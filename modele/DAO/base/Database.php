@@ -43,7 +43,7 @@ class Database implements IDatabase {
      * @param String $tableName Nom de la table
      * @param String $primaryKey Clé primaire de la table
      */
-    public function __construct(string $tableName, string $primaryKey = 'id') {
+    public function __construct(string $tableName, string|array $primaryKey = 'id') {
         $this->tableName = $tableName;
         $this->primaryKey = $primaryKey;
     }
@@ -84,8 +84,18 @@ class Database implements IDatabase {
      * @param String $id
      * @return \stdClass|null
      */
-    public function getOne(string $id): \stdClass|bool {
-        $stmt = self::getPdo()->prepare("SELECT * FROM {$this->tableName} WHERE {$this->primaryKey} = ? LIMIT 1");
+    public function getOne(string|array $id): \stdClass|bool {
+        $sql = "SELECT * FROM {$this->tableName} WHERE 1=1 ";
+        if(is_array($this->primaryKey)) {
+            foreach($this->primaryKey as $curPkey) {
+                $sql .= "AND {$curPkey} = ? ";
+            }
+            $sql .= "LIMIT 1";
+            $stmt = self::getPdo()->prepare($sql);
+        } else {
+            $sql .= "AND {$this->primaryKey} = ? LIMIT 1";
+            $stmt = self::getPdo()->prepare($sql);
+        }
         $stmt->execute([$id]);
 		try {
 			return $stmt->fetch(PDO::FETCH_OBJ);
@@ -127,17 +137,25 @@ class Database implements IDatabase {
      * @param array $data
      * @return bool
      */
-    public function updateOne(string $id, array $data = []): bool {
+    public function updateOne(string|array $id, array $data = []): bool {
         $query = "UPDATE {$this->tableName} SET ";
 
         foreach ($data as $columnName => $columnValue) {
             $query .= $columnName . " = :$columnName, ";
         }
         $query = rtrim($query, ", ");
-
-        $query .= " WHERE {$this->primaryKey} = :id";
+        $values = [];
+        if(is_array($id) && !empty($id)) {
+            foreach($id as $key => $value) {
+                $query .= " WHERE {$key} = :id";
+                $values[$key] = $value;
+            }
+        } else {
+            $query .= " WHERE {$this->primaryKey} = :id";
+        }
+        
         $stmt = self::getPdo()->prepare($query);
-        return $stmt->execute(array_merge(["id" => $id], $data));
+        return $stmt->execute(array_merge($values, $data));
     }
 	
     /**
