@@ -6,7 +6,7 @@ use modele\DAO\UserDAO as Model;
 use app\util\Request as req;
 use vue\base\MainTemplate as Vue;
 
-class Accueil { // classe
+class Accueil { // classe test baptiste
 
 	public function __construct() {
 
