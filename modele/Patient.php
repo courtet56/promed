@@ -2,18 +2,18 @@
 
 namespace modele;
 use app\util\Error;
-use modele\DAO\UserDAO;
+use modele\DAO\PatientDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : User
+ * MODELE : Objet métier : Direct Object (DO) : Patient
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DAO/UserDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "clients".
+ * -> modele/DAO/PatientDAO.php (hérités de : modele/DAO/base/Database.php)
+ * Accesseurs / mutateurs de la table : "Pyatient".
  * Logique métier à implémenter, par exemple : 
  * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
  */
 
-class User {
+class Patient {
 
 	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
@@ -24,12 +24,12 @@ class User {
 	public function __construct( 
 		private string $nom='',
 		private string $prenom='',
-		private string $email='',
-		private string $tel='',
 		private string $dateNaiss='',
-		private string $mdp='',
-		private string $idTuteur='',
-		private string $idAdresse='') {
+		private string $telephone='',
+		private string $email='',
+		private string $motDePasse='',
+		private int $idTuteur=0,
+		private int $idAdresse=0) {
 
 		//Gestionnaire d'erreur (pour les requêtes) :
 		try {
@@ -46,9 +46,9 @@ class User {
 	 */		
 	
 	// CREATE
-	public function addUser(): bool {
-		$userDAO = new UserDAO();
-		return $userDAO->create($this);
+	public function addPatient(): bool {
+		$patientDAO = new PatientDAO();
+		return $patientDAO->create($this);
 	}
 
 	// Vérification de l'email
@@ -60,7 +60,7 @@ class User {
 	 * Getters
 	 */
 	
-	public function getId(): int {
+	public function getIdPatient(): int {
 		return $this->id;
 	}
 	
@@ -76,64 +76,64 @@ class User {
 		return $this->email;
 	}
 	
-	public function getDateNaissance(): string {
+	public function getDateNaiss(): string {
 		return $this->dateNaiss;
 	}
 	
-	public function getMdp(): string {
-		return $this->mdp;
+	public function getMotDePasse(): string {
+		return $this->motDePasse;
 	}
 	
-	public function getIdAdresse(): string {
+	public function getIdAdresse(): int {
 		return $this->idAdresse;
 	}
 	
-	public function getIdTuteur(): string {
+	public function getIdTuteur(): int {
 		return $this->idTuteur;
 	}
 	
-	public function getTel(): string {
-		return $this->tel;
+	public function getTelephone(): string {
+		return $this->telephone;
 	}
 	
 	/**
 	 * Setters
 	 */
 	
-	public function setId($id): void {
-		$this->id = $id;
+	public function setIdPatient(int $idPatient): void {
+		$this->id = $idPatient;
 	}
 	
-	public function setNom($nom): void {
+	public function setNom(string $nom): void {
 		$this->nom = $nom;
 	}
 	
-	public function setPrenom($prenom): void {
+	public function setPrenom(string $prenom): void {
 		$this->prenom = $prenom;
 	}
 	
-	public function setEmail($email): void {
+	public function setEmail(string $email): void {
 		$this->email = $email;
 	}
 	
-	public function setDateNaissance($ne_le): void {
-		$this->dateNaiss = $ne_le;
+	public function setDateNaiss(string $dateNaiss): void {
+		$this->dateNaiss = $dateNaiss;
 	}
 	
-	public function setIdTuteur($idTuteur): void {
+	public function setIdTuteur(int $idTuteur): void {
 		$this->idTuteur = $idTuteur;
 	}
 	
-	public function setIdAdresse($idAdresse): void {
+	public function setIdAdresse(int $idAdresse): void {
 		$this->idAdresse = $idAdresse;
 	}
 	
-	public function setTel($tel): void {
-		$this->tel = $tel;
+	public function setTelephone(string $telephone): void {
+		$this->telephone = $telephone;
 	}
 
-	public function setMdp($mdp): void {
-		$this->mdp = $mdp;
+	public function setMotDePasse(string $motDePasse): void {
+		$this->motDePasse = $motDePasse;
 	}
 
 }
