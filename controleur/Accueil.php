@@ -2,7 +2,11 @@
 
 namespace controleur;
 
+<<<<<<< HEAD
 use modele\DAO\UserDAO as Model;
+=======
+use modele\DAO\PatientDAO as Model;
+>>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 use app\util\Request as req;
 use vue\base\MainTemplate as Vue;
 
@@ -49,7 +53,11 @@ class Accueil { // classe test baptiste
 		 *	Méthodes issues de la classe UserDAO, elle-même héritée du DAO :
 		 */
 		// $data = $db->getUsersByName('Bob'); // retourne un array
+<<<<<<< HEAD
 		$data = $db->getLineFrom('Emmanuel'); // retourne un objet
+=======
+		// $data = $db->getLineFrom('Emmanuel'); // retourne un objet
+>>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 		$allData = $db->getAll();
 		$table = $db->getTableName();
 
@@ -68,9 +76,15 @@ class Accueil { // classe test baptiste
 		/**
 		 *	Session utilisateur :
 		 */
+<<<<<<< HEAD
 		if(!isset($_SESSION['user'])) { 
 			$_SESSION['user'] = (array)$data; //conversion objet --> array
 		}
+=======
+		//if(!isset($_SESSION['user'])) { 
+		//	$_SESSION['user'] = (array)$data; //conversion objet --> array
+		//}
+>>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 		
 		/**
 		 *	-------------
@@ -126,7 +140,11 @@ class Accueil { // classe test baptiste
 		 *	3/ Option (non implémentée ici) : Chemin absolu vers le fichier .php (la vue)
 		 *	4/ Option (non implémentée ici) : n’inclus pas le header et le footer
 		 */
+<<<<<<< HEAD
 		Vue::render('Accueil', [
+=======
+		Vue::render('AuthentifPatient', [
+>>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 			'test' => $test,
 			'param' => [
 				'a' => 1,
