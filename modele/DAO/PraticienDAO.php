@@ -104,25 +104,25 @@ class PraticienDAO extends Database {
 	/**
 	*	Méthode permettant l'accès aux données filtrées pour une recherche du prénom ou du nom, 
 	*	avec une requête préparée.
-	* 	@param string $name Nom ou prénom de l'utilisateur
+	* 	@param string $email Nom ou prénom de l'utilisateur
 	* 	@return array
 	*/
-	public function getPraticienByName(string $name): mixed {
-		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE prenom LIKE :sname OR nom LIKE :name");
-		$stmt->execute([':sname' => "%$name%", ':name' => "%$name%"]);
+	public function getPraticienByEmail(string $email): mixed {
+		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE email=  :email");
+		$stmt->execute([':email' => "%$email%"]);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
 	/**
 	*	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
-	*	Le filtre (ici $name) est obligatoirement un tableau !
-	* 	@param string $name Prénom de l'utilisateur
+	*	Le filtre (ici $email) est obligatoirement un tableau !
+	* 	@param string $email Prénom de l'utilisateur
 	* 	@return object
 	*/
-	public function getLineFrom(string $name): \stdClass {
+	public function getLineFrom(string $email): \stdClass {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$name]);
+		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$email]);
 	}
 	
 	/**
