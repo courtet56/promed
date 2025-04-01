@@ -23,11 +23,7 @@ use modele\DAO\PatientDAO;
  * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
  */
 
-<<<<<<< HEAD
-class User {
-=======
 class Patient {
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 
 	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
@@ -38,21 +34,12 @@ class Patient {
 	public function __construct( 
 		private string $nom='',
 		private string $prenom='',
-<<<<<<< HEAD
-		private string $email='',
-		private string $tel='',
-		private string $dateNaiss='',
-		private string $mdp='',
-		private string $idTuteur='',
-		private string $idAdresse='') {
-=======
 		private string $dateNaiss='',
 		private string $telephone='',
 		private string $email='',
 		private string $motDePasse='',
 		private int $idTuteur=0,
 		private int $idAdresse=0) {
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 
 		//Gestionnaire d'erreur (pour les requêtes) :
 		try {
@@ -69,15 +56,9 @@ class Patient {
 	 */		
 	
 	// CREATE
-<<<<<<< HEAD
-	public function addUser(): bool {
-		$userDAO = new UserDAO();
-		return $userDAO->create($this);
-=======
 	public function addPatient(): bool {
 		$patientDAO = new PatientDAO();
 		return $patientDAO->create($this);
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 	}
 
 	// Vérification de l'email
@@ -89,11 +70,7 @@ class Patient {
 	 * Getters
 	 */
 	
-<<<<<<< HEAD
-	public function getId(): int {
-=======
 	public function getIdPatient(): int {
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 		return $this->id;
 	}
 	
@@ -109,26 +86,6 @@ class Patient {
 		return $this->email;
 	}
 	
-<<<<<<< HEAD
-	public function getDateNaissance(): string {
-		return $this->dateNaiss;
-	}
-	
-	public function getMdp(): string {
-		return $this->mdp;
-	}
-	
-	public function getIdAdresse(): string {
-		return $this->idAdresse;
-	}
-	
-	public function getIdTuteur(): string {
-		return $this->idTuteur;
-	}
-	
-	public function getTel(): string {
-		return $this->tel;
-=======
 	public function getDateNaiss(): string {
 		return $this->dateNaiss;
 	}
@@ -147,49 +104,12 @@ class Patient {
 	
 	public function getTelephone(): string {
 		return $this->telephone;
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 	}
 	
 	/**
 	 * Setters
 	 */
 	
-<<<<<<< HEAD
-	public function setId($id): void {
-		$this->id = $id;
-	}
-	
-	public function setNom($nom): void {
-		$this->nom = $nom;
-	}
-	
-	public function setPrenom($prenom): void {
-		$this->prenom = $prenom;
-	}
-	
-	public function setEmail($email): void {
-		$this->email = $email;
-	}
-	
-	public function setDateNaissance($ne_le): void {
-		$this->dateNaiss = $ne_le;
-	}
-	
-	public function setIdTuteur($idTuteur): void {
-		$this->idTuteur = $idTuteur;
-	}
-	
-	public function setIdAdresse($idAdresse): void {
-		$this->idAdresse = $idAdresse;
-	}
-	
-	public function setTel($tel): void {
-		$this->tel = $tel;
-	}
-
-	public function setMdp($mdp): void {
-		$this->mdp = $mdp;
-=======
 	public function setIdPatient(int $idPatient): void {
 		$this->id = $idPatient;
 	}
@@ -224,7 +144,6 @@ class Patient {
 
 	public function setMotDePasse(string $motDePasse): void {
 		$this->motDePasse = $motDePasse;
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 	}
 
 }
