@@ -18,40 +18,32 @@
 			<img id="avatar" class="img-thumbnail" src="<?= $actual_link ?>asset/img/logo-promed.jpg" />
 		</div>
 
+		<h2>Espace patient</h2>
+
 		<div style="margin:auto; width:50%">
 			
-			  <p>
+
 				<form method="POST" action="">
-				  <div class="d-flex justify-content-center">
-					<input type="text" name="email" class="form-control" placeholder="Tester POST sur le contrôleur About">
+					<div class="d-flex justify-content-center">
+						<label for="email">E-mail : </label>
+					</div>
+					<div class="d-flex justify-content-center">
+						<input type="text" name="email" id="email" class="form-control" placeholder="login">
+					</div>
+					<div class="spacer"></div>
+					<div class="d-flex justify-content-center">
+						<label for="motDePasse">Mot de passe : </label>
+					</div>
+					<div class="d-flex justify-content-center">
+						<input type="password" name="motDePasse" id="motDePasse" class="form-control" placeholder="mot de passe">
+					</div>
+					<div class="spacer"></div>
 					<button class="btn btn-primary">Tester</button>
-				  </div>
 				</form>
-			  </p>
 			  
-			</div>
-
-		<p><?php include(AJAX_DIR . 'ajaxRechercher.php'); ?></p>
-
-		<div style="margin:auto; display:inline-block;">
-			<div style="text-align:left">
-				<p>Liste des utilisteurs (table <b><?= $table ?></b>) :</p>
-				<?php
-				foreach ($allData as $k => $v) {
-					echo '<li><small>[id n°' . $v->idPatient . ']</small> ' . $v->prenom . ' ' . $v->nom . '</li>';
-				}
-				?>
-			</div>
 		</div>
 
 		<div class="spacer"></div>
-
-		<p>Le tableau param affiche :</p>
-		<?php
-		foreach ($param as $k => $v) {
-			echo $k . ' = ' . $v . '<br />';
-		}
-		?>
 
 	</div>
 

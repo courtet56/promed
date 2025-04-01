@@ -2,7 +2,7 @@
 
 namespace controleur;
 
-use modele\DAO\UserDAO as Model;
+use modele\DAO\PatientDAO as Model;
 use app\util\Request as req;
 use vue\base\MainTemplate as Vue;
 
@@ -49,7 +49,7 @@ class Accueil { // classe test baptiste
 		 *	Méthodes issues de la classe UserDAO, elle-même héritée du DAO :
 		 */
 		// $data = $db->getUsersByName('Bob'); // retourne un array
-		$data = $db->getLineFrom('Emmanuel'); // retourne un objet
+		// $data = $db->getLineFrom('Emmanuel'); // retourne un objet
 		$allData = $db->getAll();
 		$table = $db->getTableName();
 
@@ -68,9 +68,9 @@ class Accueil { // classe test baptiste
 		/**
 		 *	Session utilisateur :
 		 */
-		if(!isset($_SESSION['user'])) { 
-			$_SESSION['user'] = (array)$data; //conversion objet --> array
-		}
+		//if(!isset($_SESSION['user'])) { 
+		//	$_SESSION['user'] = (array)$data; //conversion objet --> array
+		//}
 		
 		/**
 		 *	-------------
@@ -126,7 +126,7 @@ class Accueil { // classe test baptiste
 		 *	3/ Option (non implémentée ici) : Chemin absolu vers le fichier .php (la vue)
 		 *	4/ Option (non implémentée ici) : n’inclus pas le header et le footer
 		 */
-		Vue::render('Accueil', [
+		Vue::render('AuthentifPatient', [
 			'test' => $test,
 			'param' => [
 				'a' => 1,

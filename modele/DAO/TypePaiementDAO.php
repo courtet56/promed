@@ -3,7 +3,7 @@
 namespace modele\DAO;
 
 use modele\DAO\base\Database;
-use modele\Patient;
+use modele\TypePaiement;
 use PDO;
 
 /** 
@@ -12,7 +12,7 @@ use PDO;
 *	Associé à la logique métier de la classe Patient (modele/User.php).
 */
 
-class PatientDAO extends Database {
+class TypePaiementDAO extends Database {
 
 	/** 
 	*	Deux paramètres pour le constructeur du DAO :
@@ -23,27 +23,20 @@ class PatientDAO extends Database {
 
 	public function __construct() {
 		//-------------------------------------------
-		$tableName = 'Patient';
-		$primaryKey = 'idPatient';
+		$tableName = 'TypePaiement';
+		$primaryKey = 'idTypePaiement';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
 	
 	/** 
-	*	Besoins en données issues du métier Patient (modele/Patient.php)
+	*	Besoins en données issues du métier TypePaiement (modele/TypePaiement.php)
 	*	@param object:metier Instance de l'objet metier
 	*	@return array
 	*/
-	private function getAllData(Patient $metier): array {
+	private function getAllData(TypePaiement $metier): array {
 		return [
-			'nom' => $metier->getNom(),
-			'prenom' => $metier->getPrenom(),
-			'dateNaiss' => $metier->getDateNaiss(),
-			'telephone' => $metier->getTelephone(),
-			'email' => $metier->getEmail(),
-			'motDePasse' => $metier->getMotDePasse(),
-			'idTuteur' => $metier->getIdTuteur(),
-			'idAdresse' => $metier->getIdAdresse(),
+			'libelle' => $metier->getLibelle(),
 		];
 	}
 
@@ -52,11 +45,11 @@ class PatientDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function create(Patient $metier): bool {
+	public function create(TypePaiement $metier): bool {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setIdPatient( $this->getLastKey() );
+		$metier->setIdTypePaiement( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -65,12 +58,12 @@ class PatientDAO extends Database {
 	*	@param integer Numéro de la clé primaire
 	*	@return mixed object|string|bool
 	*/
-	public function read(int $idPatient = 0): mixed {
+	public function read(int $idTypePaiement = 0): mixed {
 		$row = false;
-		if($idPatient > 0)$row = $this->getOne($idPatient); //on récupère la ligne/tuple concernée
+		if($idTypePaiement > 0)$row = $this->getOne($idTypePaiement); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$idPatient</b>) est invalide !" );
+			die( __CLASS__ . "->read() : l'index fourni (<b>$idTypePaiement</b>) est invalide !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
@@ -78,12 +71,9 @@ class PatientDAO extends Database {
 		foreach ($rowData as $key => $value) {
 			$rowData[$key] = $value ?? ''; // Remplace NULL par ''
 		}
-    	// Vérification spécifique pour les INT
-    	$rowData['idTuteur'] = isset($rowData['idTuteur']) ? (int) $rowData['idTuteur'] : 0;
-    	$rowData['idAdresse'] = isset($rowData['idAdresse']) ? (int) $rowData['idAdresse'] : 0;
-
-		$metier = new Patient(...$rowData); //crée l'objet User(->User.php) avec toutes les clés du tableau $rowData
-		$metier->setIdPatient($idPatient); //ajoute $id dans l'objet métier (User)
+    	
+		$metier = new TypePaiement(...$rowData); //crée l'objet User(->User.php) avec toutes les clés du tableau $rowData
+		$metier->setIdTypePaiement($idTypePaiement); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -92,10 +82,10 @@ class PatientDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function update(Patient $metier): bool {
+	public function update(TypePaiement $metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getIdPatient(), $data);
+		return $this->updateOne($metier->getIdTypePaiement(), $data);
 	}
 	
 	/** 
@@ -103,23 +93,23 @@ class PatientDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function delete(Patient $metier): bool {
+	public function delete(TypePaiement $metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getIdPatient() );
+		return $this->deleteOne( $metier->getIdTypePaiement() );
 	}
-	
+
 	/**
 	*	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
 	*	Le filtre (ici $name) est obligatoirement un tableau !
-	* 	@param string $email Email de l'utilisateur
+	* 	@param string $name Prénom de l'utilisateur
 	* 	@return array
 	*/
-	public function getPatientByEmail(string $email): array|bool {
+	public function getTypePaiementById(int $idTypePaiement): array {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
+		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE " . $this->primaryKey . " = ?", [$idTypePaiement]);
 	}
-	
+		
 	/**
 	* Utils infos
 	*/

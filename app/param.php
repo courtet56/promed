@@ -5,13 +5,13 @@
  */
 
 //Nom de l'app par défaut :
-const APP_NAME = 'MonApp';
+const APP_NAME = 'Promed';
 
 //A implémenter :
 const APP_VERSION = '0.0.0';
 
 //Titre principal de l'application :
-const MAIN_TITLE = 'Mon application';
+const MAIN_TITLE = 'MediConcept';
 
 //Fonction debug() : sort var_dump() à la place de print_r()
 const DEBUG_DUMP = false; 
