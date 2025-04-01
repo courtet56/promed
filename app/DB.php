@@ -11,7 +11,7 @@
  */
 
  const DB_SERVER = 'db'; //127.0.0.1 PAR DEFAUT EN LOCAL 
- const DB_DATABASE = 'CAGB'; //NOM DE LA BDD
+ const DB_DATABASE = 'promed'; //NOM DE LA BDD
  const DB_USER = 'root'; //NOM DE L'UTILISATEUR MYSQL
  const DB_PASSWORD = 'secret'; //MOT DE PASSE
  const DB_PORT = '3306'; //3306, PORT PAR DEFAUT
