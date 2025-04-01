@@ -2,15 +2,6 @@
 
 namespace modele;
 use app\util\Error;
-<<<<<<< HEAD
-use modele\DAO\UserDAO;
-
-/**
- * MODELE : Objet métier : Direct Object (DO) : User
- * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DAO/UserDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "clients".
-=======
 use modele\DAO\PatientDAO;
 
 /**
@@ -18,7 +9,6 @@ use modele\DAO\PatientDAO;
  * Encapsulation, manipulation et récupération des données issues du DAO :
  * -> modele/DAO/PatientDAO.php (hérités de : modele/DAO/base/Database.php)
  * Accesseurs / mutateurs de la table : "Pyatient".
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
  * Logique métier à implémenter, par exemple : 
  * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
  */
