@@ -3,16 +3,16 @@
 namespace modele\DAO;
 
 use modele\DAO\base\Database;
-use modele\Paye;
+use modele\Facturation;
 use PDO;
 
 /** 
-*	Paye DAO
-*	Implémente l'ensemble des traitements en données pour les utilisateurs.
-*	Associé à la logique métier de la classe Paye (modele/Paye.php).
+*	Facturation DAO
+*	Implémente l'ensemble des traitements en données pour les facturations.
+*	Associé à la logique métier de la classe Facturation (modele/Facturation.php).
 */
 
-class PayeDAO extends Database {
+class FacturationDAO extends Database {
 
 	/** 
 	*	Deux paramètres pour le constructeur du DAO :
@@ -23,8 +23,8 @@ class PayeDAO extends Database {
 
 	public function __construct() {
 		//-------------------------------------------
-		$tableName = 'Paye';
-		$primaryKey = ['idFacturation', 'idTypePaiement'];
+		$tableName = 'Facturation';
+		$primaryKey = 'idFacturation';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -37,8 +37,10 @@ class PayeDAO extends Database {
 	private function getAllData($metier): array {
 		return [
 			'idFacturation' => $metier->getIdFacturation(),
-			'idTypePaiement' => $metier->getIdTypePaiement(),
-			'montant' => $metier->getMontant(),
+			'dateFacturation' => $metier->getDateFacturation(),
+			'idStatutFact' => $metier->getIdStatutFact(),
+            'idRdv' => $metier->getIdRdv(),
+            'montant' => $metier->getMontant()
 		];
 	}
 
@@ -51,7 +53,7 @@ class PayeDAO extends Database {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setId( $this->getLastKey() );
+		$metier->setIdFacturation( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -60,18 +62,17 @@ class PayeDAO extends Database {
 	*	@param integer Numéro de la clé primaire
 	*	@return mixed object|string|bool
 	*/
-	public function read(int $idFacturation=0, int $idTypePaiement = 0): mixed {
+	public function read(int $idFacturation=0): mixed {
 		$row = false;
-		if($idFacturation>0 && $idTypePaiement>0)$row = $this->getOne(["idFacturation" => $idFacturation, "idTypePaiement" => $idTypePaiement]); //on récupère la ligne/tuple concernée
+		if($idFacturation>0)$row = $this->getOne($idFacturation); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
-			die( __CLASS__ . "->read() : les index fournis (<b>$idFacturation, $idTypePaiement</b>) sont invalides !" );
+			die( __CLASS__ . "->read() : les index fournis (<b>$idFacturation</b>) sont invalides !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
-		$metier = new Paye(...$rowData); //crée l'objet Paye(->Paye.php) avec toutes les clés du tableau $rowData
+		$metier = new Facturation(...$rowData); //crée l'objet Paye(->Paye.php) avec toutes les clés du tableau $rowData
 		$metier->setIdFacturation($idFacturation); //ajoute $id dans l'objet métier (Paye)
-        $metier->setIdFacturation($idTypePaiement);
 		return $metier; //retourne l'objet créé
 	}
 	
@@ -83,7 +84,7 @@ class PayeDAO extends Database {
 	public function update($metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getId(), $data);
+		return $this->updateOne($metier->getIdFacturation(), $data);
 	}
 	
 	/** 
@@ -93,7 +94,7 @@ class PayeDAO extends Database {
 	*/
 	public function delete($metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getId() );
+		return $this->deleteOne( $metier->getIdFacturation() );
 	}
 
 	/**
@@ -102,11 +103,11 @@ class PayeDAO extends Database {
 	* 	@param string $name Nom ou prénom de l'utilisateur
 	* 	@return array
 	*/
-	// public function getUsersByName(string $name): mixed {
-	// 	$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE prenom LIKE :sname OR nom LIKE :name");
-	// 	$stmt->execute([':sname' => "%$name%", ':name' => "%$name%"]);
-	// 	return $stmt->fetch(PDO::FETCH_ASSOC);
-	// }
+	public function getFactById(int $id): mixed {
+		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE idFacturation=:id");
+		$stmt->execute([':id' => $id]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
 
 	// /**
 	// *	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)

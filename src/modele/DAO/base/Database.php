@@ -164,7 +164,7 @@ class Database implements IDatabase {
      * @param $disableConstraintKey
      * @return bool
      */
-    public function deleteOne(string $id, bool $disableConstraintKey=false): bool {
+    public function deleteOne(string $id, bool $disableConstraintKey=false): bool { // à modifier
 		$sql = "DELETE FROM {$this->tableName} WHERE {$this->primaryKey} = ? LIMIT 1;";
 		
 		//On désactive temporairement les "key constraint" et on réactive au besoin :

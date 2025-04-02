@@ -14,9 +14,6 @@ use modele\DAO\PayeDAO;
  */
 
 class Paye {
-
-	private int $id=0; //La clé primaire est identifiée par $id
-	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
 	//Constructeur : User
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
@@ -42,10 +39,10 @@ class Paye {
 	 */		
 	
 	// // CREATE
-	// public function addUser(): bool {
-	// 	$userDAO = new UserDAO();
-	// 	return $userDAO->create($this);
-	// }
+	public function addPaye(): bool {
+		$payeDAO = new PayeDAO();
+		return $payeDAO->create($this);
+	}
 
 	// // Vérification de l'email
 	// public function isValidEmail(): bool {
@@ -60,11 +57,11 @@ class Paye {
 		return $this->idFacturation;
 	}
 	
-	public function getIdTypePaiement(): string {
+	public function getIdTypePaiement(): int {
 		return $this->idTypePaiement;
 	}
 	
-	public function getMontant(): string	{
+	public function getMontant(): float	{
 		return $this->montant;
 	}
 	
