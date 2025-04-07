@@ -3,7 +3,6 @@
 namespace modele;
 use app\util\Error;
 use modele\DAO\PatientDAO;
-use modele\DAO\UserDAO;
 
 /**
  * MODELE : Objet métier : Direct Object (DO) : User

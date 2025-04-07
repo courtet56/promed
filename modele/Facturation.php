@@ -20,7 +20,7 @@ class Facturation {
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
-        private string $dateFacturation=null,
+        private string $dateFacturation='',
 		private int $idStatutFact=0,
         private int $idStatutRdv=0,
 		private float $montant=0

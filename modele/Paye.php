@@ -5,17 +5,15 @@ use app\util\Error;
 use modele\DAO\PayeDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : User
+ * MODELE : Objet métier : Direct Object (DO) : Paye
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DAO/UserDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "clients".
- * Logique métier à implémenter, par exemple : 
- * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
+ * -> modele/DAO/PayeDAO.php (hérités de : modele/DAO/base/Database.php)
+ * Accesseurs / mutateurs de la table : "Paye".
  */
 
 class Paye {
 	
-	//Constructeur : User
+	//Constructeur : Paye
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
@@ -43,11 +41,6 @@ class Paye {
 		$payeDAO = new PayeDAO();
 		return $payeDAO->create($this);
 	}
-
-	// // Vérification de l'email
-	// public function isValidEmail(): bool {
-	// 	return filter_var($this->email, FILTER_VALIDATE_EMAIL);
-	// }
 	
 	/**
 	 * Getters
