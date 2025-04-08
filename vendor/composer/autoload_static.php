@@ -6,8 +6,6 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit5c0a388dd5f5735c3004166ebc555614
 {
-<<<<<<< HEAD
-=======
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
@@ -59,7 +57,6 @@ class ComposerStaticInit5c0a388dd5f5735c3004166ebc555614
         ),
     );
 
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
     public static $fallbackDirsPsr4 = array (
         0 => __DIR__ . '/..' . '/league/color-extractor/src',
     );
@@ -76,8 +73,6 @@ class ComposerStaticInit5c0a388dd5f5735c3004166ebc555614
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-<<<<<<< HEAD
-=======
         'PHPUnit\\Event\\Application\\Finished' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
         'PHPUnit\\Event\\Application\\FinishedSubscriber' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
         'PHPUnit\\Event\\Application\\Started' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Started.php',
@@ -1252,17 +1247,13 @@ class ComposerStaticInit5c0a388dd5f5735c3004166ebc555614
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-<<<<<<< HEAD
-=======
             $loader->prefixLengthsPsr4 = ComposerStaticInit5c0a388dd5f5735c3004166ebc555614::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit5c0a388dd5f5735c3004166ebc555614::$prefixDirsPsr4;
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
             $loader->fallbackDirsPsr4 = ComposerStaticInit5c0a388dd5f5735c3004166ebc555614::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit5c0a388dd5f5735c3004166ebc555614::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit5c0a388dd5f5735c3004166ebc555614::$classMap;

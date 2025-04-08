@@ -112,12 +112,6 @@
                 "source": "https://github.com/thephpleague/color-extractor/tree/master"
             },
             "install-path": "../league/color-extractor"
-<<<<<<< HEAD
-        }
-    ],
-    "dev": true,
-    "dev-package-names": []
-=======
         },
         {
             "name": "myclabs/deep-copy",
@@ -1851,5 +1845,4 @@
         "sebastian/version",
         "theseer/tokenizer"
     ]
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
 }

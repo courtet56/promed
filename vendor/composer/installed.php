@@ -1,15 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-<<<<<<< HEAD
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
-=======
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
         'reference' => '9bf1b3905fd3a5ad9486b60252d42dffe735ef8c',
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,15 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-<<<<<<< HEAD
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
-=======
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
             'reference' => '9bf1b3905fd3a5ad9486b60252d42dffe735ef8c',
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -55,8 +43,6 @@
                 0 => '*',
             ),
         ),
-<<<<<<< HEAD
-=======
         'myclabs/deep-copy' => array(
             'pretty_version' => '1.13.0',
             'version' => '1.13.0.0',
@@ -291,6 +277,5 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
->>>>>>> f643ec3d29d78a78d69829727cebf71ce00509fe
     ),
 );
