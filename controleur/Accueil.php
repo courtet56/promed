@@ -2,11 +2,7 @@
 
 namespace controleur;
 
-<<<<<<< HEAD
-use modele\DAO\UserDAO as Model;
-=======
 use modele\DAO\PatientDAO as Model;
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 use app\util\Request as req;
 use vue\base\MainTemplate as Vue;
 

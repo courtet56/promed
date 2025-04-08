@@ -66,21 +66,12 @@ class Database implements IDatabase {
      * Lance une requête SQL préparée avec un filtre "prepared statement" en tableau
 	 * @param string $cmd
 	 * @param array $filter
-<<<<<<< HEAD
-     * @return \stdClass|null
-     */
-    public function sendSQL(string $cmd, array $filter): \stdClass|null|bool {
-        $stmt = $this->getPdo()->prepare($cmd);
-        $stmt->execute($filter);
-        return $stmt->fetch(PDO::FETCH_OBJ); //FETCH_ASSOC : array
-=======
      * @return array|null
      */
     public function sendSQL(string $cmd, array $filter): array|null|bool {
         $stmt = $this->getPdo()->prepare($cmd);
         $stmt->execute($filter);
         return $stmt->fetch(PDO::FETCH_ASSOC); //FETCH_ASSOC : array
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
     }
 
     /**
@@ -95,11 +86,7 @@ class Database implements IDatabase {
 
     /**
      * Permet la récupération d'un enregistrement en base de données
-<<<<<<< HEAD
-     * @param String $id
-=======
      * @param string $id
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
      * @return \stdClass|null
      */
     public function getOne(string $id): \stdClass|bool {
@@ -120,8 +107,6 @@ class Database implements IDatabase {
      */
 	public function createOne(array $data = []): bool {
 		$bool=false;
-<<<<<<< HEAD
-=======
 
         // Remplacer 0 par NULL dans les données
         foreach ($data as $key => $value) {
@@ -130,7 +115,6 @@ class Database implements IDatabase {
             }
         }
 
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
 		$columns = array_keys($data);
 		$placeholders = array_fill(0, count($columns), '?');
 
@@ -157,8 +141,6 @@ class Database implements IDatabase {
      * @return bool
      */
     public function updateOne(string $id, array $data = []): bool {
-<<<<<<< HEAD
-=======
         // Remplacer 0 par NULL dans les données
         foreach ($data as $key => $value) {
             if ($value === 0) {
@@ -166,7 +148,6 @@ class Database implements IDatabase {
             }
         }
         
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
         $query = "UPDATE {$this->tableName} SET ";
 
         foreach ($data as $columnName => $columnValue) {

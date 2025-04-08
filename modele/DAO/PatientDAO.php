@@ -112,7 +112,7 @@ class PatientDAO extends Database {
 	/**
 	*	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
-	*	Le filtre (ici $name) est obligatoirement un tableau !
+	*	Le filtre (ici $email) est obligatoirement un tableau !
 	* 	@param string $email Email de l'utilisateur
 	* 	@return array
 	*/
