@@ -20,7 +20,13 @@ class Routing {
 
 		$route = new Router();
 
-		$route->add('', 'controleur\Accueil'); //page par défaut
+		$route->add('', 'controleur\Authentification'); //page par défaut
+		$route->add('/acces', 'controleur\Authentification');
+		$route->add('/validation', 'controleur\Validation');
+		$route->add('/captcha', 'controleur\util\Captcha');
+		$route->add('/patient/dashboard', 'controleur\DashboardPatient');
+		$route->add('/praticien/dashboard', 'controleur\DashboardPraticien');
+
 		$route->add('/accueil', 'controleur\Accueil');
 		$route->add('/about', 'controleur\About');
 		//charge une image en interne (hors asset) :

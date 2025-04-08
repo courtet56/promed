@@ -75,7 +75,7 @@ class TuteurDAO extends Database
         $rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Tuteur(...$rowData); //crée l'objet Tuteur(->Tuteur.php) avec toutes les clés du tableau $rowData
-		$metier->setIdTuteur($id); //ajoute $id dans l'objet métier (User)
+		$metier->setIdTuteur($idTuteur); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
     }
 
