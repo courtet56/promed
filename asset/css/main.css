@@ -1,5 +1,7 @@
 /*** Main CSS ***/
 
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+
 html, body {
 	height: 100%;
 	margin: 0;
@@ -21,20 +23,26 @@ html, body {
 	left: 0;
 	right: 0;
 	height: 60px;
-	background-color: #f0f0f0;
 	text-align: center;
+	vertical-align: center;
+	box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.app-logo {
-	/* En CSS l'image est chargée à un niveau supérieur */
-    background-image: url('../img/app.png');
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: left center;
-    height: 30px;
-    padding-left: 40px;
-}
+header {
+	height: 164px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+  }
 
 .left {
   text-align: left;
+}
+
+h1 {
+	font-family: 'Jersey 25', sans-serif;
+	font-size: 6rem;
+	color: #2f56b1;
+	margin: 20px 0 30px 0;
 }
