@@ -5,12 +5,10 @@ use app\util\Error;
 use modele\DAO\PraticienDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : User
+ * MODELE : Objet métier : Direct Object (DO) : Praticien
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DPraticien.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "clients".
- * Logique métier à implémenter, par exemple : 
- * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
+ * -> modele/PraticienDAO.php (hérités de : modele/DAO/base/Database.php)
+ * Accesseurs / mutateurs de la table : "Praticien".
  */
 
 class Praticien {
@@ -18,7 +16,7 @@ class Praticien {
 	private int $idPraticien=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
-	//Constructeur : User
+	//Constructeur : Praticien
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 

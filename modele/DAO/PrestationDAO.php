@@ -65,7 +65,7 @@ class PrestationDAO extends Database {
 		if($idPresta>0)$row = $this->getOne($idPresta); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
+			die( __CLASS__ . "->read() : l'index fourni (<b>$idPresta</b>) est invalide !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus

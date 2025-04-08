@@ -11,7 +11,7 @@ use modele\DAO\TuteurDAO;
  */
 
 class Tuteur {
-    private int $idTuteur=0; //La clé primaire est identifiée par $id
+    private int $idTuteur=0; //La clé primaire est identifiée par $idTuteur
     // les autres paramètres sont ci-dessous, dans le constructeur...
 
     //Constructeur : Tuteur
@@ -60,7 +60,7 @@ class Tuteur {
 
     // Retourne la date de naissance sous forme de chaîne
     public function getDateNaissance(): string {
-        return $this->dateNaiss ? $this->dateNaiss->format('Y-m-d') : ''; // Si la date est définie, retourne au format Y-m-d
+        return $this->dateNaiss;
     }
 
     public function getTelephone(): string {

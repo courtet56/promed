@@ -11,7 +11,7 @@ use modele\DAO\AdresseDAO;
  */
 
  class Adresse {
-    private int $idAdresse=0; //La clé primaire est identifiée par $id
+    private int $idAdresse=0; //La clé primaire est identifiée par $idAdresse
     // les autres paramètres sont ci-dessous, dans le constructeur...
 
     //Constructeur : Adresse

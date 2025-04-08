@@ -5,10 +5,10 @@ use app\util\Error;
 use modele\DAO\PatientDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : User
+ * MODELE : Objet métier : Direct Object (DO) : Patient
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DAO/UserDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "clients".
+ * -> modele/DAO/PatientDAO.php (hérités de : modele/DAO/base/Database.php)
+ * Accesseurs / mutateurs de la table : "Patient".
  */
 
 class Patient {
@@ -16,7 +16,7 @@ class Patient {
 	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
-	//Constructeur : User
+	//Constructeur : Patient
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 

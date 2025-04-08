@@ -5,12 +5,10 @@ use app\util\Error;
 use modele\DAO\PrestationDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : User
+ * MODELE : Objet métier : Direct Object (DO) : Prestation
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DAO/UserDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "clients".
- * Logique métier à implémenter, par exemple : 
- * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
+ * -> modele/DAO/PrestationDAO.php (hérités de : modele/DAO/base/Database.php)
+ * Accesseurs / mutateurs de la table : "Prestation".
  */
 
 class Prestation {
@@ -18,7 +16,7 @@ class Prestation {
 	private int $idPresta=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
-	//Constructeur : User
+	//Constructeur : Prestation
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
@@ -41,7 +39,7 @@ class Prestation {
 	 */		
 	
 	// CREATE
-	public function addLibelle(): bool {
+	public function addPrestation(): bool {
 		$prestationDAO = new PrestationDAO();
 		return $prestationDAO->create($this);
 	}
@@ -58,5 +56,12 @@ class Prestation {
 		return $this->libelle;
 	}
 	
+	public function setIdPresta($idPresta): void {
+		$this->idPresta = $idPresta;
+	}
+	
+	public function setLibelle($libelle): void {
+		$this->libelle = $libelle;
+	}
 
 }

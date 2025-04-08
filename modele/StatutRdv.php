@@ -6,7 +6,7 @@ use app\util\Error;
 use modele\DAO\StatutRdvDAO;
 
 class StatutRdv {
-    private int $idStatutRdv=0; //La clé primaire est identifiée par $id
+    private int $idStatutRdv=0; //La clé primaire est identifiée par $idStatutRdv
     // les autres paramètres sont ci-dessous, dans le constructeur...
 
     //Constructeur : StatutRdv
