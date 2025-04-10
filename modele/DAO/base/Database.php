@@ -41,8 +41,10 @@ class Database implements IDatabase {
 
     /**
 
+
      * @param string $tableName Nom de la table
      * @param string $primaryKey Clé primaire de la table
+
 
      */
     public function __construct(string $tableName, string $primaryKey = 'id') {
@@ -64,13 +66,14 @@ class Database implements IDatabase {
 	 * @param string $cmd
 	 * @param array $filter
 
+
+
      * @return array|null
      */
     public function sendSQL(string $cmd, array $filter): array|null|bool {
         $stmt = $this->getPdo()->prepare($cmd);
         $stmt->execute($filter);
         return $stmt->fetch(PDO::FETCH_ASSOC); //FETCH_ASSOC : array
-
     }
 
     /**
@@ -85,9 +88,7 @@ class Database implements IDatabase {
 
     /**
      * Permet la récupération d'un enregistrement en base de données
-
      * @param string $id
-
      * @return \stdClass|null
      */
     public function getOne(string $id): \stdClass|bool {
@@ -108,8 +109,6 @@ class Database implements IDatabase {
      */
 	public function createOne(array $data = []): bool {
 		$bool=false;
-
-
         // Remplacer 0 par NULL dans les données
         foreach ($data as $key => $value) {
             if ($value === 0) {
@@ -117,8 +116,8 @@ class Database implements IDatabase {
             }
         }
 
+    	$columns = array_keys($data);
 
-		$columns = array_keys($data);
 		$placeholders = array_fill(0, count($columns), '?');
 
 		$query = "INSERT INTO {$this->tableName} (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $placeholders) . ")";
@@ -151,7 +150,6 @@ class Database implements IDatabase {
             }
         }
         
-
         $query = "UPDATE {$this->tableName} SET ";
 
         foreach ($data as $columnName => $columnValue) {

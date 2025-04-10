@@ -10,12 +10,14 @@ use modele\DAO\PatientDAO;
  * -> modele/DAO/PatientDAO.php (hérités de : modele/DAO/base/Database.php)
  * Accesseurs / mutateurs de la table : "Pyatient".
 
+
+
+
  * Logique métier à implémenter, par exemple : 
  * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
  */
 
 class Patient {
-
 
 	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
@@ -32,7 +34,6 @@ class Patient {
 		private string $motDePasse='',
 		private int $idTuteur=0,
 		private int $idAdresse=0) {
-
 
 		//Gestionnaire d'erreur (pour les requêtes) :
 		try {
@@ -52,7 +53,6 @@ class Patient {
 	public function addPatient(): bool {
 		$patientDAO = new PatientDAO();
 		return $patientDAO->create($this);
-
 	}
 
 	// Vérification de l'email
@@ -65,7 +65,6 @@ class Patient {
 	 */
 	
 	public function getIdPatient(): int {
-
 		return $this->id;
 	}
 	
@@ -81,7 +80,6 @@ class Patient {
 		return $this->email;
 	}
 	
-
 	public function getDateNaiss(): string {
 		return $this->dateNaiss;
 	}
@@ -100,14 +98,12 @@ class Patient {
 	
 	public function getTelephone(): string {
 		return $this->telephone;
-
 	}
 	
 	/**
 	 * Setters
 	 */
 	
-
 	public function setIdPatient(int $idPatient): void {
 		$this->id = $idPatient;
 	}
@@ -142,7 +138,6 @@ class Patient {
 
 	public function setMotDePasse(string $motDePasse): void {
 		$this->motDePasse = $motDePasse;
-
 	}
 
 }
