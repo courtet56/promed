@@ -46,6 +46,33 @@ class PraticienDAO extends Database {
 			
 		];
 	}
+	public function getAgendaPraticien($email): array{
+
+		
+		$stmt=$this ->getPdo()-> prepare('SELECT
+	
+   		Patient.nom AS nomPatient,
+		Patient.prenom AS prenomPatient,
+    	prestation.libelle AS libellePrestation,
+    	RendezVous.heureRdv AS heureRdv,
+		StatutRdv.libelle AS libelleStatutRdv
+		FROM
+    	RendezVous
+		INNER JOIN Prestation ON RendezVous.idPresta = prestation.idPresta
+		INNER JOIN Patient ON Patient.idPatient = RendezVous.idPatient
+		INNER JOIN Praticien ON Praticien.idPraticien = RendezVous.idPraticien
+		INNER JOIN StatutRdv ON StatutRdv.idStatutRdv = RendezVous.idStatutRdv
+		where dateRdv = CURDATE() AND Praticien.email = ?;
+
+	');
+	
+	$stmt->execute([$email]);
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	return $result;
+
+
+
+	}
 
 	/** 
 	*	CRUD : create
@@ -124,8 +151,12 @@ class PraticienDAO extends Database {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$email]);
 	}
+
 	
-	/**
+
+
+
+			/**
 	* Utils infos
 	*/
 	

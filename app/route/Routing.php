@@ -20,6 +20,9 @@ class Routing {
 
 		$route = new Router();
 
+<<<<<<< HEAD
+		$route->add('', 'controleur\getAgenda'); //page par défaut
+=======
 		$route->add('', 'controleur\Authentification'); //page par défaut
 		$route->add('/acces', 'controleur\Authentification');
 		$route->add('/validation', 'controleur\Validation');
@@ -27,6 +30,7 @@ class Routing {
 		$route->add('/patient/dashboard', 'controleur\DashboardPatient');
 		$route->add('/praticien/dashboard', 'controleur\DashboardPraticien');
 
+>>>>>>> 3429fbed9d8ea312f6931868b47a438db98b9dbb
 		$route->add('/accueil', 'controleur\Accueil');
 		$route->add('/about', 'controleur\About');
 		//charge une image en interne (hors asset) :
