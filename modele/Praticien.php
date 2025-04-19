@@ -13,7 +13,7 @@ use modele\DAO\PraticienDAO;
 
 class Praticien {
 
-	private int $idPraticien=0; //La clé primaire est identifiée par $id
+	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
 	//Constructeur : Praticien
@@ -59,8 +59,8 @@ class Praticien {
 	 * Getters
 	 */
 	
-	public function getIdPraticien(): int {
-		return $this->idPraticien;
+	public function getId(): int {
+		return $this->id;
 	}
 	
 	public function getNom(): string {
@@ -96,8 +96,8 @@ class Praticien {
 	 * Setters
 	 */
 	
-	public function setIdPraticien($idPraticien): void {
-		$this->idPraticien = $idPraticien;
+	public function setId($id): void {
+		$this->id = $id;
 	}
 	
 	public function setNom($nom): void {

@@ -8,6 +8,6 @@
       &copy;<?= date('Y') . ' ' . APP_NAME ?>
     </div>
   </footer>
-
+</div>
 </body>
 </html>

@@ -13,7 +13,7 @@ use modele\DAO\PrestationDAO;
 
 class Prestation {
 
-	private int $idPresta=0; //La clé primaire est identifiée par $id
+	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
 	//Constructeur : Prestation
@@ -21,7 +21,6 @@ class Prestation {
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
 		private string $libelle='',
-		
 	) {
 
 		//Gestionnaire d'erreur (pour les requêtes) :
@@ -48,16 +47,16 @@ class Prestation {
 	 * Getters
 	 */
 	
-	public function getIdPresta(): int {
-		return $this->idPresta;
+	public function getId(): int {
+		return $this->id;
 	}
 	
 	public function getLibelle(): string {
 		return $this->libelle;
 	}
 	
-	public function setIdPresta($idPresta): void {
-		$this->idPresta = $idPresta;
+	public function setId($id): void {
+		$this->id = $id;
 	}
 	
 	public function setLibelle($libelle): void {

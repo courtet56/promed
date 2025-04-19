@@ -66,7 +66,8 @@ class Database implements IDatabase {
     public function sendSQL(string $cmd, array $filter): array|null|bool {
         $stmt = $this->getPdo()->prepare($cmd);
         $stmt->execute($filter);
-        return $stmt->fetch(PDO::FETCH_ASSOC); //FETCH_ASSOC : array
+        //$stmt->debugDumpParams();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); //FETCH_ASSOC : array
     }
 
     /**

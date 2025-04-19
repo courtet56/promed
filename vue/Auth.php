@@ -1,11 +1,12 @@
 <?php
 
 /**
- * VUE : AuthentifPatient.php
+ * VUE : Auth.php
+ * regroupe authentification du patient et authentification du praticien
  */
 
 ?>
-<div class="container">
+<div class="container" style="height: 100%;">
 
 	<div class="spacer"></div>
 
@@ -13,7 +14,7 @@
 
 		<h1>Connexion</h1>
 
-		<div style="margin:auto; width:50%">
+		<div class="authentification">
 			
 
 				<form method="POST" action="">

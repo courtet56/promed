@@ -70,7 +70,7 @@ class PrestationDAO extends Database {
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Prestation(...$rowData); //crée l'objet Prestation(->Prestation.php) avec toutes les clés du tableau $rowData
-		$metier->setIdPresta($idPresta); //ajoute $id dans l'objet métier (Prestation)
+		$metier->setId($idPresta); //ajoute $id dans l'objet métier (Prestation)
 		return $metier; //retourne l'objet crée
 	}
 	

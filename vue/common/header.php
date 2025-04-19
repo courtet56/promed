@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <div class="wrapper">
     <header>
         <!-- <div class="container-fluid"> -->
             <a class="navbar-brand" href="<?= $actual_link ?>">

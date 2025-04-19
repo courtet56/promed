@@ -39,10 +39,10 @@ class PraticienDAO extends Database {
 			'nom' => $metier->getNom(),
 			'prenom' => $metier->getPrenom(),
 			'email' => $metier->getEmail(),
-			'activite' => $activite->getActivite(),
-			'adeli' => $adeli->getAdeli(),
-			'motDePasse' => $motDePasse->getMotDePasse(),
-			'idAdresse' => $idAdresse->getIdAdresse(),
+			'activite' => $metier->getActivite(),
+			'adeli' => $metier->getAdeli(),
+			'motDePasse' => $metier->getMotDePasse(),
+			'idAdresse' => $metier->getIdAdresse(),
 			
 		];
 	}
@@ -70,7 +70,7 @@ class PraticienDAO extends Database {
 		if($idPraticien>0)$row = $this->getOne($idPraticien); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
+			die( __CLASS__ . "->read() : l'index fourni (<b>$idPraticien</b>) est invalide !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
@@ -122,7 +122,7 @@ class PraticienDAO extends Database {
 	*/
 	public function getLineFrom(string $email): \stdClass {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$email]);
+		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
 	}
 	
 	/**

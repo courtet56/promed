@@ -143,5 +143,11 @@ class PatientDAO extends Database {
 	public function getPrimaryKey(): string {
 		return $this->primaryKey;
 	}
+
+	public function getRdvByPatient(Patient $patient) {
+		$idPatient = $patient->getIdPatient();
+		$today = date("Y-m-d");
+		return $this->sendSQL("SELECT * FROM RendezVous WHERE idPatient = ? AND dateRdv > ?", [$idPatient, $today]);
+	}
 	
 }
