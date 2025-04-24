@@ -5,7 +5,7 @@ use app\util\Error;
 use modele\DAO\AdresseDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : Tuteur
+ * MODELE : Objet métier : Direct Object (DO) : adresse
  * 
 
  */

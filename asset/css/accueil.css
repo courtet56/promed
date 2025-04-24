@@ -7,33 +7,18 @@
 }
 
 .avatar img {
-<<<<<<< HEAD
   height: 100px;
   width: 100px;
   object-fit: cover;
   background: #F4F4F7;
   border-radius: 100% !important;
-=======
-  height: 285px;
-  width: 267px;
-  object-fit: cover;
-  background: #F4F4F7;
-  transform: scale(0.5);
-  /* border-radius: 100% !important; */
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
   border: 2px solid #a8b9de;
 }
 
 .avatar-title {
-<<<<<<< HEAD
   padding:2px 6px 2px 6px;
   color:#07143F;
   background:#FFF8DF;
-=======
-  padding: 2px 6px 2px 6px;
-  color: #07143F;
-  background: #FFF8DF;
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
   border-radius: 5px;
   border: 1px solid #94A9F3;
 }
@@ -47,8 +32,117 @@
 .txt-bloc {
   margin: auto;
   display: inline-block;
-<<<<<<< HEAD
+
 }
-=======
+
+header {
+  height: 164px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
+
+.navbar-brand {
+  align-content: center;
+}
+
+#main-logo {
+  height: 70%;
+  padding: auto;
+}
+
+#loginButton {
+  background-color: #B3D155;
+}
+
+#loginButton:hover {
+  background-color: #8fa846;
+}
+
+#signupButton {
+  background-color: #5CB75A;
+}
+
+#signupButton:hover {
+  background-color: #418340;
+}
+
+.btn {
+  font-size: 2rem;
+  font-family: 'Jersey 25', sans-serif;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+}
+
+a:hover {
+  color: black;
+}
+
+transition style {
+  color: black;
+}
+
+.form-control, .form-control:focus {
+  background-color: #D9D9D9;
+  font-family: 'Jersey 25', sans-serif;
+  font-size: 1.5rem;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.radioDiv {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: 'Jersey 25', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.form-check-input:checked {
+  background-color: #2f56b1;
+  border-color: #2f56b1;
+}
+
+.form-check-input:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+}
+
+@media screen and (max-width: 768px) {
+  body {
+      font-size: 14px; /* ou même 12px si besoin */
+  }
+
+  h1 {
+      font-size: 2.5rem;
+  }
+
+  h2, h3 {
+      font-size: 1.5rem;
+  }
+
+  table td, table th {
+      font-size: 12px;
+  }
+
+  .btn {
+      padding: 6px 10px;
+  }
+
+.radioDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+#main-logo {
+  height: 60%;
+  padding: auto;
+}
+}
+
+

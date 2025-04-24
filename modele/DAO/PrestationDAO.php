@@ -60,9 +60,9 @@ class PrestationDAO extends Database {
 	*	@param integer Numéro de la clé primaire
 	*	@return mixed object|string|bool
 	*/
-	public function read(int $idPresta=0): mixed {
+	public function read(int $id=0): mixed {
 		$row = false;
-		if($idPresta>0)$row = $this->getOne($idPresta); //on récupère la ligne/tuple concernée
+		if($id>0)$row = $this->getOne($id); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
 			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
@@ -70,7 +70,7 @@ class PrestationDAO extends Database {
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Prestation(...$rowData); //crée l'objet Prestation(->Prestation.php) avec toutes les clés du tableau $rowData
-		$metier->setIdPresta($idPresta); //ajoute $id dans l'objet métier (Prestation)
+		$metier->setId($id); //ajoute $id dans l'objet métier (Prestation)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -110,7 +110,7 @@ class PrestationDAO extends Database {
 	* 	@param string $libelle Prénom de l'utilisateur
 	* 	@return object
 	*/
-	public function getLibelle(string $libelle): \stdClass {
+	public function getLibelle(string $libelle) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE libelle = ?", [$libelle]);
 	}

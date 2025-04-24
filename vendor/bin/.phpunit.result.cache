@@ -1,0 +1,1 @@
+{"version":1,"defects":{"PayeTest::testCreationPaye":8,"tests\\PayeTest::testCreationPaye":8,"tests\\PayeTest::testErrorClassExists":8},"times":{"PayeTest::testCreationPaye":0.03,"tests\\PayeTest::testCreationPaye":0.018,"tests\\PayeTest::testErrorClassExists":0.001}}

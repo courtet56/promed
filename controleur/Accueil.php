@@ -7,7 +7,7 @@ use modele\DAO\PatientDAO as Model;
 use app\util\Request as req;
 use vue\base\MainTemplate as Vue;
 
-class Accueil { // classe test baptiste
+class Accueil {
 
 	public function __construct() {
 
@@ -51,8 +51,10 @@ class Accueil { // classe test baptiste
 		 */
 		// $data = $db->getUsersByName('Bob'); // retourne un array
 
+		// $data = $db->getLineFrom('Emmanuel'); // retourne un objet
+
 		$allData = $db->getAll();
-		$table = $db->getTableName();
+		//$table = $db->getTableName();
 
 		/**
 		 *	Fonction debug() accessible partout (app/functions.php)
@@ -73,7 +75,6 @@ class Accueil { // classe test baptiste
 		//if(!isset($_SESSION['user'])) { 
 		//	$_SESSION['user'] = (array)$data; //conversion objet --> array
 		//}
-		
 		/**
 		 *	-------------
 		 *	    POST
@@ -113,6 +114,7 @@ class Accueil { // classe test baptiste
 			'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
 		]);
 
+
 		/**
 		 *	VUE : Méthode test() :
 		 *	Affiche les chemins utilisés pour la vue et arrête l'application
@@ -129,16 +131,7 @@ class Accueil { // classe test baptiste
 		 *	4/ Option (non implémentée ici) : n’inclus pas le header et le footer
 		 */
 
-			'test' => $test,
-			'param' => [
-				'a' => 1,
-				'b' => 2,
-				'c' => 3
-			],
-			// 'data' => $_SESSION[''],
-			'allData' => $allData,
-			'table' => $table,
-		]);
+		Vue::render('Accueil');
 
 	}
 }

@@ -15,15 +15,14 @@ use modele\DAO\PrestationDAO;
 
 class Prestation {
 
-	private int $idPresta=0; //La clé primaire est identifiée par $id
+	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
-	//Constructeur : User
+	//Constructeur : Prestation
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
 		private string $libelle='',
-		
 	) {
 
 		//Gestionnaire d'erreur (pour les requêtes) :
@@ -41,7 +40,7 @@ class Prestation {
 	 */		
 	
 	// CREATE
-	public function addLibelle(): bool {
+	public function addPrestation(): bool {
 		$prestationDAO = new PrestationDAO();
 		return $prestationDAO->create($this);
 	}
@@ -50,13 +49,20 @@ class Prestation {
 	 * Getters
 	 */
 	
-	public function getIdPresta(): int {
-		return $this->idPresta;
+	public function getId(): int {
+		return $this->id;
 	}
 	
 	public function getLibelle(): string {
 		return $this->libelle;
 	}
 	
+	public function setId($id): void {
+		$this->id = $id;
+	}
+	
+	public function setLibelle($libelle): void {
+		$this->libelle = $libelle;
+	}
 
 }

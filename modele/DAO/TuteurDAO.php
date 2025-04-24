@@ -119,7 +119,7 @@ class TuteurDAO extends Database
 	* 	@param string $name Prénom du tuteur
 	* 	@return object
 	*/
-	public function getLineFrom(string $name): \stdClass {
+	public function getLineFrom(string $name) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$name]);
 	}

@@ -5,12 +5,10 @@ use app\util\Error;
 use modele\DAO\TypePaiementDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : Patient
+ * MODELE : Objet métier : Direct Object (DO) : TypePaiement
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DAO/PatientDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "Pyatient".
- * Logique métier à implémenter, par exemple : 
- * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
+ * -> modele/DAO/TypePaiementDAO.php (hérités de : modele/DAO/base/Database.php)
+ * Accesseurs / mutateurs de la table : "TypePaiement".
  */
 
 class TypePaiement {

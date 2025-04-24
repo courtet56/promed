@@ -19,7 +19,7 @@ class Patient {
 	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
-	//Constructeur : User
+	//Constructeur : Patient
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 

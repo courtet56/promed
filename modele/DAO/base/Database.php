@@ -46,7 +46,7 @@ class Database implements IDatabase {
      * @param string $primaryKey Clé primaire de la table
 
      */
-    public function __construct(string $tableName, string $primaryKey = 'id') {
+    public function __construct(string $tableName, string|array $primaryKey = 'id') {
         $this->tableName = $tableName;
         $this->primaryKey = $primaryKey;
     }
@@ -73,7 +73,8 @@ class Database implements IDatabase {
     public function sendSQL(string $cmd, array $filter): array|null|bool {
         $stmt = $this->getPdo()->prepare($cmd);
         $stmt->execute($filter);
-        return $stmt->fetch(PDO::FETCH_ASSOC); //FETCH_ASSOC : array
+        //$stmt->debugDumpParams();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); //FETCH_ASSOC : array
     }
 
     /**
@@ -91,8 +92,18 @@ class Database implements IDatabase {
      * @param string $id
      * @return \stdClass|null
      */
-    public function getOne(string $id): \stdClass|bool {
-        $stmt = self::getPdo()->prepare("SELECT * FROM {$this->tableName} WHERE {$this->primaryKey} = ? LIMIT 1");
+    public function getOne(string|array $id): \stdClass|bool {
+        $sql = "SELECT * FROM {$this->tableName} WHERE 1=1 ";
+        if(is_array($this->primaryKey)) {
+            foreach($this->primaryKey as $curPkey) {
+                $sql .= "AND {$curPkey} = ? ";
+            }
+            $sql .= "LIMIT 1";
+            $stmt = self::getPdo()->prepare($sql);
+        } else {
+            $sql .= "AND {$this->primaryKey} = ? LIMIT 1";
+            $stmt = self::getPdo()->prepare($sql);
+        }
         $stmt->execute([$id]);
 		try {
 			return $stmt->fetch(PDO::FETCH_OBJ);
@@ -157,10 +168,18 @@ class Database implements IDatabase {
             $query .= $columnName . " = :$columnName, ";
         }
         $query = rtrim($query, ", ");
-
-        $query .= " WHERE {$this->primaryKey} = :id";
+        $values = [];
+        if(is_array($id) && !empty($id)) {
+            foreach($id as $key => $value) {
+                $query .= " WHERE {$key} = :id";
+                $values[$key] = $value;
+            }
+        } else {
+            $query .= " WHERE {$this->primaryKey} = :id";
+        }
+        
         $stmt = self::getPdo()->prepare($query);
-        return $stmt->execute(array_merge(["id" => $id], $data));
+        return $stmt->execute(array_merge($values, $data));
     }
 	
     /**
@@ -169,7 +188,7 @@ class Database implements IDatabase {
      * @param $disableConstraintKey
      * @return bool
      */
-    public function deleteOne(string $id, bool $disableConstraintKey=false): bool {
+    public function deleteOne(string $id, bool $disableConstraintKey=false): bool { // à modifier
 		$sql = "DELETE FROM {$this->tableName} WHERE {$this->primaryKey} = ? LIMIT 1;";
 		
 		//On désactive temporairement les "key constraint" et on réactive au besoin :

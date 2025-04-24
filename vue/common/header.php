@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<?= ASSET ?>/css/popup.css">
     <link rel="stylesheet" href="<?= ASSET ?>/css/main.css">
     <?= $customCSS ?>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="<?= ASSET ?>/js/popup.js" defer></script>
     <script src="<?= ASSET ?>/js/main.js" defer></script>
     <script src="<?= ASSET ?>/js/<?= $_SESSION['CUSTOM_JS'] ?>" defer></script>
@@ -23,14 +24,18 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+    <div class="wrapper">
+    <header>
+        <!-- <div class="container-fluid"> -->
             <a class="navbar-brand" href="<?= $actual_link ?>">
-                <div class="app-logo"><?= MAIN_TITLE ?></div>
+                <img src="<?=ASSET?>/img/promed.jpg" id="main-logo">
             </a>
-            <ul class="nav nav-pills">
+            <!-- <ul class="nav nav-pills">
                 <li class="nav-item"><a href="admin/test" class="nav-link">Mon compte</a></li>';
                 <li class="nav-item"><a href="about?app=10" class="nav-link">À propos</a></li>
-            </ul>
-        </div>
-    </nav>
+            </ul> -->
+        <!-- </div> -->
+    </header>
+    <!-- <nav class="header">
+        
+    </nav> -->
