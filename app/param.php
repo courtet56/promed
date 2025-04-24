@@ -24,7 +24,7 @@ const MAIN_TITLE = 'MediConcept';
 const DEBUG_DUMP = false; 
 
 //Affiche les informations de débogage sur les requêtes AJAX :
-const AJAX_DEBUG = false; //true -> le navigateur à recharger
+const AJAX_DEBUG = true; //true -> le navigateur à recharger
 
 //Nom du répertoire des fichiers statiques (images, js, css) :
 const ASSET = 'asset';

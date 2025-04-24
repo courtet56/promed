@@ -5,13 +5,13 @@ use app\util\Error;
 use modele\DAO\AdresseDAO;
 
 /**
- * MODELE : Objet métier : Direct Object (DO) : Adresse
+ * MODELE : Objet métier : Direct Object (DO) : adresse
  * 
 
  */
 
  class Adresse {
-    private int $idAdresse=0; //La clé primaire est identifiée par $idAdresse
+    private int $id=0; //La clé primaire est identifiée par $id
     // les autres paramètres sont ci-dessous, dans le constructeur...
 
     //Constructeur : Adresse
@@ -44,8 +44,8 @@ use modele\DAO\AdresseDAO;
     /**
      * Getters
      */
-    public function getIdAdresse(): int {
-        return $this->idAdresse;
+    public function getId(): int {
+        return $this->id;
     }
     public function getNumero(): string {
         return $this->numero;
@@ -65,8 +65,8 @@ use modele\DAO\AdresseDAO;
     /**
      * Setters
      */
-    public function setIdAdresse(int $idAdresse): void {
-        $this->idAdresse = $idAdresse;
+    public function setId(int $id): void {
+        $this->id = $id;
     }
     public function setNumero(string $numero): void {
         $this->numero = $numero;
@@ -82,6 +82,10 @@ use modele\DAO\AdresseDAO;
     }
     public function setPays(string $pays): void {
         $this->pays = $pays;
+    }
+
+    public function __toString() {
+        return "Adresse: {$this->numero}, {$this->rue}, {$this->codePostal}, {$this->ville}, {$this->pays}";
     }
 }   
  

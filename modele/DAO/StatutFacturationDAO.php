@@ -3,16 +3,16 @@
 namespace modele\DAO;
 
 use modele\DAO\base\Database;
-use modele\Prestation;
+use modele\StatutFacturation;
 use PDO;
 
 /** 
-*	PrestationDAO
-*	Implémente l'ensemble des traitements en données pour les utilisateurs.
-*	Associé à la logique métier de la classe Prestation (modele/Prestation.php).
+*	Patient DAO
+*	Implémente l'ensemble des traitements en données pour le statut facturation.
+*	Associé à la logique métier de la classe StatutFacturation (modele/StatutFacturation.php).
 */
 
-class PrestationDAO extends Database {
+class StatutFacturationDAO extends Database {
 
 	/** 
 	*	Deux paramètres pour le constructeur du DAO :
@@ -23,22 +23,20 @@ class PrestationDAO extends Database {
 
 	public function __construct() {
 		//-------------------------------------------
-		$tableName = 'Prestation';
-		$primaryKey = 'idPresta';
+		$tableName = 'StatutFacturation';
+		$primaryKey = 'idStatutFact';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
 	
 	/** 
-	*	Besoins en données issues du métier Prestation (modele/Prestation.php)
-	*	@param object:metier Instance de l'objet métier
+	*	Besoins en données issues du métier StatutFacturation (modele/StatutFacturation.php)
+	*	@param object:metier Instance de l'objet metier
 	*	@return array
 	*/
-	private function getAllData($metier): array {
+	private function getAllData(StatutFacturation $metier): array {
 		return [
 			'libelle' => $metier->getLibelle(),
-			
-			
 		];
 	}
 
@@ -47,11 +45,11 @@ class PrestationDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function create($metier): bool {
+	public function create(StatutFacturation $metier): bool {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setId( $this->getLastKey() );
+		$metier->setIdStatutFacturation( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -60,17 +58,22 @@ class PrestationDAO extends Database {
 	*	@param integer Numéro de la clé primaire
 	*	@return mixed object|string|bool
 	*/
-	public function read(int $id=0): mixed {
+	public function read(int $idStatutFacturation = 0): mixed {
 		$row = false;
-		if($id>0)$row = $this->getOne($id); //on récupère la ligne/tuple concernée
+		if($idStatutFacturation > 0)$row = $this->getOne($idStatutFacturation); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
+			die( __CLASS__ . "->read() : l'index fourni (<b>$idStatutFacturation</b>) est invalide !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
-		$metier = new Prestation(...$rowData); //crée l'objet Prestation(->Prestation.php) avec toutes les clés du tableau $rowData
-		$metier->setId($id); //ajoute $id dans l'objet métier (Prestation)
+    	// Vérification des valeurs NULL et application de valeurs par défaut
+		foreach ($rowData as $key => $value) {
+			$rowData[$key] = $value ?? ''; // Remplace NULL par ''
+		}
+    	
+		$metier = new StatutFacturation(...$rowData); //crée l'objet User(->User.php) avec toutes les clés du tableau $rowData
+		$metier->setIdStatutFacturation($idStatutFacturation); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -79,10 +82,10 @@ class PrestationDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function update($metier): bool {
+	public function update(StatutFacturation $metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getIdPresta(), $data);
+		return $this->updateOne($metier->getIdStatutFacturation(), $data);
 	}
 	
 	/** 
@@ -90,31 +93,23 @@ class PrestationDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function delete($metier): bool {
+	public function delete(StatutFacturation $metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getIdPresta() );
+		return $this->deleteOne( $metier->getIdStatutFacturation() );
 	}
-
-	/**
-	*	Méthode permettant l'accès aux données filtrées pour une recherche du prénom ou du nom, 
-	*	avec une requête préparée.
-	* 	@param string $libelle Nom ou prénom de l'utilisateur
-	* 	@return array
-	*/
-	
 
 	/**
 	*	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
-	*	Le filtre (ici $libelle) est obligatoirement un tableau !
-	* 	@param string $libelle Prénom de l'utilisateur
-	* 	@return object
+	*	Le filtre (ici $name) est obligatoirement un tableau !
+	* 	@param string $name Prénom de l'utilisateur
+	* 	@return array
 	*/
-	public function getLibelle(string $libelle) {
+	public function getStatutFacturationById(int $idStatutFacturation): array {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE libelle = ?", [$libelle]);
+		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE " . $this->primaryKey . " = ?", [$idStatutFacturation]);
 	}
-	
+		
 	/**
 	* Utils infos
 	*/

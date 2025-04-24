@@ -76,7 +76,7 @@ use PDO;
     public function update($metier): bool {
         $data = $this->getAllData($metier);
         //updateOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
-        $bool = $this->updateOne($data, $metier->getIdStatutRdv());
+        $bool = $this->updateOne($metier->getIdStatutRdv(),$data );
         return $bool;
     }
     /**

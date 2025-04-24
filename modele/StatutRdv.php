@@ -6,7 +6,7 @@ use app\util\Error;
 use modele\DAO\StatutRdvDAO;
 
 class StatutRdv {
-    private int $idStatutRdv=0; //La clé primaire est identifiée par $idStatutRdv
+    private int $id=0; //La clé primaire est identifiée par $idStatutRdv
     // les autres paramètres sont ci-dessous, dans le constructeur...
 
     //Constructeur : StatutRdv
@@ -37,7 +37,7 @@ class StatutRdv {
      * Getters
      */
     public function getIdStatutRdv(): int {
-        return $this->idStatutRdv;
+        return $this->id;
     }
     public function getLibelle(): string {
         return $this->libelle;
@@ -46,7 +46,7 @@ class StatutRdv {
      * Setters
      */
     public function setIdStatutRdv(int $idStatutRdv): void {
-        $this->idStatutRdv = $idStatutRdv;
+        $this->id = $idStatutRdv;
     }
     public function setLibelle(string $libelle): void {
         $this->libelle = $libelle;

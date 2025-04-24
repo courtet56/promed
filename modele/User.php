@@ -2,35 +2,34 @@
 
 namespace modele;
 use app\util\Error;
-use modele\DAO\PraticienDAO;
+use modele\DAO\UserDAO;
 
 /**
  * MODELE : Objet métier : Direct Object (DO) : User
  * Encapsulation, manipulation et récupération des données issues du DAO :
- * -> modele/DPraticien.php (hérités de : modele/DAO/base/Database.php)
+ * -> modele/DAO/UserDAO.php (hérités de : modele/DAO/base/Database.php)
  * Accesseurs / mutateurs de la table : "clients".
  * Logique métier à implémenter, par exemple : 
  * calculer l'âge à partir de la date de naissance dans une méthode getAge() ...
  */
 
-class Praticien {
+class User {
 
 	private int $id=0; //La clé primaire est identifiée par $id
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
-	//Constructeur : Praticien
+	//Constructeur : User
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
 		private string $nom='',
 		private string $prenom='',
 		private string $email='',
-		private string $activite='',
-		private string $adeli='',
-		private string $motDePasse='',
-		private int $idAdresse=0,
-        
-		) {
+		private string $ne_le='',
+		private string $ville='',
+		private string $enfants='',
+		private string $tel='',
+		private string $avatar='') {
 
 		//Gestionnaire d'erreur (pour les requêtes) :
 		try {
@@ -44,30 +43,12 @@ class Praticien {
 	
 	/**
 	 * Methods
-	 */
-	
-	 
-		
-
-
-			//TODO
-		// récuperation de la date d'aujourd'hui
-	
-
-		// récupération de la liste des patients d'aujourd'hui
-		
-		// récuperation de la date d'aujourdh'hui
-		
-
-		
-
-
-	 
+	 */		
 	
 	// CREATE
-	public function addPraticien(): bool {
-		$praticienDAO = new PraticienDAO();
-		return $praticienDAO->create($this);
+	public function addUser(): bool {
+		$userDAO = new UserDAO();
+		return $userDAO->create($this);
 	}
 
 	// Vérification de l'email
@@ -94,29 +75,32 @@ class Praticien {
 	public function getEmail(): string {
 		return $this->email;
 	}
-	public function getActivite(): string {
-		return $this->activite;
-	}
-	public function getAdeli(): string {
-		return $this->adeli;
-	}
-	public function getMotDePasse(): string {
-		return $this->motDePasse;
-	}
-	public function getIdAdresse(): string {
-		return $this->idAdresse;
+	
+	public function getDateNaissance(): string {
+		return $this->ne_le;
 	}
 	
+	public function getVille(): string {
+		return $this->ville;
+	}
 	
+	public function getEnfants(): string {
+		return $this->enfants;
+	}
 	
+	public function getTel(): string {
+		return $this->tel;
+	}
 	
-	
+	public function getAvatar(): string {
+		return $this->avatar;
+	}
 	
 	/**
 	 * Setters
 	 */
 	
-	public function setIdPraticien($id): void {
+	public function setId($id): void {
 		$this->id = $id;
 	}
 	
@@ -132,21 +116,24 @@ class Praticien {
 		$this->email = $email;
 	}
 	
-	public function setActivite($activite): void {
-		$this->activite = $activite;
+	public function setDateNaissance($ne_le): void {
+		$this->ne_le = $ne_le;
 	}
 	
-	public function setAdeli($adeli): void {
-		$this->adeli = $adeli;
+	public function setVille($ville): void {
+		$this->ville = $ville;
 	}
 	
-	public function setMotDePasse($motDePasse): void {
-		$this->motDePasse = $motDePasse;
-	}
-	public function setIdAdresse($idAdresse): void {
-		$this->idAdresse = $idAdresse;
+	public function setEnfants($enfants): void {
+		$this->enfants = $enfants;
 	}
 	
+	public function setTel($tel): void {
+		$this->tel = $tel;
+	}
 
-	
+	public function setAvatar($avatar): void {
+		$this->avatar = $avatar;
+	}
+
 }

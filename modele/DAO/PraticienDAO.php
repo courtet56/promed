@@ -24,7 +24,7 @@ class PraticienDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Praticien';
-		$primaryKey = 'idPraticien';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -45,6 +45,33 @@ class PraticienDAO extends Database {
 			'idAdresse' => $metier->getIdAdresse(),
 			
 		];
+	}
+	public function getAgendaPraticien($email): array{
+
+		
+		$stmt=$this ->getPdo()-> prepare('SELECT
+	
+   		Patient.nom AS nomPatient,
+		Patient.prenom AS prenomPatient,
+    	prestation.libelle AS libellePrestation,
+    	RendezVous.heureRdv AS heureRdv,
+		StatutRdv.libelle AS libelleStatutRdv
+		FROM
+    	RendezVous
+		INNER JOIN Prestation ON RendezVous.idPresta = prestation.idPresta
+		INNER JOIN Patient ON Patient.idPatient = RendezVous.idPatient
+		INNER JOIN Praticien ON Praticien.idPraticien = RendezVous.idPraticien
+		INNER JOIN StatutRdv ON StatutRdv.idStatutRdv = RendezVous.idStatutRdv
+		where dateRdv = CURDATE() AND Praticien.email = ?;
+
+	');
+	
+	$stmt->execute([$email]);
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	return $result;
+
+
+
 	}
 
 	/** 
@@ -75,7 +102,7 @@ class PraticienDAO extends Database {
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Praticien(...$rowData); //crée l'objet Praticien(->Praticien.php) avec toutes les clés du tableau $rowData
-		$metier->setId($idPraticien); //ajoute $id dans l'objet métier (User)
+		$metier->setIdPraticien($idPraticien); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -109,7 +136,7 @@ class PraticienDAO extends Database {
 	*/
 	public function getPraticienByEmail(string $email): mixed {
 		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE email=  :email");
-		$stmt->execute([':email' => "%$email%"]);
+		$stmt->execute([':email' => $email]);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
@@ -120,7 +147,7 @@ class PraticienDAO extends Database {
 	* 	@param string $email Prénom de l'utilisateur
 	* 	@return object
 	*/
-	public function getLineFrom(string $email): \stdClass {
+	public function getLineFrom(string $email) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
 	}

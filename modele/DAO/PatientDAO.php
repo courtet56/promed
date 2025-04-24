@@ -72,7 +72,7 @@ class PatientDAO extends Database {
 	*	@return mixed object|string|bool
 	*/
 
-	public function read(int $idPatient = 0) {
+	public function read(int $idPatient = 0): mixed {
 		$row = false;
 		if($idPatient > 0)$row = $this->getOne($idPatient); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
@@ -91,6 +91,8 @@ class PatientDAO extends Database {
 
 		$metier = new Patient(...$rowData); //crée l'objet User(->User.php) avec toutes les clés du tableau $rowData
 		$metier->setIdPatient($idPatient); //ajoute $id dans l'objet métier (User)		return $metier; //retourne l'objet crée
+
+		return $metier; //retourne l'objet crée
 	}
 	
 	/** 
@@ -121,12 +123,13 @@ class PatientDAO extends Database {
 	/**
 	*	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
-	*	Le filtre (ici $name) est obligatoirement un tableau !
+  
+	*	Le filtre (ici $email) est obligatoirement un tableau !
 
 	* 	@param string $email Email de l'utilisateur
 	* 	@return array
 	*/
-	public function getPatientByEmail(string $email): array|null {
+	public function getPatientByEmail(string $email): array|bool {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
 

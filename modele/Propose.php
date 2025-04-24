@@ -72,7 +72,7 @@ class Propose {
 	}
 	
 	public function setIdPraticien($idPraticien): void {
-		$this->idPraticien = $idPraticien;
+		$this->idPresta = $idPraticien;
 	}
 	
 	public function setDuree($duree): void {

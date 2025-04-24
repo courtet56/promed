@@ -3,16 +3,16 @@
 namespace modele\DAO;
 
 use modele\DAO\base\Database;
-use modele\Prestation;
+use modele\User;
 use PDO;
 
 /** 
-*	PrestationDAO
+*	User DAO
 *	Implémente l'ensemble des traitements en données pour les utilisateurs.
-*	Associé à la logique métier de la classe Prestation (modele/Prestation.php).
+*	Associé à la logique métier de la classe User (modele/User.php).
 */
 
-class PrestationDAO extends Database {
+class UserDAO extends Database {
 
 	/** 
 	*	Deux paramètres pour le constructeur du DAO :
@@ -23,22 +23,27 @@ class PrestationDAO extends Database {
 
 	public function __construct() {
 		//-------------------------------------------
-		$tableName = 'Prestation';
-		$primaryKey = 'idPresta';
+		$tableName = 'clients';
+		$primaryKey = 'id_client';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
 	
 	/** 
-	*	Besoins en données issues du métier Prestation (modele/Prestation.php)
+	*	Besoins en données issues du métier User (modele/User.php)
 	*	@param object:metier Instance de l'objet métier
 	*	@return array
 	*/
 	private function getAllData($metier): array {
 		return [
-			'libelle' => $metier->getLibelle(),
-			
-			
+			'nom' => $metier->getNom(),
+			'prenom' => $metier->getPrenom(),
+			'email' => $metier->getEmail(),
+			'ne_le' => $metier->getDateNaissance(),
+			'ville' => $metier->getVille(),
+			'enfants' => $metier->getEnfants(),
+			'tel' => $metier->getTel(),
+			'avatar' => $metier->getAvatar(),
 		];
 	}
 
@@ -69,8 +74,8 @@ class PrestationDAO extends Database {
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
-		$metier = new Prestation(...$rowData); //crée l'objet Prestation(->Prestation.php) avec toutes les clés du tableau $rowData
-		$metier->setId($id); //ajoute $id dans l'objet métier (Prestation)
+		$metier = new User(...$rowData); //crée l'objet User(->User.php) avec toutes les clés du tableau $rowData
+		$metier->setId($id); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -82,7 +87,7 @@ class PrestationDAO extends Database {
 	public function update($metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getIdPresta(), $data);
+		return $this->updateOne($metier->getId(), $data);
 	}
 	
 	/** 
@@ -92,27 +97,31 @@ class PrestationDAO extends Database {
 	*/
 	public function delete($metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getIdPresta() );
+		return $this->deleteOne( $metier->getId() );
 	}
 
 	/**
 	*	Méthode permettant l'accès aux données filtrées pour une recherche du prénom ou du nom, 
 	*	avec une requête préparée.
-	* 	@param string $libelle Nom ou prénom de l'utilisateur
+	* 	@param string $name Nom ou prénom de l'utilisateur
 	* 	@return array
 	*/
-	
+	public function getUsersByName(string $name): mixed {
+		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE prenom LIKE :sname OR nom LIKE :name");
+		$stmt->execute([':sname' => "%$name%", ':name' => "%$name%"]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
 
 	/**
 	*	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
-	*	Le filtre (ici $libelle) est obligatoirement un tableau !
-	* 	@param string $libelle Prénom de l'utilisateur
+	*	Le filtre (ici $name) est obligatoirement un tableau !
+	* 	@param string $name Prénom de l'utilisateur
 	* 	@return object
 	*/
-	public function getLibelle(string $libelle) {
+	public function getLineFrom(string $name): \stdClass {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE libelle = ?", [$libelle]);
+		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$name]);
 	}
 	
 	/**

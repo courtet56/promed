@@ -54,7 +54,7 @@ class Accueil {
 		// $data = $db->getLineFrom('Emmanuel'); // retourne un objet
 
 		$allData = $db->getAll();
-		$table = $db->getTableName();
+		//$table = $db->getTableName();
 
 		/**
 		 *	Fonction debug() accessible partout (app/functions.php)
@@ -75,7 +75,6 @@ class Accueil {
 		//if(!isset($_SESSION['user'])) { 
 		//	$_SESSION['user'] = (array)$data; //conversion objet --> array
 		//}
-
 		/**
 		 *	-------------
 		 *	    POST

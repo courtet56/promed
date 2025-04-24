@@ -40,8 +40,11 @@ class Database implements IDatabase {
     }
 
     /**
-     * @param String $tableName Nom de la table
-     * @param String $primaryKey Clé primaire de la table
+
+
+     * @param string $tableName Nom de la table
+     * @param string $primaryKey Clé primaire de la table
+
      */
     public function __construct(string $tableName, string|array $primaryKey = 'id') {
         $this->tableName = $tableName;
@@ -53,7 +56,10 @@ class Database implements IDatabase {
 	 * @return integer
 	 */
 	public function getLastKey(): int {
-		//return $this->getPdo()->lastInsertId(); //instable, mais possible
+		// Vérifier si $lastId est initialisé
+        if (!isset($this->lastId)) {
+            $this->lastId = 0; // Initialisation par défaut
+        }
 		return $this->lastId;
 	}
 
@@ -61,7 +67,8 @@ class Database implements IDatabase {
      * Lance une requête SQL préparée avec un filtre "prepared statement" en tableau
 	 * @param string $cmd
 	 * @param array $filter
-     * @return \stdClass|null
+
+     * @return array|null
      */
     public function sendSQL(string $cmd, array $filter): array|null|bool {
         $stmt = $this->getPdo()->prepare($cmd);
@@ -82,7 +89,7 @@ class Database implements IDatabase {
 
     /**
      * Permet la récupération d'un enregistrement en base de données
-     * @param String $id
+     * @param string $id
      * @return \stdClass|null
      */
     public function getOne(string|array $id): \stdClass|bool {
@@ -113,7 +120,16 @@ class Database implements IDatabase {
      */
 	public function createOne(array $data = []): bool {
 		$bool=false;
+
+        // Remplacer 0 par NULL dans les données
+        foreach ($data as $key => $value) {
+            if ($value === 0) {
+                $data[$key] = null; // Remplacer la valeur 0 par NULL
+            }
+        }
+
 		$columns = array_keys($data);
+
 		$placeholders = array_fill(0, count($columns), '?');
 
 		$query = "INSERT INTO {$this->tableName} (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $placeholders) . ")";
@@ -138,7 +154,14 @@ class Database implements IDatabase {
      * @param array $data
      * @return bool
      */
-    public function updateOne(string|array $id, array $data = []): bool {
+    public function updateOne(string $id, array $data = []): bool {
+        // Remplacer 0 par NULL dans les données
+        foreach ($data as $key => $value) {
+            if ($value === 0) {
+                $data[$key] = null; // Remplacer la valeur 0 par NULL
+            }
+        }
+        
         $query = "UPDATE {$this->tableName} SET ";
 
         foreach ($data as $columnName => $columnValue) {

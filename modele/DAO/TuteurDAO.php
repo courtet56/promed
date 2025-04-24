@@ -75,7 +75,7 @@ class TuteurDAO extends Database
         $rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Tuteur(...$rowData); //crée l'objet Tuteur(->Tuteur.php) avec toutes les clés du tableau $rowData
-		$metier->setIdTuteur($id); //ajoute $id dans l'objet métier (User)
+		$metier->setIdTuteur($idTuteur); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
     }
 
@@ -119,7 +119,7 @@ class TuteurDAO extends Database
 	* 	@param string $name Prénom du tuteur
 	* 	@return object
 	*/
-	public function getLineFrom(string $name): \stdClass {
+	public function getLineFrom(string $name) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$name]);
 	}

@@ -5,6 +5,7 @@
  */
 
 ?>
+
 <div class="container">
 
 	<div class="spacer"></div>
@@ -22,4 +23,6 @@
 
 	</div>
 
+
+</div>
 </div>
