@@ -44,7 +44,25 @@ class Praticien {
 	
 	/**
 	 * Methods
-	 */		
+	 */
+	
+	 
+		
+
+
+			//TODO
+		// récuperation de la date d'aujourd'hui
+	
+
+		// récupération de la liste des patients d'aujourd'hui
+		
+		// récuperation de la date d'aujourdh'hui
+		
+
+		
+
+
+	 
 	
 	// CREATE
 	public function addPraticien(): bool {
@@ -60,6 +78,8 @@ class Praticien {
 	/**
 	 * Getters
 	 */
+
+	 
 	
 	public function getId(): int {
 		return $this->id;

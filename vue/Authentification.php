@@ -1,10 +1,11 @@
 <?php
-
 /**
  * VUE : AuthentifPatient.php
  */
 
 ?>
+
+
 <div class="container">
 
 	<div class="spacer"></div>
@@ -18,12 +19,19 @@
 			<img id="avatar" class="img-thumbnail" src="<?= $actual_link ?>asset/img/logo-promed.jpg" />
 		</div>
 
-		<h2>Espace patient</h2>
+		<h3><?= $_SESSION['erreur']; ?></h3>
+		<div class="spacer"></div>
 
 		<div style="margin:auto; width:50%">
-			
+				<form method="POST" action="validation">
+					
+					<div>
+    					<input type="radio" id="praticien" name="choixUtilisateur" value="praticien" checked />
+    					<label for="praticien">Praticien</label>
+    					<input type="radio" id="patient" name="choixUtilisateur" value="patient" />
+    					<label for="patient">Patient</label>
+  					</div>
 
-				<form method="POST" action="">
 					<div class="d-flex justify-content-center">
 						<label for="email">E-mail : </label>
 					</div>
@@ -38,7 +46,11 @@
 						<input type="password" name="motDePasse" id="motDePasse" class="form-control" placeholder="mot de passe">
 					</div>
 					<div class="spacer"></div>
-					<button class="btn btn-primary">Tester</button>
+					<label for="captcha">Recopiez le texte de l'image :</label><br>
+    				<img src="<?= $actual_link ?>captcha" alt="captcha"><br>
+    				<input type="text" name="captcha" required>
+					<div class="spacer"></div>
+					<button class="btn btn-primary">Valider</button>
 				</form>
 			  
 		</div>
