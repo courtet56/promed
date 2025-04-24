@@ -42,7 +42,7 @@ Class EspacePatient
                 $prestation = $dbPresta->read($curRdv['idPresta']);
                 $html .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
                         $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
-                        $prestation->getLibelle() . "</td><td><button type='button' class='btn'>Annuler</button></td>\n";
+                        $prestation->getLibelle() . "</td><td><button type='button' class='btn cancelBtn' idRdv='" . $curRdv['idRdv'] . "'>Annuler</button></td>\n";
             }
         }
 

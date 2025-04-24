@@ -16,7 +16,7 @@
 			
 			<div style="margin:auto; width:50%; display: flex; flex-direction:column;">
 			  	<a href="./auth"><button type="button" class="btn" id="loginButton">Connexion</button></a>
-				<a href="#"><button type="button" class="btn" id="signupButton">Inscription</button></a>
+				<a href="./inscription"><button type="button" class="btn" id="signupButton">Inscription</button></a>
 			</div>
 
 		<div class="spacer"></div>

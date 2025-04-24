@@ -33,16 +33,5 @@ class getAgenda
 
 
         ]);
-
-
-
-
-
-
-
-
-
     }
-
-
 }
