@@ -37,6 +37,7 @@ class MainAjax extends Ajax {
 			// - "findUsers" est utilisé dans : vue/ajax/ajaxRechercher.php
 			// - la méthode protégée : "getUserBySearch" est implémentée ci-dessous.
 			'findUsers' => 'getUserBySearch',
+			''
 			// - D'autres lignes ?
 		];
 	}
@@ -87,6 +88,8 @@ class MainAjax extends Ajax {
 		if($user!==false)$_SESSION['user'] = $user;
 		return $user;
 	}
+
+
 	
 	
 }

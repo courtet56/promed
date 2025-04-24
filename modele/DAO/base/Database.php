@@ -45,7 +45,6 @@ class Database implements IDatabase {
      * @param string $tableName Nom de la table
      * @param string $primaryKey Clé primaire de la table
 
-
      */
     public function __construct(string $tableName, string $primaryKey = 'id') {
         $this->tableName = $tableName;
@@ -57,7 +56,10 @@ class Database implements IDatabase {
 	 * @return integer
 	 */
 	public function getLastKey(): int {
-		//return $this->getPdo()->lastInsertId(); //instable, mais possible
+		// Vérifier si $lastId est initialisé
+        if (!isset($this->lastId)) {
+            $this->lastId = 0; // Initialisation par défaut
+        }
 		return $this->lastId;
 	}
 
@@ -65,8 +67,6 @@ class Database implements IDatabase {
      * Lance une requête SQL préparée avec un filtre "prepared statement" en tableau
 	 * @param string $cmd
 	 * @param array $filter
-
-
 
      * @return array|null
      */
@@ -109,6 +109,7 @@ class Database implements IDatabase {
      */
 	public function createOne(array $data = []): bool {
 		$bool=false;
+
         // Remplacer 0 par NULL dans les données
         foreach ($data as $key => $value) {
             if ($value === 0) {
@@ -116,7 +117,7 @@ class Database implements IDatabase {
             }
         }
 
-    	$columns = array_keys($data);
+		$columns = array_keys($data);
 
 		$placeholders = array_fill(0, count($columns), '?');
 
