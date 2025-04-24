@@ -3,7 +3,6 @@
 namespace modele\DAO;
 
 use modele\DAO\base\Database;
-
 use modele\Patient;
 use PDO;
 
@@ -14,7 +13,6 @@ use PDO;
 */
 
 class PatientDAO extends Database {
-
 
 	/** 
 	*	Deux paramètres pour le constructeur du DAO :
@@ -46,7 +44,6 @@ class PatientDAO extends Database {
 			'email' => $metier->getEmail(),
 			'motDePasse' => $metier->getMotDePasse(),
 			'idTuteur' => $metier->getIdTuteur(),
-
 			'idAdresse' => $metier->getIdAdresse(),
 		];
 	}
@@ -56,13 +53,11 @@ class PatientDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-
 	public function create(Patient $metier): bool {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
 		$metier->setIdPatient( $this->getLastKey() );
-
 		return $bool;
 	}
 
@@ -71,7 +66,6 @@ class PatientDAO extends Database {
 	*	@param integer Numéro de la clé primaire
 	*	@return mixed object|string|bool
 	*/
-
 	public function read(int $idPatient = 0): mixed {
 		$row = false;
 		if($idPatient > 0)$row = $this->getOne($idPatient); //on récupère la ligne/tuple concernée
@@ -100,12 +94,10 @@ class PatientDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-
 	public function update(Patient $metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->updateOne($metier->getIdPatient(), $data);
-
 	}
 	
 	/** 
@@ -113,7 +105,6 @@ class PatientDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-
 	public function delete(Patient $metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->deleteOne( $metier->getIdPatient() );
@@ -132,7 +123,6 @@ class PatientDAO extends Database {
 	public function getPatientByEmail(string $email): array|bool {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
-
 	}
 	
 	/**

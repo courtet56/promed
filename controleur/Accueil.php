@@ -51,6 +51,7 @@ class Accueil {
 		 */
 		// $data = $db->getUsersByName('Bob'); // retourne un array
 
+
 		// $data = $db->getLineFrom('Emmanuel'); // retourne un objet
 
 		$allData = $db->getAll();
@@ -75,6 +76,7 @@ class Accueil {
 		//if(!isset($_SESSION['user'])) { 
 		//	$_SESSION['user'] = (array)$data; //conversion objet --> array
 		//}
+
 		/**
 		 *	-------------
 		 *	    POST
@@ -131,7 +133,19 @@ class Accueil {
 		 *	4/ Option (non implémentée ici) : n’inclus pas le header et le footer
 		 */
 
-		Vue::render('Accueil');
+
+		Vue::render('AuthentifPatient', [
+
+			'test' => $test,
+			'param' => [
+				'a' => 1,
+				'b' => 2,
+				'c' => 3
+			],
+			// 'data' => $_SESSION[''],
+			'allData' => $allData,
+			'table' => $table,
+		]);
 
 	}
 }
