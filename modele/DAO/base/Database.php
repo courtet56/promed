@@ -40,13 +40,8 @@ class Database implements IDatabase {
     }
 
     /**
-<<<<<<< HEAD
-     * @param String $tableName Nom de la table
-     * @param String $primaryKey Clé primaire de la table
-=======
      * @param string $tableName Nom de la table
      * @param string $primaryKey Clé primaire de la table
->>>>>>> 582f3bf7c610af686a8ef56488f433f3a8886b10
      */
     public function __construct(string $tableName, string $primaryKey = 'id') {
         $this->tableName = $tableName;
@@ -58,7 +53,10 @@ class Database implements IDatabase {
 	 * @return integer
 	 */
 	public function getLastKey(): int {
-		//return $this->getPdo()->lastInsertId(); //instable, mais possible
+		// Vérifier si $lastId est initialisé
+        if (!isset($this->lastId)) {
+            $this->lastId = 0; // Initialisation par défaut
+        }
 		return $this->lastId;
 	}
 

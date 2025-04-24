@@ -24,7 +24,7 @@ class PraticienDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Praticien';
-		$primaryKey = 'idPraticien';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -39,10 +39,10 @@ class PraticienDAO extends Database {
 			'nom' => $metier->getNom(),
 			'prenom' => $metier->getPrenom(),
 			'email' => $metier->getEmail(),
-			'activite' => $activite->getActivite(),
-			'adeli' => $adeli->getAdeli(),
-			'motDePasse' => $motDePasse->getMotDePasse(),
-			'idAdresse' => $idAdresse->getIdAdresse(),
+			'activite' => $metier->getActivite(),
+			'adeli' => $metier->getAdeli(),
+			'motDePasse' => $metier->getMotDePasse(),
+			'idAdresse' => $metier->getIdAdresse(),
 			
 		];
 	}
@@ -109,7 +109,7 @@ class PraticienDAO extends Database {
 	*/
 	public function getPraticienByEmail(string $email): mixed {
 		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE email=  :email");
-		$stmt->execute([':email' => "%$email%"]);
+		$stmt->execute([':email' => $email]);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 

@@ -14,6 +14,7 @@ function isValidatedForm() {
         form.parentNode.insertBefore(errorContainer, form);
     }
     
+    
     // Vider le conteneur d'erreurs
     errorContainer.innerHTML = '';
     
@@ -148,36 +149,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     (response) => {
                         console.log('Réponse du serveur:', response);
                         
-                        if (response.success) {
-                            // En cas de succès, rediriger vers la page de connexion
+                        if (response) {
+                            alert('Inscription réussie ! Vous allez être redirigé vers la page de connexion.');
+                            // Rediriger vers la page de connexion
                             window.location.href = '/connexion';
                         } else {
                             // En cas d'erreur côté serveur, afficher le message dans le conteneur d'erreurs
                             let errorContainer = document.getElementById('form-errors');
                             if (errorContainer) {
-                                const errorParagraph = document.createElement('p');
-                                errorParagraph.textContent = response || 'Une erreur est survenue lors du traitement de votre demande.';
-                                errorContainer.innerHTML = '';
-                                errorContainer.appendChild(errorParagraph);
-                                errorContainer.style.display = 'block';
+                                // const errorParagraph = document.createElement('p');
+                                // errorParagraph.textContent = response || 'Cette adresse e-mail est déjà utilisée.';
+                                // errorContainer.innerHTML = '';
+                                // errorContainer.appendChild(errorParagraph);
+                                // errorContainer.style.display = 'block';
+
+                                alert('Cette adresse e-mail est déjà utilisée.')
                             }
                         }
                     },
                     // Callback de fin de requête
                     () => {
-                        // Facultatif: Retirer un indicateur de chargement si vous en avez un
-                        // document.getElementById('loading-indicator').style.display = 'none';
                         
-                        // Déverrouiller le bouton de soumission si nécessaire
-                        submitButton.disabled = false;
                     }
                 );
                 
-                // Facultatif: Afficher un indicateur de chargement
-                // document.getElementById('loading-indicator').style.display = 'block';
-                
-                // Facultatif: Verrouiller le bouton pour éviter les soumissions multiples
-                submitButton.disabled = true;
             }
         });
     } else {

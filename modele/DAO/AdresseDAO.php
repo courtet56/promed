@@ -18,7 +18,7 @@ class AdresseDAO extends Database {
     public function __construct() {
 
         $tableName = 'Adresse';
-        $primaryKey = 'idAdresse';
+        $primaryKey = 'id';
 
         parent::__construct($tableName, $primaryKey);
 
@@ -48,8 +48,9 @@ class AdresseDAO extends Database {
 
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
+		var_dump($data);
 		$bool = $this->createOne($data);
-		$metier->setIdAdresse( $this->getLastKey() );
+		$metier->setId( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -59,18 +60,18 @@ class AdresseDAO extends Database {
 	* @return mixed object|string|bool
 	*/
 	
-	public function read(int $idAdresse=0): mixed {
+	public function read(int $id=0): mixed {
 		$row = false;
-		if($idAdresse>0) {
-			$row = $this->getOne($idAdresse); // on récupère la ligne/tuple concernée
+		if($id>0) {
+			$row = $this->getOne($id); // on récupère la ligne/tuple concernée
 		}
 		if(!$row){
-			die(__class__ . "->read() : Erreur : l'index fourni (<b>$idAdresse</b>) est invalide !" );
+			die(__class__ . "->read() : Erreur : l'index fourni (<b>$id</b>) est invalide !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey],$row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Adresse(...$rowData); //crée l'objet Adresse(->Adresse.php) avec toutes les clés du tableau $rowData
-		$metier->setIdAdresse($idAdresse); //ajoute $id dans l'objet métier (Adresse)
+		$metier->setId($id); //ajoute $id dans l'objet métier (Adresse)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -81,7 +82,7 @@ class AdresseDAO extends Database {
 	*/
 	public function update($metier): bool {
 		$data = $this->getAllData($metier);
-		return $this->updateOne($metier->getIdAdresse(),$data);
+		return $this->updateOne($metier->getId(),$data);
 	}
 	
 	/**
@@ -89,8 +90,8 @@ class AdresseDAO extends Database {
 	* @param integer Numéro de la clé primaire
 	* @return bool
 	*/
-	public function delete(int $idAdresse=0): bool {
-		return $this->deleteOne($idAdresse);
+	public function delete(int $id=0): bool {
+		return $this->deleteOne($id);
 	}
 
 	
