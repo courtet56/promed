@@ -5,6 +5,11 @@ namespace controleur;
 use vue\base\Ajax as Ajax;
 use app\util\Request as req;
 use modele\DAO\UserDAO as Model;
+use modele\DAO\PraticienDAO as PraticienDAO;
+use modele\DAO\AdresseDAO as AdresseDAO;
+use modele\Adresse as Adresse;
+use modele\Praticien as Praticien;
+
 
 /**
  *	Classe chargée depuis le routing : route/routing.php
@@ -37,7 +42,7 @@ class MainAjax extends Ajax {
 			// - "findUsers" est utilisé dans : vue/ajax/ajaxRechercher.php
 			// - la méthode protégée : "getUserBySearch" est implémentée ci-dessous.
 			'findUsers' => 'getUserBySearch',
-			''
+			'newPraticien' => 'inscriptionPraticien',
 			// - D'autres lignes ?
 		];
 	}
@@ -79,17 +84,111 @@ class MainAjax extends Ajax {
 	 * ==> voir au-dessus le tableau dans la fonction ajaxRoute().
 	 * @return mixed Retourne le nom ou le prénom recherché, ou false
 	 */
-	protected function getUserBySearch(): mixed {
-		// attention $_POST n'est pas sécurisé !
-		// $nom = $_POST['name'] ?? ''; //??=opérateur nullable, équivalent à isset
-		$nom = req::post('name'); //$_POST sécurisé avec la méthode Request (app/util/Request.php)
-		$user = $this->db->getUsersByName($nom);
-		if (empty($nom)) $user = false;
-		if($user!==false)$_SESSION['user'] = $user;
-		return $user;
+	
+	
+
+	protected function inscriptionPraticien () {
+
+		$nom = trim(req::post('nom'));
+        $prenom = trim(req::post('prenom'));
+        $email = trim(req::post('email'));
+        $adeli = trim(req::post('adeli'));
+        $activite = trim(req::post('activite'));
+        $numero = trim(req::post('numero'));
+        $rue = trim(req::post('rue'));
+        $codePostal = trim(req::post('codePostal'));
+        $ville = trim(req::post('ville'));
+        $pays = trim(req::post('pays'));
+        $motDePasse = password_hash(trim(req::post('motDePasse')), PASSWORD_DEFAULT);
+		$captcha = trim(req::post('captcha'));
+
+
+		$validateForm = $this->validateForm($nom, $prenom, $email, $adeli, $activite, $numero, $rue, $codePostal, $ville, $pays, $motDePasse, $captcha);
+
+		if($validateForm !== true){
+			return $validateForm;
+		}
+		
+		$praticienDAO = new PraticienDAO();
+		$adresseDAO = new AdresseDAO();
+	
+
+		if(!empty($_POST)){
+       
+			$existingPraticien = $praticienDAO->getPraticienByEmail($email);
+
+			   if(!empty($existingPraticien)){
+				   // TODO retourner message d'erreur : email déjà utilisé
+				   return "email déjà utilisé !";
+			   } else {
+				   $adresse = new Adresse($numero, $rue, $codePostal, $ville, $pays);
+				   if($adresseDAO->create($adresse)){
+					   $idAdresse = $adresseDAO->getLastKey();
+					   if($idAdresse >0){
+						   $praticien = new Praticien($nom, $prenom, $email, $activite, $adeli, $motDePasse, $idAdresse);
+						   if($praticienDAO->create($praticien)){
+							   // TODO rediriger vers la page de connexion (appel de la méthode connection)
+							   
+							   return "ok";
+						   } else {
+							   return "inscription échouée, échec dans la création du praticien en bdd !";
+						   }
+					   } else {
+						   return "impossible de réucpérer l'id de l'adresse !";
+					   }
+				   } else {
+						return "Création Adresse échouée ! Inscription échouée !";
+				   }
+			   }
+		} else {
+				return "Champ vide !";
+		}
+		   
 	}
 
+	private function validateForm($nom, $prenom, $email, $adeli, $activite, $numero, $rue, $codePostal, $ville, $pays, $motDePasse, $captcha) {
 
-	
-	
+
+		if(empty($nom) || empty($prenom) || empty($email) || empty($adeli) || empty($activite) || 
+			empty($numero) || empty($rue) || empty($codePostal) || empty($ville) || empty($pays) || 
+			empty($motDePasse) || empty($captcha)
+		){
+			return "Champs vides !";
+		} 
+
+		// Vérification du format de l'email
+		if($email != filter_var($email, FILTER_VALIDATE_EMAIL)){
+			return "Email invalide !";
+		}
+
+		if(!preg_match('/^[0-9]{3} [0-9]{3} [0-9]{3}$/', $adeli)){
+			return "Numéro Adeli invalide !";
+		}
+
+		// Vérification du format mot de passe
+		if(strlen($motDePasse) < 8){
+			return "Mot de passe trop court !";
+		}
+		if(!preg_match('/[0-9]/', $motDePasse)){
+			return "Le mot de passe doit contenir au moins un chiffre !";
+		}
+		if(!preg_match('/[a-z]/', $motDePasse)){
+			return "Le mot de passe doit contenir au moins une minuscule !";
+		}
+		if(!preg_match('/[!@#$%^&*()_+]/', $motDePasse)){
+			return "Le mot de passe doit contenir au moins un caractère spécial !";
+		}
+		if(!preg_match('/[A-Z]/', $motDePasse)){
+			return "Le mot de passe doit contenir au moins une majuscule !";
+		}
+		
+		if(md5($captcha) != $_SESSION["captchaCode"]){
+			return "Mauvais code de sécurité !";
+		} 
+		return true;
+	}
+
 }
+
+
+

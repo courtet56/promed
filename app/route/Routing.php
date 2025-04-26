@@ -20,8 +20,11 @@ class Routing {
 
 		$route = new Router();
 
-		$route->add('', 'controleur\getAgenda'); //page par défaut
+		$route->add('', 'controleur\Accueil'); //page par défaut
+		$route->add('/inscription', 'controleur\InscriptionPraticien');
+
 		$route->add('/accueil', 'controleur\Accueil');
+		$route->add('/captcha', 'controleur\util\Captcha');
 		$route->add('/about', 'controleur\About');
 		//charge une image en interne (hors asset) :
 		$route->add('/img', 'controleur\util\Image');
