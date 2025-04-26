@@ -23,12 +23,12 @@ class AjaxRequest {
 	 *		);
 	 */
 	
-	constructor(url, type, data, fullDebug=false) {
+	constructor(url, type, data, fullDebug) {
 		this.url = url;
 		this.type = type;
 		this.data = data;
 		this.dbug = ajaxDebug;
-		this.verbose = false; //false -> masquer le popup sur le DOM, laisser le console.log
+		this.verbose = true; //false -> masquer le popup sur le DOM, laisser le console.log
 		
 		if(this.dbug) {
 			this.log = '->Début de la requête AJAX\n';
