@@ -27,7 +27,11 @@
                         <div class="col-md-4">
                             <h3>Colonne de gauche</h3>
                             <p>Contenu à gauche, prend 4 colonnes sur 12.</p>
+
+                    
                         </div>
+
+
                         <div class="col-md-4">
 
 
@@ -79,11 +83,23 @@
                             </div>
 
 
+                            <div>
+
+                            <button>Modifier</button>
+                            <button>Supprimer</button>
+
+                            </div>
+
                         </div>
+
+
 
                         <div class="col-md-4">
                             <h3>Colonne de droite</h3>
-                            <p>Contenu à droite, prend 4 colonnes sur 12.</p>
+                            <p>Contenu à droite, prend 4 colonnes sur 12.</p> 
+
+                            <button>Exporter une facture</button>
+
                         </div>
                     </div>
 
