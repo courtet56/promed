@@ -49,7 +49,7 @@ class AdresseDAO extends Database {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setIdAdresse( $this->getLastKey() );
+		$metier->setId( $this->getLastKey() );
 		return $bool;
 	}
 
