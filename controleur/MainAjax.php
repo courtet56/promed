@@ -179,7 +179,7 @@ class MainAjax extends Ajax {
 		}
 		
 		if(md5($captcha) !== $_SESSION["captchaCode"]){
-			return "saisie captcha: " .  md5($captcha);
+			return "saisie du captcha " . $captcha . " hashée : " . md5($captcha) . "\n captcha de la session : " . $_SESSION['captchaCode'];
 		} 
 		return true;
 	}
