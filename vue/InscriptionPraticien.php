@@ -7,12 +7,7 @@
 <div class="container">
     <div class="spacer"></div>
     <div class="text-center">
-        <h1>Inscription</h1>
-        <div class="avatar">
-            <div class="load-bloc spinner-border spinner-border" style="display:none" role="status"></div>
-            <img id="avatar" class="img-thumbnail" src="<?= $actual_link ?>asset/img/logo-promed.jpg" />
-        </div>
-        <h2>Inscription praticien</h2>
+        <h1>Inscription praticien</h1>
         <div style="margin:auto; width:50%">
             <form method="POST" action="">
                 <div class="d-flex justify-content-center">
@@ -99,19 +94,13 @@
                     <input type="password" name="motDePasse2" id="motDePasse2" class="form-control" placeholder="Confirmer mot de passe" value="<?= isset($motDePasse2) ? $motDePasse2 : '' ?>">
                 </div>
                 <div class="spacer"></div>
-                <div class="d-flex justify-content-center">
-                    <label for="captcha">Captcha : </label>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Captcha" value="<?= isset($captcha) ? $captcha : '' ?>">
-                </div>
+                <label for="captcha">Recopiez le texte de l'image :</label><br>
+                    <img src="<?= $actual_link ?>captcha" alt="captcha"><br>
+                    <input type="text" name="captcha" required>
                 <div class="spacer"></div>
                 <button type='submit' id='btnInscription' class="btn btn-primary">Inscription</button>
             </form>
             <div class="spacer"></div>
-            <div class="d-flex justify-content-center">
-                <img src="<?= $actual_link ?>controleur/util/Captcha.php" alt="Captcha" class="captcha-image" />
-            </div>
         </div>
     </div>
 </div>

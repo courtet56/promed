@@ -94,8 +94,8 @@ class Database implements IDatabase {
      */
     public function getOne(string|array $id): \stdClass|bool {
         $sql = "SELECT * FROM {$this->tableName} WHERE 1=1 ";
-        if(is_array($this->primaryKey)) {
-            foreach($this->primaryKey as $curPkey) {
+        if(is_array($id)) {
+            foreach($id as $curPkey) {
                 $sql .= "AND {$curPkey} = ? ";
             }
             $sql .= "LIMIT 1";
