@@ -134,18 +134,7 @@ class Accueil {
 		 */
 
 
-		Vue::render('AuthentifPatient', [
-
-			'test' => $test,
-			'param' => [
-				'a' => 1,
-				'b' => 2,
-				'c' => 3
-			],
-			// 'data' => $_SESSION[''],
-			'allData' => $allData,
-			'table' => $table,
-		]);
+		Vue::render('Accueil');
 
 	}
 }
