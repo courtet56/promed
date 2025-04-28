@@ -5,18 +5,13 @@
  */
 ?>
 <div class="container">
-<<<<<<< Updated upstream
         
-        
-=======
-
    
->>>>>>> Stashed changes
         <h1>Inscription</h1>
         
         <div class="alert alert-danger mt-3" role="alert" id="form-errors" style="display:none"></div>
         
-        <form method="POST" action="">
+        
             <div class="row mb-3">
                 <div class="col-md-6">
                     <input type="text" name="nom" id="nom" class="form-control" placeholder="Nom" value="<?= isset($nom) ? $nom : '' ?>">
@@ -80,6 +75,5 @@
             <div class="d-grid gap-2">
                 <button type="submit" id="btnInscription" class="btn btn-validate">Valider</button>
             </div>
-        </form>
     </div>
 </div>          

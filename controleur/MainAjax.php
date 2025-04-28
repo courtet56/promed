@@ -178,8 +178,8 @@ class MainAjax extends Ajax {
 			return "Le mot de passe doit contenir au moins une majuscule !";
 		}
 		
-		if(md5($captcha) != $_SESSION["captchaCode"]){
-			return "Mauvais code de sécurité !";
+		if(md5($captcha) !== $_SESSION["captchaCode"]){
+			return "saisie captcha: " .  md5($captcha);
 		} 
 		return true;
 	}
