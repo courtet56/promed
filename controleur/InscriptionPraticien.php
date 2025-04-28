@@ -22,6 +22,7 @@ class InscriptionPraticien
          */
 
          
+         var_dump($_SESSION["captchaCode"]);
         
     
     
