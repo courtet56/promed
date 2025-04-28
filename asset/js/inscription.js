@@ -1,24 +1,13 @@
-/**
+/** 
  * Valide le formulaire d'inscription du praticien avant soumission
  * @returns {boolean} True si le formulaire est valide, false sinon
  */
 function isValidatedForm() {
-    
-    // Récupérer ou créer le conteneur d'erreurs
+
     let errorContainer = document.getElementById('form-errors');
-    if (!errorContainer) {
-        errorContainer = document.createElement('div');
-        errorContainer.id = 'form-errors';
-        errorContainer.className = 'alert alert-danger mt-3';
-        const form = document.querySelector('form');
-        form.parentNode.insertBefore(errorContainer, form);
-    }
-    
-    
-    // Vider le conteneur d'erreurs
+
     errorContainer.innerHTML = '';
-    
-    // Drapeau indiquant si le formulaire est valide
+
     let isValid = true;
 
     // Récupérer les champs du formulaire
@@ -73,6 +62,8 @@ function isValidatedForm() {
         errorContainer.appendChild(errorParagraph);
         isValid = false;
     }
+
+
     // Afficher ou masquer le conteneur d'erreurs selon le résultat de la validation
     errorContainer.style.display = isValid ? 'none' : 'block';
 
@@ -127,13 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (isValidatedForm()) {
                 // Récupérer les données du formulaire
-                const formDataObj = getFormData('json');
-                
-                // Log des données pour le debug
-                console.log('Données du formulaire à envoyer:', formDataObj);
+                 const formDataObj = getFormData('json');
                 
                 // Déterminer l'URL relative
-                const ajaxUrl = './inscription';
+                const ajaxUrl = 'ajax?newPraticien';
                 
                 // Créer une instance de la classe AjaxRequest
                 const request = new AjaxRequest(
@@ -147,25 +135,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 request.send(
                     // Callback de succès
                     (response) => {
-                        console.log('Réponse du serveur:', response);
                         
-                        if (response) {
+                        if (response ==='ok') {
                             alert('Inscription réussie ! Vous allez être redirigé vers la page de connexion.');
-                            // Rediriger vers la page de connexion
-                            window.location.href = '/connexion';
+                            window.location.href = './accueil';
+                               
                         } else {
-                            // En cas d'erreur côté serveur, afficher le message dans le conteneur d'erreurs
-                            let errorContainer = document.getElementById('form-errors');
-                            if (errorContainer) {
-                                // const errorParagraph = document.createElement('p');
-                                // errorParagraph.textContent = response || 'Cette adresse e-mail est déjà utilisée.';
-                                // errorContainer.innerHTML = '';
-                                // errorContainer.appendChild(errorParagraph);
-                                // errorContainer.style.display = 'block';
-
-                                alert('Cette adresse e-mail est déjà utilisée.')
-                            }
+                            alert(response);
                         }
+                        
+                            
                     },
                     // Callback de fin de requête
                     () => {
