@@ -25,12 +25,12 @@ class Routing {
 
 		$route->add('/validation', 'controleur\Validation');
 
+		$route->add('praticien/agenda', 'controleur\getAgenda'); //page par défaut
+		$route->add('/fichepatient', 'controleur\nouvelleFichePatient'); //page par défaut
 		$route->add('/accueil', 'controleur\Accueil');
-		$route->add('/captcha', 'controleur\util\Captcha');
 		$route->add('/about', 'controleur\About');
 		//charge une image en interne (hors asset) :
 		$route->add('/img', 'controleur\util\Image');
-		$route->add('/auth', 'controleur\Authentif');
 		//charge la classe MainAjax($message), 'Hello AJAX' un message de sortie par défaut :
 		$route->add('/ajax', 'controleur\MainAjax', 'Hello AJAX');
 		//si l'on souhaite passer plusieurs paramètres, il faut ajouter un tableau :

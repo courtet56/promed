@@ -8,6 +8,9 @@
 <body>
 
 
+
+        <h1>Dates de rendez-vous</h1>
+
     <table>
 
 
@@ -38,6 +41,8 @@
 
     </table>
 
+    
+
     <div>
 
         <label for="choix">Choisissez une option :</label>
@@ -50,6 +55,8 @@
 
 
     </div>
+
+
 
     <div>
 
