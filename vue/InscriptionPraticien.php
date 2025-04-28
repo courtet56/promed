@@ -5,6 +5,17 @@
  */
 ?>
 <div class="container">
+
+    <div class="spacer"></div>
+    <div class="text-center">
+        <h1>Inscription praticien</h1>
+        <div style="margin:auto; width:50%">
+            <form method="POST" action="">
+                <div class="d-flex justify-content-center">
+                    <label for="nom">Nom : </label>
+                </div>
+                <div class="d-flex justify-content-center">
+
         
         
         <h1>Inscription</h1>
@@ -49,6 +60,17 @@
                 <div class="col-md-6">
                     <input type="text" name="codePostal" id="codePostal" class="form-control" placeholder="Code postal" value="<?= isset($codePostal) ? $codePostal : '' ?>">
                 </div>
+
+                <div class="spacer"></div>
+                <label for="captcha">Recopiez le texte de l'image :</label><br>
+                    <img src="<?= $actual_link ?>captcha" alt="captcha"><br>
+                    <input type="text" name="captcha" required>
+                <div class="spacer"></div>
+                <button type='submit' id='btnInscription' class="btn btn-primary">Inscription</button>
+            </form>
+            <div class="spacer"></div>
+        </div>
+
             </div>
             
             <div class="mb-3">

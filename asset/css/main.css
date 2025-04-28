@@ -39,40 +39,9 @@ header {
 
 h1 {
 	font-family: 'Jersey 25', sans-serif;
-	font-size: 6rem;
+	font-size: 4rem;
 	color: #2f56b1;
 	margin: 20px 0 30px 0;
-}
-
-.rdvList {
-	font-family: 'Jersey 25', sans-serif;
-	font-size: 2rem;
-
-	th {
-		font-weight: 600;
-		font-size: 2.5rem;
-	}
-
-	td, th {
-		vertical-align: middle;
-		text-align: center; /* si tu veux centrer horizontalement aussi */
-	  }
-	  
-	.btn {
-		background-color: rgb(233, 108, 108);
-		padding: 5px 15px 5px 15px;
-		width: auto;
-		--bs-btn-font-size: 2rem;
-	}
-
-	.btn:active{
-		background-color: rgb(161, 76, 76);
-		border-color: rgb(161, 76, 76);
-	}
-
-	.btn:disabled {
-		border-color: inherit;
-	}
 }
 
 .navbar-brand {
@@ -86,7 +55,7 @@ h1 {
 }
 
 #main-logo {
-	height: 70%;
+	width: 20rem;
 	padding: auto;
   }
 
@@ -129,4 +98,40 @@ h1 {
 
 
 	 
+}
+
+.table {
+	border: 2px solid #2f56b1; 
+	border-collapse: collapse;
+}
+
+.rdvList {
+	font-family: 'Jersey 25', sans-serif;
+	font-size: 2rem;
+
+	th {
+		font-weight: 600;
+		font-size: 2rem;
+	}
+
+	td, th {
+		vertical-align: middle;
+		text-align: center; /* si tu veux centrer horizontalement aussi */
+	  }
+	  
+	.btn {
+		background-color: rgb(233, 108, 108);
+		padding: 5px 15px 5px 15px;
+		width: auto;
+		--bs-btn-font-size: 1.5rem;
+	}
+
+	.btn:active{
+		background-color: rgb(161, 76, 76);
+		border-color: rgb(161, 76, 76);
+	}
+
+	.btn:disabled {
+		border-color: inherit;
+	}
 }

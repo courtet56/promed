@@ -47,11 +47,6 @@ header {
   align-content: center;
 }
 
-#main-logo {
-  height: 70%;
-  padding: auto;
-}
-
 #loginButton {
   background-color: #B3D155;
 }
@@ -134,15 +129,11 @@ transition style {
       padding: 6px 10px;
   }
 
-.radioDiv {
-  display: flex;
-  flex-direction: column;
-}
+  .radioDiv {
+    display: flex;
+    flex-direction: column;
+  }
 
-#main-logo {
-  height: 60%;
-  padding: auto;
-}
 }
 
 
