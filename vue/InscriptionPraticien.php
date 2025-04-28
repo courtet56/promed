@@ -5,8 +5,13 @@
  */
 ?>
 <div class="container">
+<<<<<<< Updated upstream
         
         
+=======
+
+   
+>>>>>>> Stashed changes
         <h1>Inscription</h1>
         
         <div class="alert alert-danger mt-3" role="alert" id="form-errors" style="display:none"></div>

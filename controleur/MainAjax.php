@@ -161,10 +161,6 @@ class MainAjax extends Ajax {
 			return "Email invalide !";
 		}
 
-		if(!preg_match('/^[0-9]{3} [0-9]{3} [0-9]{3}$/', $adeli)){
-			return "Numéro Adeli invalide !";
-		}
-
 		// Vérification du format mot de passe
 		if(strlen($motDePasse) < 8){
 			return "Mot de passe trop court !";
