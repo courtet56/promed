@@ -45,6 +45,7 @@
         <?php foreach ($prestations as $unePrestation): ?>
     
             <option value="option1">Consultation</option>
+        <?php endforeach;?>
           
         </select>
 
@@ -59,8 +60,4 @@
         <button> Supprimer</button>
 
     </div>
-
-
-
-
 </body>

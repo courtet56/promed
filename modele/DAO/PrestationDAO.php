@@ -24,7 +24,7 @@ class PrestationDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Prestation';
-		$primaryKey = 'idPresta';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}

@@ -20,9 +20,8 @@ class InscriptionPraticien
          *	    MODELE
          *	--------------
          */
-
-         
-         var_dump($_SESSION["captchaCode"]);
+        echo "session captcha : ";
+         print_r($_SESSION);
         
     
     

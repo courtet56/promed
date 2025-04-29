@@ -24,11 +24,9 @@ class Routing {
 		$route->add('/auth', 'controleur\Authentif'); //page par défaut
 		$route->add('/inscription', 'controleur\InscriptionPraticien');
 
-		$route->add('/auth/validation', function () {
-			\controleur\Authentif::validation();
-		});
-
-		$route->add('/validation', 'controleur\Validation');
+		//$route->add('/validation', 'controleur\Validation');
+		$route->add('/patient', 'controleur\EspacePatient');
+		//$route->add('/praticien', 'controleur\EspacePraticien');
 
 		$route->add('/accueil', 'controleur\Accueil');
 		$route->add('/captcha', 'controleur\util\Captcha');

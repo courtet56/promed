@@ -42,6 +42,14 @@
 						<input type="password" name="motDePasse" id="motDePasse" class="form-control" placeholder="Mot de passe">
 					</div>
 					<div class="spacer"></div>
+					<div class="row mb-3 align-items-center">
+						<div class="col-5">
+							<img src="<?= $actual_link ?>captcha" alt="captcha" class="img-fluid captcha-image">
+						</div>
+						<div class="col-7">
+							<input type="text" name="captcha" id="captcha" class="form-control" placeholder="CAPTCHA" required>
+						</div>
+					</div>
 					<button class="btn" id="loginButton" style="margin: 20px 0 0 0;">Valider</button>
 				</form>
 			  
