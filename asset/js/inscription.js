@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Vérifier si le bouton de soumission existe avant d'ajouter l'écouteur d'événement
     if (submitButton) {
-        submitButton.addEventListener('click', function(e) {
-            e.preventDefault();
+        submitButton.addEventListener('click', function() {
             
             if (isValidatedForm()) {
                 // Récupérer les données du formulaire
