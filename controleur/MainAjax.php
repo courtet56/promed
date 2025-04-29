@@ -8,6 +8,7 @@ use modele\DAO\UserDAO as Model;
 use modele\DAO\PraticienDAO as PraticienDAO;
 use modele\DAO\AdresseDAO as AdresseDAO;
 use modele\Adresse as Adresse;
+use modele\DAO\RendezVousDAO;
 use modele\Praticien as Praticien;
 
 
@@ -43,6 +44,7 @@ class MainAjax extends Ajax {
 			// - la méthode protégée : "getUserBySearch" est implémentée ci-dessous.
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
+			'annulerRdv' => 'annulerRendezVous'
 			// - D'autres lignes ?
 		];
 	}
@@ -86,6 +88,7 @@ class MainAjax extends Ajax {
 	 */
 	
 	
+	// Début Traitement Inscription Praticien :
 
 	protected function inscriptionPraticien () {
 
@@ -122,7 +125,9 @@ class MainAjax extends Ajax {
 				   return "email déjà utilisé !";
 			   } else {
 				   $adresse = new Adresse($numero, $rue, $codePostal, $ville, $pays);
+				
 				   if($adresseDAO->create($adresse)){
+
 					   $idAdresse = $adresseDAO->getLastKey();
 					   if($idAdresse >0){
 						   $praticien = new Praticien($nom, $prenom, $email, $activite, $adeli, $motDePasse, $idAdresse);
@@ -137,7 +142,7 @@ class MainAjax extends Ajax {
 						   return "impossible de réucpérer l'id de l'adresse !";
 					   }
 				   } else {
-						return "Création Adresse échouée ! Inscription échouée !";
+						return "Echec dans la création de l'adresse !";
 				   }
 			   }
 		} else {
@@ -179,9 +184,17 @@ class MainAjax extends Ajax {
 		}
 		
 		if(md5($captcha) !== $_SESSION["captchaCode"]){
-			return "saisie captcha: " .  md5($captcha);
+			return "Captcha invalide !";
 		} 
 		return true;
+	}
+	//Fin Traitement Inscription Praticien
+
+	protected function annulerRendezVous () {
+		$idRdv = trim(req::post('idRdv')); // récupération de l'idrdv envoyé par ajax via POST
+		$rdvDao = new RendezVousDAO;
+		
+		return $rdvDao->annulerRdv($idRdv);
 	}
 
 }

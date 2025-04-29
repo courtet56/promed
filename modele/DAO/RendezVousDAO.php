@@ -24,7 +24,7 @@ class RendezVousDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'RendezVous';
-		$primaryKey = 'idRdv';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -125,6 +125,12 @@ class RendezVousDAO extends Database {
         $dateTime->modify('+1 day');
         return $dateTime->format($format);
     }
+
+	public function annulerRdv($idRdv) {
+		$sql = "UPDATE " . $this->tableName . " SET idStatutRdv = 2 WHERE id = :idRdv";
+		$stmt = $this->getPdo()->prepare($sql);
+		return $stmt->execute([':idRdv' => $idRdv]);
+	}
 
 	// /**
 	// *	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)

@@ -24,7 +24,7 @@ class PraticienDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Praticien';
-		$primaryKey = 'idPraticien';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
