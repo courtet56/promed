@@ -133,6 +133,7 @@ class Database implements IDatabase {
 		$placeholders = array_fill(0, count($columns), '?');
 
 		$query = "INSERT INTO {$this->tableName} (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $placeholders) . ")";
+
 		$stmt = self::getPdo()->prepare($query);
 		$values = array_values($data);
 
