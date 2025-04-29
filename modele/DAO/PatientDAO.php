@@ -137,10 +137,25 @@ class PatientDAO extends Database {
 		return $this->primaryKey;
 	}
 
-	public function getRdvByPatient(Patient $patient) {
+	public function getCurrentRdvByPatient(Patient $patient) { // rdv en cours, non passés
 		$idPatient = $patient->getIdPatient();
-		$today = date("Y-m-d");
-		return $this->sendSQL("SELECT * FROM RendezVous WHERE idPatient = ? AND dateRdv > ?", [$idPatient, $today]);
+		$now = date("Y-m-d H:i:s");
+		date_default_timezone_set("Europe/Paris");
+		return $this->sendSQL("SELECT rdv.id, rdv.dateRdv, rdv.heureRdv, rdv.idPatient, rdv.idPraticien, rdv.idPresta FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv = srdv.id WHERE rdv.idPatient = ? AND CONCAT(rdv.dateRdv, ' ', rdv.heureRdv) > ? AND srdv.libelle LIKE 'En cours';", [$idPatient, $now]);
 	}
 	
+	public function getRdvAnnulesByPatient(Patient $patient) { // rdv a vénir ou passés mais annulés
+		$idPatient = $patient->getIdPatient();
+		$today = date("Y-m-d");
+		date_default_timezone_set("Europe/Paris");
+		$time = date("H:i");
+		return $this->sendSQL("SELECT * FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv=srdv.id WHERE idPatient = ? AND srdv.libelle LIKE 'Annulé'", [$idPatient]);
+	}
+
+	public function getOldRdvByPatient(Patient $patient) { // rdv passés et honorés
+		$idPatient = $patient->getIdPatient();
+		$now = date("Y-m-d H:i:s");
+		date_default_timezone_set("Europe/Paris");
+		return $this->sendSQL("SELECT * FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv=srdv.id WHERE idPatient = ? AND CONCAT(rdv.dateRdv, ' ', rdv.heureRdv) < ? AND srdv.libelle NOT LIKE 'Annulé'", [$idPatient, $now]);
+	}
 }
