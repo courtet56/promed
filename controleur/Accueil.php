@@ -54,7 +54,6 @@ class Accueil {
 
 		// $data = $db->getLineFrom('Emmanuel'); // retourne un objet
 
-		$allData = $db->getAll();
 		//$table = $db->getTableName();
 
 		/**
@@ -82,12 +81,7 @@ class Accueil {
 		 *	    POST
 		 *	-------------
 		 */
-		
-		$test = 'Avatar par défaut';
-		//Utilisation de la classe Request (app/util/Request.php)
-		if(req::has('helloPost')) {
-			$test = req::post('helloPost');
-		}
+	
 
 		/**
 		 *	-------------
