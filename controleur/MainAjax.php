@@ -86,6 +86,7 @@ class MainAjax extends Ajax {
 	 */
 	
 	
+	// Début Traitement Inscription Praticien :
 
 	protected function inscriptionPraticien () {
 
@@ -122,7 +123,9 @@ class MainAjax extends Ajax {
 				   return "email déjà utilisé !";
 			   } else {
 				   $adresse = new Adresse($numero, $rue, $codePostal, $ville, $pays);
+				
 				   if($adresseDAO->create($adresse)){
+
 					   $idAdresse = $adresseDAO->getLastKey();
 					   if($idAdresse >0){
 						   $praticien = new Praticien($nom, $prenom, $email, $activite, $adeli, $motDePasse, $idAdresse);
@@ -137,7 +140,7 @@ class MainAjax extends Ajax {
 						   return "impossible de réucpérer l'id de l'adresse !";
 					   }
 				   } else {
-						return "Création Adresse échouée ! Inscription échouée !";
+						return "Echec dans la création de l'adresse !";
 				   }
 			   }
 		} else {
@@ -161,10 +164,6 @@ class MainAjax extends Ajax {
 			return "Email invalide !";
 		}
 
-		if(!preg_match('/^[0-9]{3} [0-9]{3} [0-9]{3}$/', $adeli)){
-			return "Numéro Adeli invalide !";
-		}
-
 		// Vérification du format mot de passe
 		if(strlen($motDePasse) < 8){
 			return "Mot de passe trop court !";
@@ -182,11 +181,12 @@ class MainAjax extends Ajax {
 			return "Le mot de passe doit contenir au moins une majuscule !";
 		}
 		
-		if(md5($captcha) != $_SESSION["captchaCode"]){
-			return "Mauvais code de sécurité !";
+		if(md5($captcha) !== $_SESSION["captchaCode"]){
+			return "Captcha invalide !";
 		} 
 		return true;
 	}
+	//Fin Traitement Inscription Praticien
 
 }
 

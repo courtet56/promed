@@ -29,12 +29,6 @@ class Routing {
 		});
 
 		$route->add('/validation', 'controleur\Validation');
-		$route->add('/captcha', 'controleur\util\Captcha');
-		$route->add('/patient/dashboard', 'controleur\DashboardPatient');
-		$route->add('/praticien/dashboard', 'controleur\DashboardPraticien');
-
-
-		$route->add('/captcha', 'controleur\util\captcha');
 
 		$route->add('/accueil', 'controleur\Accueil');
 		$route->add('/captcha', 'controleur\util\Captcha');
