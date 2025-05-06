@@ -20,21 +20,23 @@ class Routing {
 
 		$route = new Router();
 
-		$route->add('', 'controleur\Accueil'); //page par défaut
+		$route->add('', 'controleur\Authentif'); //page par défaut
+		$route->add('/auth', 'controleur\Authentif'); //page par défaut
 		$route->add('/inscription', 'controleur\InscriptionPraticien');
 		
 		//Espace Praticien
 		$route->add('/praticien', 'controleur\EspacePraticien');
 
-		// $route->add('/acces', 'controleur\Authentification');
-		// $route->add('/validation', 'controleur\Validation');
+
+		//$route->add('/validation', 'controleur\Validation');
+		$route->add('/patient', 'controleur\EspacePatient');
+		//$route->add('/praticien', 'controleur\EspacePraticien');
 
 		$route->add('/accueil', 'controleur\Accueil');
 		$route->add('/captcha', 'controleur\util\Captcha');
 		$route->add('/about', 'controleur\About');
 		//charge une image en interne (hors asset) :
 		$route->add('/img', 'controleur\util\Image');
-		$route->add('/auth', 'controleur\Authentif');
 		//charge la classe MainAjax($message), 'Hello AJAX' un message de sortie par défaut :
 		$route->add('/ajax', 'controleur\MainAjax', 'Hello AJAX');
 		//si l'on souhaite passer plusieurs paramètres, il faut ajouter un tableau :

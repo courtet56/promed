@@ -8,6 +8,7 @@ use modele\DAO\UserDAO as Model;
 use modele\DAO\PraticienDAO as PraticienDAO;
 use modele\DAO\AdresseDAO as AdresseDAO;
 use modele\Adresse as Adresse;
+use modele\DAO\RendezVousDAO;
 use modele\Praticien as Praticien;
 
 
@@ -44,6 +45,7 @@ class MainAjax extends Ajax {
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
 			'modifyPraticien' => 'modifyPraticien'
+			'annulerRdv' => 'annulerRendezVous'
 			// - D'autres lignes ?
 		];
 	}
@@ -378,6 +380,14 @@ class MainAjax extends Ajax {
 
 	
 	
+	protected function annulerRendezVous () {
+		$idRdv = trim(req::post('idRdv')); // récupération de l'idrdv envoyé par ajax via POST
+		$rdvDao = new RendezVousDAO;
+		
+		return $rdvDao->annulerRdv($idRdv);
+	}
+
+}
 
 
 }
