@@ -44,6 +44,7 @@ class MainAjax extends Ajax {
 			// - la méthode protégée : "getUserBySearch" est implémentée ci-dessous.
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
+			'modifyPraticien' => 'modifyPraticien'
 			'annulerRdv' => 'annulerRendezVous'
 			// - D'autres lignes ?
 		];
@@ -190,6 +191,195 @@ class MainAjax extends Ajax {
 	}
 	//Fin Traitement Inscription Praticien
 
+	// Début Traitement Modification Praticien :
+
+	protected function modifyPraticien () {
+
+		$name = trim(req::post('nom'));
+        $forname = trim(req::post('prenom'));
+        $email = trim(req::post('email'));
+        $adeli = trim(req::post('adeli'));
+        $activity = trim(req::post('activite'));
+		$numero = trim(req::post('numero'));
+        $rue = trim(req::post('rue'));
+		$ville = trim(req::post('ville'));
+        $codePostal = trim(req::post('codePostal'));
+        $pays = trim(req::post('pays'));
+        $oldPassword = trim(req::post('ancienMotDePasse'));
+        $newPassword = trim(req::post('nouveauMotDePasse'));
+
+        
+
+		if(!empty($name) 
+		&& !empty($forname) 
+		&& !empty($email)
+		&& !empty($adeli)
+		&& !empty($activity)
+		&& !empty($numero)
+		&& !empty($rue)
+		&& !empty($codePostal)
+		&& !empty($ville)
+		&& !empty($pays))
+		{
+		
+			// Utiliser session quand elle sera disponible : $praticien = $_SESSION['praticien'];
+			$praticienDAO = new PraticienDAO();
+			$currentPraticien = $praticienDAO->read(17);
+
+
+			$adresseDAO = new AdresseDAO();
+			$currentAdresse = $adresseDAO->read(17);
+
+			$currentName = $currentPraticien->getNom();
+			$currentForname = $currentPraticien->getPrenom();
+			$currentEmail = $currentPraticien->getEmail();
+			$currentAdeli = $currentPraticien->getAdeli();
+			$currentActivity = $currentPraticien->getActivite();
+			$currentNumero = $currentAdresse->getNumero();
+			$currentRue = $currentAdresse->getRue();
+			$currentVille = $currentAdresse->getVille();
+			$currentCodePostal = $currentAdresse->getCodePostal();	
+			$currentPays = $currentAdresse->getPays();
+			$currentPassword = $currentPraticien->getMotDePasse();
+			
+
+			$modification = false; // Initialisation de la variable de modification
+
+			if(!empty($oldPassword) && !empty($newPassword))
+			{	
+				if(password_verify($oldPassword, $currentPassword) !== true)
+				{
+					return "L'ancien mot de passe est incorrect !";
+				}
+				$isValidatePassword = $this->validatePassword($newPassword);
+
+				if($isValidatePassword != true)
+				{
+					return $isValidatePassword;
+				}
+
+				//MAJ MDP de l'objet currentPraticien Php:
+				$currentPraticien->setMotDePasse(password_hash($newPassword, PASSWORD_DEFAULT));
+				$praticienDAO->update($currentPraticien);
+
+				$modification = true;
+			}
+
+			if($name != $currentName 
+			|| $forname != $currentForname 
+			|| $email != $currentEmail 
+			|| $adeli != $currentAdeli 
+			|| $activity != $currentActivity
+			|| $numero != $currentNumero
+			|| $rue != $currentRue
+			|| $ville != $currentVille
+			|| $codePostal != $currentCodePostal
+			|| $pays != $currentPays)
+			{	
+				
+				$validateForm = $this->validateFormModification($name, $forname, $email,
+				$adeli, $activity, $numero, $rue, $codePostal, $ville, $pays);
+
+				if($validateForm != true)
+				{
+					return $validateForm;
+				} 
+				//Check pour voir si email et adeli dispo:
+				$existingAdeli = $praticienDAO->getPraticienByAdeli($adeli);
+				$existingEmail = $praticienDAO->getPraticienByEmail($email);
+
+				/**  si il existe un adeli, on recupère l'id associé à cette adeli et on le compare (id)
+				* à celui du currentPraticien de la session :
+				*/
+				if(!empty($existingAdeli) && $existingAdeli['id'] != $currentPraticien->getId())
+				{
+					return "Adeli déjà utilisé !";
+				}
+				if (!empty($existingEmail) && $existingEmail['id'] != $currentPraticien->getId())
+				{
+					return "Email déjà utilisé !";
+				}
+
+				//MAJ de l'objet currentPraticien Php:
+				$currentPraticien->setNom($name);
+				$currentPraticien->setPrenom($forname);
+				$currentPraticien->setEmail($email);
+				$currentPraticien->setAdeli($adeli);
+				$currentPraticien->setActivite($activity);
+
+				$praticienDAO->update($currentPraticien);
+
+				//MAJ de l'objet currentAdresse Php:
+				$currentAdresse->setNumero($numero);
+				$currentAdresse->setRue($rue);
+				$currentAdresse->setVille($ville);
+				$currentAdresse->setCodePostal($codePostal);
+				$currentAdresse->setPays($pays);
+
+				$adresseDAO->update($currentAdresse);
+
+				$modification = true;
+			}
+			
+			//Résultat: 
+			if($modification == true){
+				return "Modification effectuée !";
+			} else {
+				return "Aucune modification effectuée !";
+			}
+			
+		}
+		return "Tous les champs doivent être remplis !";
+	}
+	// Contrôle du formulaire de modification de profil :
+	private function validateFormModification($name, $forname, $email,
+		 $adeli, $activity, $numero, $rue, $codePostal, $ville, $pays){
+		if(empty($name) 
+		|| empty($forname) 
+		|| empty($email) 
+		|| empty($adeli) 
+		|| empty($activity)
+		|| empty($numero)
+		|| empty($rue)
+		|| empty($codePostal)
+		|| empty($ville)
+		|| empty($pays))
+		{
+			return "Champs vides !";
+		}
+		// Vérification du format de l'email
+		else if($email != filter_var($email, FILTER_VALIDATE_EMAIL)){
+			return "Email invalide !";
+		}
+		return true;
+	}
+
+	// Contrôle pour le changement de mot de passe :
+	private function validatePassword($newPassword){
+
+		if(strlen($newPassword) < 8){
+			return "Mot de passe trop court !";
+		}
+		if(!preg_match('/[0-9]/', $newPassword)){
+			return "Le mot de passe doit contenir au moins un chiffre !";
+		}
+		if(!preg_match('/[a-z]/', $newPassword)){
+			return "Le mot de passe doit contenir au moins une minuscule !";
+		}
+		if(!preg_match('/[!@#$%^&*()_+]/', $newPassword)){
+			return "Le mot de passe doit contenir au moins un caractère spécial !";
+		}
+		if(!preg_match('/[A-Z]/', $newPassword)){
+			return "Le mot de passe doit contenir au moins une majuscule !";
+		}
+		 
+		
+		return true;
+		
+	}
+
+	
+	
 	protected function annulerRendezVous () {
 		$idRdv = trim(req::post('idRdv')); // récupération de l'idrdv envoyé par ajax via POST
 		$rdvDao = new RendezVousDAO;
@@ -200,4 +390,5 @@ class MainAjax extends Ajax {
 }
 
 
+}
 
