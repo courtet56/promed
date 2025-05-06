@@ -22,8 +22,12 @@ class Routing {
 
 		$route->add('', 'controleur\Accueil'); //page par défaut
 		$route->add('/inscription', 'controleur\InscriptionPraticien');
+		
+		//Espace Praticien
+		$route->add('/praticien', 'controleur\EspacePraticien');
 
-		$route->add('/validation', 'controleur\Validation');
+		// $route->add('/acces', 'controleur\Authentification');
+		// $route->add('/validation', 'controleur\Validation');
 
 		$route->add('/accueil', 'controleur\Accueil');
 		$route->add('/captcha', 'controleur\util\Captcha');

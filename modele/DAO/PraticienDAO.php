@@ -24,7 +24,7 @@ class PraticienDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Praticien';
-		$primaryKey = 'idPraticien';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -60,7 +60,7 @@ class PraticienDAO extends Database {
     	RendezVous
 		INNER JOIN Prestation ON RendezVous.idPresta = prestation.idPresta
 		INNER JOIN Patient ON Patient.idPatient = RendezVous.idPatient
-		INNER JOIN Praticien ON Praticien.idPraticien = RendezVous.idPraticien
+		INNER JOIN Praticien ON Praticien.id = RendezVous.id
 		INNER JOIN StatutRdv ON StatutRdv.idStatutRdv = RendezVous.idStatutRdv
 		where dateRdv = CURDATE() AND Praticien.email = ?;
 
@@ -83,7 +83,7 @@ class PraticienDAO extends Database {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setIdPraticien( $this->getLastKey() );
+		$metier->setid( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -92,17 +92,17 @@ class PraticienDAO extends Database {
 	*	@param integer Numéro de la clé primaire
 	*	@return mixed object|string|bool
 	*/
-	public function read(int $idPraticien=0): mixed {
+	public function read(int $id=0): mixed {
 		$row = false;
-		if($idPraticien>0)$row = $this->getOne($idPraticien); //on récupère la ligne/tuple concernée
+		if($id>0)$row = $this->getOne($id); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$row) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$idPraticien</b>) est invalide !" );
+			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
 		}
 		$rowData = (array)$row; //conversion objet --> array
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Praticien(...$rowData); //crée l'objet Praticien(->Praticien.php) avec toutes les clés du tableau $rowData
-		$metier->setIdPraticien($idPraticien); //ajoute $id dans l'objet métier (User)
+		$metier->setid($id); //ajoute $id dans l'objet métier (User)
 		return $metier; //retourne l'objet crée
 	}
 	
@@ -115,7 +115,7 @@ class PraticienDAO extends Database {
 	public function update($metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getIdPraticien(), $data);
+		return $this->updateOne($metier->getid(), $data);
 	}
 	
 	/** 
@@ -125,7 +125,7 @@ class PraticienDAO extends Database {
 	*/
 	public function delete($metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getIdPraticien() );
+		return $this->deleteOne( $metier->getid() );
 	}
 
 	/**
@@ -134,10 +134,19 @@ class PraticienDAO extends Database {
 	* 	@param string $email Nom ou prénom de l'utilisateur
 	* 	@return array
 	*/
+
+	
 	public function getPraticienByEmail(string $email): mixed {
 		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE email=  :email");
 		$stmt->execute([':email' => $email]);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public function getPraticienByAdeli(string $adeli): mixed {
+		$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE adeli=  :adeli");
+		$stmt->execute([':adeli' => $adeli]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+
 	}
 
 	/**
@@ -163,5 +172,5 @@ class PraticienDAO extends Database {
 	public function getPrimaryKey(): string {
 		return $this->primaryKey;
 	}
-	
-}
+
+}	

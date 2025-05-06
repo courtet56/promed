@@ -116,7 +116,7 @@ class Praticien {
 	 * Setters
 	 */
 	
-	public function setIdPraticien($id): void {
+	public function setId($id): void {
 		$this->id = $id;
 	}
 	
