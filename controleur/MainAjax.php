@@ -8,8 +8,10 @@ use modele\DAO\UserDAO as Model;
 use modele\DAO\PraticienDAO as PraticienDAO;
 use modele\DAO\AdresseDAO as AdresseDAO;
 use modele\Adresse as Adresse;
+use modele\DAO\PatientDAO;
 use modele\DAO\RendezVousDAO;
 use modele\Praticien as Praticien;
+use modele\Patient as Patient;
 
 
 /**
@@ -44,7 +46,8 @@ class MainAjax extends Ajax {
 			// - la méthode protégée : "getUserBySearch" est implémentée ci-dessous.
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
-			'annulerRdv' => 'annulerRendezVous'
+			'annulerRdv' => 'annulerRendezVous',
+			'connexion' => 'connexion'
 			// - D'autres lignes ?
 		];
 	}
@@ -197,6 +200,42 @@ class MainAjax extends Ajax {
 		return $rdvDao->annulerRdv($idRdv);
 	}
 
+	protected function connexion () {
+		$email = trim(req::post('email'));
+		$mdp = trim(req::post('motDePasse'));
+		$captcha = trim(req::post('captcha'));
+		$userType = trim(req::post('userType'));
+		$user = false;
+
+		if($userType == "patient") {
+			$dbPatient = new PatientDAO();
+			$user = $dbPatient->getPatientByEmail($email);
+		} else if ($userType == "praticien"){
+			$dbPraticien = new PraticienDAO();
+			$userInfo = $dbPraticien->getPraticienByEmail($email);
+		}
+		
+		if(md5($captcha) !== $_SESSION['captchaCode']) { // vérification du captcha
+			return "Captcha incorrect.";
+		}
+
+		if(empty($userInfo)) { // cas ou aucune ligne ne correspond a l'email en bd
+			return "Ce compte n'existe pas.";
+		} else { // création d'objet en fonction
+			if($userType == "patient") {
+				$user = new Patient($userInfo['nom'], $userInfo['prenom'], $userInfo['dateNaiss'], $userInfo['telephone'], $userInfo['email'], $userInfo['motDePasse'], $userInfo['idTuteur'], $userInfo['idAdresse']);
+				$user->setIdPatient($userInfo['id']);
+			} else {
+				$user = new Praticien($userInfo['nom'], $userInfo['prenom'], $userInfo['email'], $userInfo['activite'], $userInfo['adeli'], $userInfo['motDePasse'], $userInfo['idAdresse']);
+				$user->setIdPraticien($userInfo['id']);
+			}
+		}
+
+		if(!password_verify($mdp, $user->getMotDePasse())) { // cas ou mdp incorrect
+			return "Mot de passe incorrect.";
+		}
+		return "ok";
+	}
 }
 
 
