@@ -67,9 +67,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             request.send(
                 (response) => {
-                    console.log(response);
                     if(response === "ok") {
                         console.log("connexion fonctionne, session et redirection a implémenter");
+                        if(userType == "praticien") {
+                            window.location.href = '';
+                        } else if (userType == "patient") {
+                            window.location.href = './patient';
+                        }
                     } else {
                         $('#form-errors').text(response);
                         $('#form-errors').show();

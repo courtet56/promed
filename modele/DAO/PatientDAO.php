@@ -122,7 +122,9 @@ class PatientDAO extends Database {
 	*/
 	public function getPatientByEmail(string $email): array|bool {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
+		$stmt = $this->getPdo()->prepare("SELECT * from `" . $this->tableName . "` WHERE email = :email");
+		$stmt->execute([':email' => $email]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 	
 	/**

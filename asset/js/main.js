@@ -78,7 +78,7 @@ class AjaxRequest {
 						this.popup.style.display = "block";
 					}
 				}
-				completeCallback();
+				//completeCallback();
 			},
 			error: (jqXHR, textStatus, errorThrown) => {
 				console.error('Erreur lors de la requête: ', textStatus, errorThrown);

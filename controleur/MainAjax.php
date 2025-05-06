@@ -47,7 +47,8 @@ class MainAjax extends Ajax {
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
 			'annulerRdv' => 'annulerRendezVous',
-			'connexion' => 'connexion'
+			'connexion' => 'connexion',
+			'logout' => 'logout'
 			// - D'autres lignes ?
 		];
 	}
@@ -142,7 +143,7 @@ class MainAjax extends Ajax {
 							   return "inscription échouée, échec dans la création du praticien en bdd !";
 						   }
 					   } else {
-						   return "impossible de réucpérer l'id de l'adresse !";
+						   return "impossible de récupérer l'id de l'adresse !";
 					   }
 				   } else {
 						return "Echec dans la création de l'adresse !";
@@ -200,6 +201,7 @@ class MainAjax extends Ajax {
 		return $rdvDao->annulerRdv($idRdv);
 	}
 
+	// debut authentification
 	protected function connexion () {
 		$email = trim(req::post('email'));
 		$mdp = trim(req::post('motDePasse'));
@@ -209,7 +211,7 @@ class MainAjax extends Ajax {
 
 		if($userType == "patient") {
 			$dbPatient = new PatientDAO();
-			$user = $dbPatient->getPatientByEmail($email);
+			$userInfo = $dbPatient->getPatientByEmail($email);
 		} else if ($userType == "praticien"){
 			$dbPraticien = new PraticienDAO();
 			$userInfo = $dbPraticien->getPraticienByEmail($email);
@@ -234,8 +236,26 @@ class MainAjax extends Ajax {
 		if(!password_verify($mdp, $user->getMotDePasse())) { // cas ou mdp incorrect
 			return "Mot de passe incorrect.";
 		}
+		$_SESSION['user'] = [
+			'email' => $email,
+			'userType' => $userType
+		];
 		return "ok";
 	}
+
+	protected function logout() {
+		if(isset($_POST['logout']) && $_POST['logout']) {
+			if (isset($_SESSION['user'])) {
+				unset($_SESSION['user']);
+			}
+			return 'ok';
+		}
+		else {
+			return false;
+		}
+	}
+
+	//fin méthode authentification
 }
 
 
