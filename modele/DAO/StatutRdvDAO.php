@@ -22,7 +22,7 @@ use PDO;
     public function __construct() {
 
         $tableName = 'StatutRdv';
-        $primaryKey = 'idStatutRdv';
+        $primaryKey = 'id';
 
         parent::__construct($tableName, $primaryKey);
     }

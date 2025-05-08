@@ -170,13 +170,17 @@ class Database implements IDatabase {
         }
         $query = rtrim($query, ", ");
         $values = [];
-        if(is_array($id) && !empty($id)) {
-            foreach($id as $key => $value) {
-                $query .= " WHERE {$key} = :id";
-                $values[$key] = $value;
+        if (is_array($id) && !empty($id)) {
+            $conditions = [];
+            foreach ($id as $key => $value) {
+                $param = "id_$key";
+                $conditions[] = "$key = :$param";
+                $values[$param] = $value;
             }
+            $query .= " WHERE " . implode(" AND ", $conditions);
         } else {
             $query .= " WHERE {$this->primaryKey} = :id";
+            $values['id'] = $id;
         }
         
         $stmt = self::getPdo()->prepare($query);
