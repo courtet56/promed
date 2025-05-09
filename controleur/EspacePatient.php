@@ -29,26 +29,89 @@ Class EspacePatient
         $patient = new Patient('MACRON', 'Emmanuel', '1977-12-21', '1234567890', 'emmanuel.macron@example.com', '1234', 1, 1);
         $patient->setIdPatient(1);
 
-        $rdvList = $db->getRdvByPatient($patient);
-        // echo "<pre>";
-        // print_r($rdvList);
-        // echo "</pre>";
+        $currentRdvList = $db->getCurrentRdvByPatient($patient);
+        $cancelRdvList = $db->getRdvAnnulesByPatient($patient);
+        $oldRdvList = $db->getOldRdvByPatient($patient);
 
-        $html = '';
+        $htmlCurrent = '';
 
-        if(is_array($rdvList)) { // construction ligne par ligne du tableau contenant les rdv
-            foreach($rdvList as $curRdv) {
+        if(is_array($currentRdvList) && !empty($currentRdvList)) { // construction ligne par ligne du tableau contenant les rdv en cours
+            $htmlCurrent .= "<thead>
+            <tr>
+            <th scope='col'>Date</th>
+            <th scope='col'>Heure</th>
+            <th scope='col'>Praticien</th>
+            <th scope='col'>Prise en charge</th>
+            <th scope='col'></th>
+            </tr>
+        </thead>";
+            foreach($currentRdvList as $curRdv) {
                 $praticien = $dbPrat->read($curRdv["idPraticien"]);
                 $prestation = $dbPresta->read($curRdv['idPresta']);
-                $html .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
+                $htmlCurrent .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
                         $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
-                        $prestation->getLibelle() . "</td><td><button type='button' class='btn cancelBtn' idRdv='" . $curRdv['idRdv'] . "'>Annuler</button></td>\n";
+                        $prestation->getLibelle() . "</td><td><button type='button' class='btn cancelBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop' idRdv='" . $curRdv['id'] . "'>Annuler</button></td>\n";
             }
+            $htmlCurrent .= "</tbody>";
+        } else {
+            $htmlCurrent .= "Vous n'avez aucun rendez-vous de prévu pour le moment.";
         }
 
+        $htmlCancel = '';
+
+        if(is_array($cancelRdvList) && !empty($cancelRdvList)) { // construction ligne par ligne du tableau contenant les rdv7
+            $htmlCancel .= "<thead>
+            <tr>
+            <th scope='col'>Date</th>
+            <th scope='col'>Heure</th>
+            <th scope='col'>Praticien</th>
+            <th scope='col'>Prise en charge</th>
+            <th scope='col'></th>
+            </tr>
+        </thead><tbody>";
+            foreach($cancelRdvList as $curRdv) {
+                $praticien = $dbPrat->read($curRdv["idPraticien"]);
+                $prestation = $dbPresta->read($curRdv['idPresta']);
+                $htmlCancel .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
+                        $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
+                        $prestation->getLibelle() . "</td><td><button disabled type='button' class='btn cancelBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop' idRdv='" . $curRdv['id'] . "'>Annulé</button></td>\n";
+            }
+            $htmlCancel .= "</tbody>";
+        } else {
+            $htmlCancel .= "Vous n'avez aucun rendez-vous annulé pour le moment.";
+        }
+
+        $htmlOld = '';
+
+        if(is_array($oldRdvList) && !empty($oldRdvList)) { // construction ligne par ligne du tableau contenant les rdv7
+            $htmlOld .= "<thead>
+            <tr>
+            <th scope='col'>Date</th>
+            <th scope='col'>Heure</th>
+            <th scope='col'>Praticien</th>
+            <th scope='col'>Prise en charge</th>
+            <th scope='col'></th>
+            </tr>
+        </thead><tbody>";
+            foreach($oldRdvList as $curRdv) {
+                $praticien = $dbPrat->read($curRdv["idPraticien"]);
+                $prestation = $dbPresta->read($curRdv['idPresta']);
+                $htmlOld .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
+                        $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
+                        $prestation->getLibelle() . "</td><td><button disabled type='button' class='btn cancelBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop' idRdv='" . $curRdv['id'] . "'>Annuler</button></td>\n";
+            }
+            $htmlOld .= "</tbody>";
+        } else {
+            $htmlOld .= "Vous n'avez aucun rendez-vous de passé pour le moment.";
+        }
+
+        Vue::addJS([ASSET . '/js/rendezVous.js']);
         Vue::render('EspacePatient', [
-            'tableRdv' => $html // variable html à inclure dans la vue sous le nom $tableRdv
+            'currentRdv' => $htmlCurrent, // variable html à inclure dans la vue sous le nom $tableRdv
+            'cancelRdv' => $htmlCancel,
+            'oldRdv' => $htmlOld
         ]);
+
         
     }
 		

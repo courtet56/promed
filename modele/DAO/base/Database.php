@@ -177,6 +177,7 @@ class Database implements IDatabase {
             }
         } else {
             $query .= " WHERE {$this->primaryKey} = :id";
+            $values['id'] = $id;
         }
         
         $stmt = self::getPdo()->prepare($query);

@@ -20,6 +20,9 @@
     <script src="<?= ASSET ?>/js/main.js" defer></script>
     <script src="<?= ASSET ?>/js/<?= $_SESSION['CUSTOM_JS'] ?>" defer></script>
     <?= $customJS ?>
+    <!-- Bootstrap Bundle avec Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
@@ -35,6 +38,12 @@
                 <li class="nav-item"><a href="about?app=10" class="nav-link">À propos</a></li>
             </ul> -->
         <!-- </div> -->
+        <?php
+        // /if ($user->isLogin()) {
+        ?>
+         <?php
+        //  }
+         ?>
     </header>
     <!-- <nav class="header">
         
