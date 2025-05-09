@@ -71,41 +71,29 @@ function isValidatedForm() {
 }
 
 /* Récupère tous les champs du formulaire dans un objet ou un tableau
- * @param {string} format - Le format de retour souhaité ('array' ou 'json')
  * @returns {Object|Array} - Les données du formulaire au format demandé
  */
-function getFormData(format = 'json') {
-    // Définir les champs à récupérer
+function getFormData() {
     const fieldNames = [
-        'nom', 
-        'prenom', 
-        'activite', 
-        'numero', 
-        'rue', 
-        'codePostal', 
-        'ville', 
-        'pays', 
-        'email', 
-        'adeli', 
-        'motDePasse', 
-        'captcha'
+        'nom', 'prenom', 'activite', 'numero', 'rue',
+        'codePostal', 'ville', 'pays', 'email', 'adeli',
+        'motDePasse', 'captcha'
     ];
-    
-    // Format JSON (objet)
-    if (format.toLowerCase() === 'json') {
-        const formData = {};
-        
-        // Récupérer chaque valeur et l'ajouter à l'objet
-        fieldNames.forEach(fieldName => {
-            const element = document.getElementById(fieldName);
-            if (element) {
-                formData[fieldName] = element.value.trim();
-            }
-        });
-        
-        return formData;
+
+    const formData = {};
+
+    for (let i = 0; i < fieldNames.length; i++) {
+        const field = fieldNames[i];
+        const element = document.getElementById(field);
+
+        if (element) {
+            formData[field] = element.value.trim();
+        }
     }
+
+    return formData;
 }
+
 
 // Ajouter un écouteur d'événement au chargement du DOM
 document.addEventListener('DOMContentLoaded', function() {
@@ -117,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (isValidatedForm()) {
                 // Récupérer les données du formulaire
-                 const formDataObj = getFormData('json');
+                 const formDataObj = getFormData();
                 
                 // Déterminer l'URL relative
                 const ajaxUrl = 'ajax?newPraticien';
