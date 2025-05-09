@@ -125,7 +125,7 @@ class PraticienDAO extends Database {
 	*/
 	public function delete($metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getIdPraticien() );
+		return $this->deleteOne( $metier->getId() );
 	}
 
 	/**
@@ -145,7 +145,7 @@ class PraticienDAO extends Database {
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
 	*	Le filtre (ici $email) est obligatoirement un tableau !
 	* 	@param string $email Prénom de l'utilisateur
-	* 	@return object
+	* 	@return array|null
 	*/
 	public function getLineFrom(string $email) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)

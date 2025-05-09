@@ -20,7 +20,7 @@ class Routing {
 
 		$route = new Router();
 
-		$route->add('', 'controleur\Authentif'); //page par défaut
+		$route->add('', 'controleur\Accueil'); //page par défaut
 		$route->add('/auth', 'controleur\Authentif'); //page par défaut
 		$route->add('/inscription', 'controleur\InscriptionPraticien');
 

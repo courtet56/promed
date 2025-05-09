@@ -6,9 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'tests\\' => array($baseDir . '/tests'),
-    'modele\\' => array($baseDir . '/src/modele'),
-    'app\\' => array($baseDir . '/src/app'),
+    'modele\\' => array($baseDir . '/modele'),
+    'config\\' => array($baseDir . '/config'),
+    'app\\' => array($baseDir . '/app'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     '' => array($vendorDir . '/league/color-extractor/src'),
