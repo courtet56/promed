@@ -1,0 +1,1 @@
+{"version":1,"defects":{"PraticienDAOTest::testCreateAndRead":8,"PraticienDAOTest::testGetPraticienByEmail":8,"PraticienDAOTest::testDelete":8},"times":{"PraticienDAOTest::testCreateAndRead":0.093,"PraticienDAOTest::testGetPraticienByEmail":0.001,"PraticienDAOTest::testDelete":0.023}}

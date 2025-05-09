@@ -54,12 +54,12 @@ Class Authentif
         Vue::addJS([ASSET . '/js/authentif.js',]);
 
         Vue::setTitle('Authentification');
-        Vue::render('Authentification');
+        Vue::render('Auth');
     }
 
     public static function validation() {
         session_start();
-        
+
 
         $captchaUser = strtolower(trim($_POST['captcha']));
          $captchaSession = $_SESSION['captchaCode'] ?? '';
@@ -73,13 +73,12 @@ Class Authentif
          $dbPatient = new PatientDAO();
          $dbPraticien = new PraticienDAO();
  
-         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+         if (isset($_POST['email']) &&  isset($_POST['motDePasse']) ) {
              $email = trim(req::post('email'));
              $motDePasse = trim(req::post('motDePasse'));
              $utilisateur = req::post('choixUtilisateur');
  
              if (empty($email) || empty($motDePasse)) {
-                 // TODO retourner message d'erreur
                  $_SESSION['erreur'] = "Aucun champ ne doit être vide.";
                  header("Location: auth"); // Recharge la page avec l'erreur
                  exit();
@@ -89,11 +88,10 @@ Class Authentif
  
                  if (isset($patient) && password_verify($motDePasse, $patient['motDePasse'])) {
                      unset($_SESSION['erreur']); // Supprime l'erreur si la connexion est réussie
-                     $_SESSION['utilisateur'] = 'patient';
+                     $_SESSION['patient'] = $patient;
                      header("Location: patient/dashboard");
                      exit();
                  } else {
-                     // TODO retourner message d'erreur : identifiant ou mot de passe invalide
                      $_SESSION['erreur'] = "Identifiant ou mot de passe invalide.";
                      header("Location: auth"); // Recharge la page avec l'erreur
                      exit();
@@ -103,17 +101,15 @@ Class Authentif
  
                  if (isset($praticien) && password_verify($motDePasse, $praticien['motDePasse'])) {
                      unset($_SESSION['erreur']); // Supprime l'erreur si la connexion est réussie
-                     $_SESSION['utilisateur'] = 'praticien';
+                     $_SESSION['praticien'] = $praticien;
                      header("Location: praticien/dashboard");
                      exit();
                  } else {
-                     // TODO retourner message d'erreur : identifiant ou mot de passe invalide
                      $_SESSION['erreur'] = "Identifiant ou mot de passe invalide.";
                      header("Location: auth"); // Recharge la page avec l'erreur
                      exit();
                  }
              }
          }
-    }
-		
+    }		
 }
