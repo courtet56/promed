@@ -300,19 +300,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
+    
     // Supprimer Prestation:
 
      $('.btnSupprimer').on('click', function() {
-        const $tr = $(this).closest('tr');
+        const $tr = $(this).closest('tr'); // déclare un objet $tr
+        const idPresta = $tr.attr('id');
         console.log($tr.attr('id'));
 
-        // faire un tableau avec en key 'idPresta' 
-        // et new Ajax:
-
-
+        let data = {'idPresta' : idPresta};
+        const ajaxUrl = 'ajax?supprPresta' ;
+        const request = new AjaxRequest(ajaxUrl, 'POST', data, true);
+        request.send(
+            (response) => 
+            {
+                if(response === null)
+                {
+                    $tr.remove();
+                    alert("Suppression prestation réussie");
+                }
+            }
+        )
     })
-
-    
 });           
     
 

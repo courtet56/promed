@@ -94,13 +94,17 @@ class ProposeDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function delete($idPrat,$idPresta): bool {
+	public function delete($idPrat,$idPresta):bool {
+		
 		$sql = "DELETE FROM Propose WHERE idPresta = :idPresta AND idPraticien = :idPrat LIMIT 1;";
         $stmt = self::getPdo()->prepare($sql);
-        return $stmt->execute([
+        $stmt->execute([
 			':idPrat' => $idPrat, 
 			':idPresta' => $idPresta,
 		]);
+		 // Retourne true si une ligne a été supprimée
+    	return $stmt->rowCount() > 0;
+
 	}
 
 	/**
