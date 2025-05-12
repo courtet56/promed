@@ -66,7 +66,7 @@ class ProposeDAO extends Database {
 		if($id>0)$rows = $this->getAllById($id); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$rows) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
+			return [];
 		} 
 		$metiers = [];
 		foreach ($rows as $row){
@@ -94,13 +94,17 @@ class ProposeDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function delete($idPrat,$idPresta): bool {
+	public function delete($idPrat,$idPresta):bool {
+		
 		$sql = "DELETE FROM Propose WHERE idPresta = :idPresta AND idPraticien = :idPrat LIMIT 1;";
         $stmt = self::getPdo()->prepare($sql);
-        return $stmt->execute([
+        $stmt->execute([
 			':idPrat' => $idPrat, 
 			':idPresta' => $idPresta,
 		]);
+		 // Retourne true si une ligne a été supprimée
+    	return $stmt->rowCount() > 0;
+
 	}
 
 	/**
@@ -122,7 +126,7 @@ class ProposeDAO extends Database {
 	* 	@param string $name Prénom de l'utilisateur
 	* 	@return object
 	*/
-	public function getLineFrom(string $name): \stdClass {
+	public function getLineFrom(string $name) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$name]);
 	}

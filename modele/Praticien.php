@@ -148,5 +148,16 @@ class Praticien {
 	}
 	
 
+	public static function fromArray(array $data): Praticien {
+		return new Praticien(
+			$data['nom'] ?? '',
+			$data['prenom'] ?? '',
+			$data['email'] ?? '',
+			$data['activite'] ?? '',
+			$data['adeli'] ?? '',
+			$data['motDePasse'] ?? '',
+			(int)$data['idAdresse'] ?? 0
+		);
+	}
 	
 }
