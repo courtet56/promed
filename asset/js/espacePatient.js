@@ -1,11 +1,24 @@
-// Gère les ajouts, modifs et annulation de rdv côté patient et praticien
+document.addEventListener('DOMContentLoaded', function() {
+    logoutButton = document.getElementById('logoutButton');
+    if(logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            $('#logoutModalBtnConfirm').on('click', function() { // si bouton de confirmation de la modale est cliqué
+                deconnexion();
+            });
+    
+            $('#logoutModalBtnClose').on('click', function() { // fermeture de la modale si annulation avortée (bouton "fermer" cliqué)
+                console.log("annulation"); // debug
+            });
+        })
+    }
+})
 
-//function getBoutonAnnuler () {
+
 document.addEventListener('DOMContentLoaded', function() {
     $('.cancelBtn').on('click', function() {
         const idRdv = $(this).attr('idrdv');
 
-        const $tr = $(this).closest('tr');
+        const $tr = $(this).closest('.accordion-item');
         const $tds = $tr.find('td');
         // récupération de la date, de l'heure et du nom du praticien correspondant au rdv
         const date = $tds.eq(0).text().trim();
@@ -40,14 +53,30 @@ function supprimerRendezVous(idRdv) {
         (response) => {
             switch (response) {
                 case true : 
-                alert("Annulation réussie"); 
                 window.location.href = '';
                 exit;
-                case false : alert("Annulation échouée. Réessayer plus tard");
+                case false :
                 window.location.href = '';
                 exit;
             }
             console.log(response);
         })
 }
-//}
+
+function deconnexion() {
+    const ajaxUrl = 'ajax?logout';
+
+    
+    const request = new AjaxRequest(
+        ajaxUrl,
+        'POST',
+        {'logout' : true}
+    )
+
+    request.send(
+        (response) => {
+            console.log(response);
+            window.location.href = './accueil'
+        }
+    )
+}

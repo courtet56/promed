@@ -5,6 +5,7 @@ namespace modele\DAO;
 use modele\DAO\base\Database;
 use modele\Propose;
 use PDO;
+use stdClass;
 
 /** 
 *	ProposeDAO
@@ -24,7 +25,7 @@ class ProposeDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Propose';
-		$primaryKey = 'id_client';
+		$primaryKey = 'idPraticien';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -36,14 +37,10 @@ class ProposeDAO extends Database {
 	*/
 	private function getAllData($metier): array {
 		return [
-			'nom' => $metier->getNom(),
-			'prenom' => $metier->getPrenom(),
-			'email' => $metier->getEmail(),
-			'ne_le' => $metier->getDateNaissance(),
-			'ville' => $metier->getVille(),
-			'enfants' => $metier->getEnfants(),
-			'tel' => $metier->getTel(),
-			'avatar' => $metier->getAvatar(),
+			'idPraticien' => $metier->getIdPraticien(),
+			'idPresta' => $metier->getIdPresta(),
+			'duree' => $metier->getDuree(),
+			'tarif' => $metier->getTarif(),
 		];
 	}
 
@@ -56,7 +53,6 @@ class ProposeDAO extends Database {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setId( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -66,17 +62,18 @@ class ProposeDAO extends Database {
 	*	@return mixed object|string|bool
 	*/
 	public function read(int $id=0): mixed {
-		$row = false;
-		if($id>0)$row = $this->getOne($id); //on récupère la ligne/tuple concernée
+		$rows = false;
+		if($id>0)$rows = $this->getAllById($id); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
-		if(!$row) {
+		if(!$rows) {
 			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
-		}
-		$rowData = (array)$row; //conversion objet --> array
-		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
-		$metier = new Propose(...$rowData); //crée l'objet Propose(->Propose.php) avec toutes les clés du tableau $rowData
-		$metier->setId($id); //ajoute $id dans l'objet métier (Propose)
-		return $metier; //retourne l'objet crée
+		} 
+		$metiers = [];
+		foreach ($rows as $row){
+			$propose = new Propose($row->idPresta, $row->idPraticien, $row->duree,$row->tarif);
+			$metiers[] = $propose;
+		} //crée l'objet Propose(->Propose.php) avec toutes les clés du tableau $rowData
+		return $metiers; //retourne l'objet crée
 	}
 	
 	/** 
@@ -84,10 +81,12 @@ class ProposeDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function update($metier): bool {
+	public function update(Propose $metier): bool {
 		$data = $this->getAllData($metier);
-		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getId(), $data);
+		$sql = "UPDATE Propose SET duree = :duree, tarif = :tarif WHERE idPraticien = :idPraticien AND idPresta = :idPresta";
+		$stmt = self::getPdo()->prepare($sql);
+		return $stmt->execute($data);
+		
 	}
 	
 	/** 
@@ -95,9 +94,13 @@ class ProposeDAO extends Database {
 	*	@param object:metier Instance de l'objet métier
 	*	@return bool
 	*/
-	public function delete($metier): bool {
-		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getId() );
+	public function delete($idPrat,$idPresta): bool {
+		$sql = "DELETE FROM Propose WHERE idPresta = :idPresta AND idPraticien = :idPrat LIMIT 1;";
+        $stmt = self::getPdo()->prepare($sql);
+        return $stmt->execute([
+			':idPrat' => $idPrat, 
+			':idPresta' => $idPresta,
+		]);
 	}
 
 	/**
@@ -135,5 +138,25 @@ class ProposeDAO extends Database {
 	public function getPrimaryKey(): string {
 		return $this->primaryKey;
 	}
+
+	/** Méthode qui prend en paramètre l'id du praticien et  idPrestation
+	 * et qui retourne un objet Propose ou null : */ 
+	public function getPropositionByIds($idPrat, $idPresta) : ?Propose { // ? = possibilité de retour null
+		$sql = "SELECT * FROM {$this->tableName} WHERE idPraticien = :idPraticien and idPresta = :idPrestation";
+		$stmt = $this->getPdo()->prepare($sql);
+		$stmt->execute([
+			':idPraticien' => $idPrat, 
+			':idPrestation' => $idPresta,
+		]);
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
+		if($result == false){
+			return null;
+		}
+		$propose = new Propose($result->idPresta, $result->idPraticien, $result->duree, $result->tarif);
+		return $propose;
+
+	}
+
+	
 	
 }

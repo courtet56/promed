@@ -7,9 +7,9 @@ use modele\Praticien;
 use PDO;
 
 /** 
-*	User DAO
-*	Implémente l'ensemble des traitements en données pour les utilisateurs.
-*	Associé à la logique métier de la classe User (modele/User.php).
+*	PraticienDAO
+*	Implémente l'ensemble des traitements en données pour les praticiens.
+*	Associé à la logique métier de la classe Praticien (modele/Praticien.php).
 */
 
 class PraticienDAO extends Database {
@@ -115,7 +115,7 @@ class PraticienDAO extends Database {
 	public function update($metier): bool {
 		$data = $this->getAllData($metier);
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->updateOne($metier->getid(), $data);
+		return $this->updateOne($metier->getId(), $data);
 	}
 	
 	/** 
@@ -125,7 +125,7 @@ class PraticienDAO extends Database {
 	*/
 	public function delete($metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getid() );
+		return $this->deleteOne( $metier->getId() );
 	}
 
 	/**
@@ -154,7 +154,7 @@ class PraticienDAO extends Database {
 	*	Prend en compte la commande SQL et son filtre issue du prepared statement [?]
 	*	Le filtre (ici $email) est obligatoirement un tableau !
 	* 	@param string $email Prénom de l'utilisateur
-	* 	@return object
+	* 	@return array|null
 	*/
 	public function getLineFrom(string $email) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
