@@ -21,6 +21,7 @@ use modele\DAO\PrestationDAO as PrestationDAO;
 class EspacePraticien{
 
     public function __construct(){
+
         if (isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
 
 
@@ -128,12 +129,12 @@ class EspacePraticien{
 
         if(!isset($_GET['action']) || $_GET['action'] == 'accueil_praticien'){
             // print_r($praticien);
-            Vue::render('Agenda', [
+            Vue::render('AccueilPraticien', [
                 "praticien" => $praticien
             ]);
         }
         if(isset($_GET['action']) && $_GET['action'] == "test") {
-            echo "test fonctionne";
+            Vue::render('Agenda');
         }
 
         } else {

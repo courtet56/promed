@@ -66,13 +66,13 @@
     <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent"  style="align-items:center;">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+          <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "accueil_praticien" ? "active" : ''?>" aria-current="page" href="./praticien?action=accueil_praticien">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./praticien?action=test">Rendez-vous</a>
+          <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "test" ? "active" : ''?>" href="./praticien?action=test">Rendez-vous</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./praticien?action=modif_profil">Mon profil</a>
+          <a class="nav-link <?=isset($_GET['action']) && ($_GET['action'] == "modif_profil" || $_GET['action'] == "") ? "active" : ''?>" href="./praticien?action=modif_profil">Mon profil</a>
         </li>
       </ul>
     </div>
