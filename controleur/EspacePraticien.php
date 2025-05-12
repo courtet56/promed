@@ -13,12 +13,18 @@ use controleur\util\FormatDate as FormatDate;
 use modele\DAO\ProposeDAO as ProposeDAO;
 use modele\Propose as Propose;
 use modele\DAO\PrestationDAO as PrestationDAO;
+use app\util\Request as Request;
 
 
 
 
 
 class EspacePraticien{
+
+    public function action($action): bool {
+        return Request::is($action);
+    }
+
 
     public function __construct(){
 
@@ -47,7 +53,7 @@ class EspacePraticien{
             // print_r($proposes);
             // echo'<pre>';        
             
-            if(isset($_GET['action']) && $_GET['action'] == "agenda"){
+            if($this->action("agenda")){
                 $data = $praticienDAO->getAgendaPraticien($praticien->getEmail());
                 $dateDuJour = FormatDate::getFormatDate();
 
@@ -61,7 +67,7 @@ class EspacePraticien{
                 ]);
             }
 
-            if(isset($_GET['action']) && $_GET['action'] == 'modif_profil'){
+            if($this->action("modif_profil")){
                 
                 if($praticien){
                     $dataPrat = [];
@@ -116,7 +122,7 @@ class EspacePraticien{
 
             }
 
-            if(!isset($_GET['action']) || $_GET['action'] == 'accueil_praticien'){
+            if($this->action("accueil_praticien")){
                 // print_r($praticien);
                 Vue::render('AccueilPraticien', [
                     "praticien" => $praticien
