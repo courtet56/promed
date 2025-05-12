@@ -53,13 +53,13 @@ class PraticienDAO extends Database {
 	
    		Patient.nom AS nomPatient,
 		Patient.prenom AS prenomPatient,
-    	prestation.libelle AS libellePrestation,
+    	Prestation.libelle AS libellePrestation,
     	RendezVous.heureRdv AS heureRdv,
 		RendezVous.dateRdv As dateRdv,
 		StatutRdv.libelle AS libelleStatutRdv
 		FROM
     	RendezVous
-		INNER JOIN Prestation ON RendezVous.idPresta = prestation.id
+		INNER JOIN Prestation ON RendezVous.idPresta = Prestation.id
 		INNER JOIN Patient ON Patient.id = RendezVous.idPatient
 		INNER JOIN Praticien ON Praticien.id = RendezVous.idPraticien
 		INNER JOIN StatutRdv ON StatutRdv.id = RendezVous.idStatutRdv
