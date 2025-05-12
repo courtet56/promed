@@ -7,10 +7,12 @@ use modele\DAO\PraticienDAO as PraticienDAO;
 use vue\base\MainTemplate as Vue;
 use modele\Adresse as Adresse;
 use modele\DAO\AdresseDAO as AdresseDAO;
+
+use controleur\util\FormatDate as FormatDate;
+
 use modele\DAO\ProposeDAO as ProposeDAO;
 use modele\Propose as Propose;
 use modele\DAO\PrestationDAO as PrestationDAO;
-
 
 
 
@@ -48,7 +50,26 @@ class EspacePraticien{
 
         
         
+        if($_GET['action'] == "agenda"){
+            $_SESSION['prenom'] = 'bernard';
+            $_SESSION['nom'] = 'cazeneuve';
+            $_SESSION['activite'] = 'Medecin Généraliste';
+            $_SESSION['email'] = 'bernard.cazeneuve@example.com';
+            $email = $_SESSION['email'];
+            $data = $praticienDAO->getAgendaPraticien($email);
+            $dateDuJour = FormatDate::getFormatDate();
 
+
+            Vue::render('Agenda', [
+
+                'data' => $data,
+                'dateDuJour' => $dateDuJour,
+
+                'nom' => $_SESSION['nom'],
+                'prenom' => $_SESSION['prenom'],
+                'activite' => $_SESSION['activite']
+            ]);
+        }
 
         if($_GET['action'] == 'modif_profil'){
             
@@ -103,6 +124,7 @@ class EspacePraticien{
             ]);
 
         }
+
         } else {
             echo "Vous n'êtes pas connecté.";
         }
