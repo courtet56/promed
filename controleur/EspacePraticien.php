@@ -26,88 +26,46 @@ class EspacePraticien
     public function __construct()
     {
 
-
-        // if (isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
-
-
-        // Utilisation de GET pour orienter vers la bonne fonctionnalité (ex: GET = modif_profil))
-        // renvoie la vue en conséquence
-
-        $praticienDAO = new PraticienDAO();
-        $praticien = $praticienDAO->read(1);
-        // echo '<pre>';
-        // print_r($praticien);
-        // echo '</pre>';
-
-        $adresseDAO = new AdresseDAO();
-        $adresse = $adresseDAO->read(1);
-        // echo '<pre>';
-        // print_r($adresse);
-        // echo '</pre>';
-
-        $proposeDAO = new ProposeDAO();
-        $proposes = $proposeDAO->read(1); // retourne tous les proposes du medecin 
-
-        // echo'<pre>';
-        // print_r($proposes);
-        // echo'<pre>';
+        if (isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
 
 
+            // Utilisation de GET pour orienter vers la bonne fonctionnalité (ex: GET = modif_profil))
+            // renvoie la vue en conséquence
 
-        $soigneDAO = new SoigneDAO();
+            $praticienDAO = new PraticienDAO();
+            $praticienArray = $praticienDAO->getPraticienByEmail($_SESSION['user']['email']);
+            $praticien = Praticien::fromArray($praticienArray);
+            $praticien->setId($praticienArray['id']);
 
+            // echo '<pre>';
+            // print_r($praticien);
+            // echo '</pre>';
 
-        if ($_GET['action'] == "liste_patient") {
-            $_SESSION['prenom'] = 'bernard';
-            $_SESSION['nom'] = 'cazeneuve';
-            $_SESSION['activite'] = 'Medecin Généraliste';
-            $_SESSION['email'] = 'bernard.cazeneuve@example.com';
-            $email = $_SESSION['email'];
-            $data = $soigneDAO->getListePatientPraticien($email);
+            $adresseDAO = new AdresseDAO();
+            $adresse = $adresseDAO->read($praticien->getIdAdresse());
 
+            $proposeDAO = new ProposeDAO();
+            $proposes = $proposeDAO->read($praticien->getId()); // retourne tous les proposes du medecin 
 
+            // echo'<pre>';
+            // print_r($proposes);
+            // echo'<pre>';        
 
-            Vue::render('ListePatientPraticien', [
-
-                'data' => $data,
-
-
-                'nom' => $_SESSION['nom'],
-                'prenom' => $_SESSION['prenom'],
-
-            ]);
-
-
-            Vue::setTitle('Liste patient');
-            Vue::addJS([ASSET . '/js/listePatientPraticien.js',]);
-            Vue::render('ListePatientPraticien', [
-                'data' => $data,
-
-            ]);
-
-
-            if ($_GET['action'] == "agenda") {
-                $_SESSION['prenom'] = 'bernard';
-                $_SESSION['nom'] = 'cazeneuve';
-                $_SESSION['activite'] = 'Medecin Généraliste';
-                $_SESSION['email'] = 'bernard.cazeneuve@example.com';
-                $email = $_SESSION['email'];
-                $data = $praticienDAO->getAgendaPraticien($email);
+            if (isset($_GET['action']) && $_GET['action'] == "agenda") {
+                $data = $praticienDAO->getAgendaPraticien($praticien->getEmail());
                 $dateDuJour = FormatDate::getFormatDate();
 
-
+                Vue::addCSS([ASSET . '/css/agenda.css',]);
+                Vue::setTitle('Agenda du praticien');
                 Vue::render('Agenda', [
 
                     'data' => $data,
                     'dateDuJour' => $dateDuJour,
-
-                    'nom' => $_SESSION['nom'],
-                    'prenom' => $_SESSION['prenom'],
-                    'activite' => $_SESSION['activite']
+                    'praticien' => $praticien
                 ]);
             }
 
-            if ($_GET['action'] == 'modif_profil') {
+            if (isset($_GET['action']) && $_GET['action'] == 'modif_profil') {
 
                 if ($praticien) {
                     $dataPrat = [];
@@ -156,9 +114,27 @@ class EspacePraticien
                 Vue::render('ModifParamPraticien', [
                     'dataPrat' => $dataPrat,
                     'dataPrestations' => $dataPrestations,
-                    'dataLibellePrestations' => $dataLibellePrestations
+                    'dataLibellePrestations' => $dataLibellePrestations,
+                    'praticien' => $praticien
                 ]);
 
+
+                Vue::render('Agenda', [
+
+                    'data' => $data,
+                    'dateDuJour' => $dateDuJour,
+
+                    'nom' => $_SESSION['nom'],
+                    'prenom' => $_SESSION['prenom'],
+                    'activite' => $_SESSION['activite']
+                ]);
+            }
+
+            if (!isset($_GET['action']) || $_GET['action'] == 'accueil_praticien') {
+                // print_r($praticien);
+                Vue::render('AccueilPraticien', [
+                    "praticien" => $praticien
+                ]);
             }
 
         } else {

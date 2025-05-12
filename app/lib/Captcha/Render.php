@@ -46,7 +46,7 @@ class Render {
 		
 		//variable de la chaine aléatoire à afficher :
 		$this->randval = $format_randval;
-
+		
 		//ecriture de cette valeur en MD5 :
 		$this->session =  md5($format_randval);
 		
@@ -54,7 +54,7 @@ class Render {
 	
 	/** binaire de l'image **/
 	public function make($image_type='png') {
-
+		
 		if(!file_exists($this->font_file))die("<h3>Captcha font file ".$this->font_file." not found !</h3>");
 		
 		//on envoie comme info le type d'image sur le navigateur :

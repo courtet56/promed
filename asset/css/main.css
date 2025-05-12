@@ -153,7 +153,8 @@ h1 {
 }
 
 .nav-link.active {
-	color: black !important;
+	color: #3257A8 !important;
+	text-decoration: underline;
 }
 
 .nav-tabs {
