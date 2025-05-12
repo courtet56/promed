@@ -29,6 +29,7 @@ class Patient {
 		private string $telephone='',
 		private string $email='',
 		private string $motDePasse='',
+		private int $estTuteur=0,
 		private int $idTuteur=0,
 		private int $idAdresse=0) {
 
@@ -92,6 +93,10 @@ class Patient {
 	public function getIdTuteur(): int {
 		return $this->idTuteur;
 	}
+
+	public function getEstTuteur(): int {
+		return $this->estTuteur;
+	}
 	
 	public function getTelephone(): string {
 		return $this->telephone;
@@ -132,6 +137,9 @@ class Patient {
 	public function setTelephone(string $telephone): void {
 		$this->telephone = $telephone;
 	}
+	public function setEstTuteur(int $estTuteur): void {
+		$this->estTuteur = $estTuteur;
+	}
 
 	public function setMotDePasse(string $motDePasse): void {
 		$this->motDePasse = $motDePasse;
@@ -145,6 +153,7 @@ class Patient {
 			$data['telephone'] ?? '',
 			$data['email'] ?? '',
 			$data['motDePasse'] ?? '',
+			(int)$data['estTuteur'] ?? 0,
 			(int)$data['idTuteur'] ?? 0,
 			(int)$data['idAdresse'] ?? 0
 		);
