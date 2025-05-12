@@ -7,8 +7,8 @@
 <div class="container py-5">
 
     <div class="text-center mb-4">
-        <h1 class="fw-bold">Bienvenue <?= htmlspecialchars($prenom) ?> <?= htmlspecialchars($nom) ?> !</h1>
-        <h2 class="text-secondary">Mon activité : <?= htmlspecialchars($activite) ?></h2>
+        <h1 class="fw-bold">Bienvenue <?= $praticien->getPrenom() ?> <?= $praticien->getNom() ?> !</h1>
+        <h2 class="text-secondary">Mon activité : <?= $praticien->getActivite() ?></h2>
         <h4 class="text-muted"><?= htmlspecialchars($dateDuJour); ?></h4>
     </div>
 

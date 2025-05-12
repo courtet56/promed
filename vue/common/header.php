@@ -69,7 +69,7 @@
           <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "accueil_praticien" ? "active" : ''?>" aria-current="page" href="./praticien?action=accueil_praticien">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "test" ? "active" : ''?>" href="./praticien?action=test">Rendez-vous</a>
+          <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "agenda" ? "active" : ''?>" href="./praticien?action=agenda">Rendez-vous</a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?=isset($_GET['action']) && ($_GET['action'] == "modif_profil" || $_GET['action'] == "") ? "active" : ''?>" href="./praticien?action=modif_profil">Mon profil</a>
