@@ -1,31 +1,42 @@
 <?php
 namespace controleur\util;
+
 use DateTime;
-use IntlDateFormatter;
 
-class FormatDate{
+class FormatDate {
 
-public static function getFormatDate():string{
+    public static function getFormatDate(): string {
 
-// ⚙️ Définir le fuseau horaire
-date_default_timezone_set('Europe/Paris');
+        // ⚙️ Définir le fuseau horaire
+        date_default_timezone_set('Europe/Paris');
 
-// 📅 Création d'un objet DateTime pour la date actuelle
-$date = new DateTime();
+        // 📅 Obtenir la date actuelle
+        $date = new DateTime();
 
-// 🌍 Création d'un formateur personnalisé
-$formatter = new IntlDateFormatter(
-    'fr_FR', // Langue française
-    IntlDateFormatter::FULL, // Format complet pour avoir le jour de la semaine en toutes lettres
-    IntlDateFormatter::NONE,
-    'Europe/Paris',
-    IntlDateFormatter::GREGORIAN,
-    'EEEE d MMMM yyyy H\'h\'mm' // Format personnalisé
-);
+        // 🗓️ Tableaux pour traduction des jours et mois
+        $jours = [
+            'Sunday' => 'Dimanche', 'Monday' => 'Lundi', 'Tuesday' => 'Mardi',
+            'Wednesday' => 'Mercredi', 'Thursday' => 'Jeudi',
+            'Friday' => 'Vendredi', 'Saturday' => 'Samedi'
+        ];
 
-// 🌟 Affichage de la date formatée
-return ucfirst($formatter->format($date)); 
+        $mois = [
+            'January' => 'janvier', 'February' => 'février', 'March' => 'mars',
+            'April' => 'avril', 'May' => 'mai', 'June' => 'juin',
+            'July' => 'juillet', 'August' => 'août', 'September' => 'septembre',
+            'October' => 'octobre', 'November' => 'novembre', 'December' => 'décembre'
+        ];
 
+        // 🧩 Construction manuelle de la date
+        $jourEn = $date->format('l');
+        $jour = $jours[$jourEn];
+        $numeroJour = $date->format('j');
+        $moisEn = $date->format('F');
+        $moisFr = $mois[$moisEn];
+        $annee = $date->format('Y');
+        $heure = $date->format('H\h i');
 
-}
+        // 📅 Format final : Lundi 6 mai 2024 14h 05
+        return "$jour $numeroJour $moisFr $annee $heure";
+    }
 }

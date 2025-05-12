@@ -44,11 +44,7 @@ class EspacePraticien{
 
         // echo'<pre>';
         // print_r($proposes);
-        // echo'<pre>';
-
-        
-
-        
+        // echo'<pre>';        
         
         if($_GET['action'] == "agenda"){
             $_SESSION['prenom'] = 'bernard';
@@ -59,7 +55,8 @@ class EspacePraticien{
             $data = $praticienDAO->getAgendaPraticien($email);
             $dateDuJour = FormatDate::getFormatDate();
 
-
+            Vue::addCSS([ASSET . '/css/agenda.css',]);
+            Vue::setTitle('Agenda du praticien');
             Vue::render('Agenda', [
 
                 'data' => $data,
