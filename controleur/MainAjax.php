@@ -394,7 +394,7 @@ class MainAjax extends Ajax {
 	// Début modifications prise en charge Praticien:
 
 	protected function ajouterModifierPrestation (): bool {
-		$idPraticien = 19;
+		$idPraticien = trim(req::post('userId'));
 		$idPresta = trim(req::post('libellePrestation'));
 
 		$proposeDAO = new ProposeDAO();
@@ -416,7 +416,7 @@ class MainAjax extends Ajax {
 	}
 
 	protected function selectionnerPrestation () {
-		$idPraticien = 19;
+		$idPraticien = trim(req::post('userId'));
 		$idPresta = trim(req::post('libellePrestation'));
 
 		$proposeDAO = new ProposeDAO();

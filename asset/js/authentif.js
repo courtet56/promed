@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(response === "ok") {
                         console.log("connexion fonctionne, session et redirection a implémenter");
                         if(userType == "praticien") {
-                            window.location.href = '';
+                            window.location.href = './praticien';
                         } else if (userType == "patient") {
                             window.location.href = './patient';
                         }

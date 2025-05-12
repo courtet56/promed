@@ -28,19 +28,19 @@ class EspacePraticien{
         // renvoie la vue en conséquence
 
         $praticienDAO = new PraticienDAO();
-        $praticien = $praticienDAO->read(19);
+        $praticienArray = $praticienDAO->getPraticienByEmail($_SESSION['user']['email']);
+        $praticien = Praticien::fromArray($praticienArray);
+        $praticien->setId($praticienArray['id']);
+
         // echo '<pre>';
         // print_r($praticien);
         // echo '</pre>';
 
         $adresseDAO = new AdresseDAO();
-        $adresse = $adresseDAO->read(19);
-        // echo '<pre>';
-        // print_r($adresse);
-        // echo '</pre>';
+        $adresse = $adresseDAO->read($praticien->getIdAdresse());
 
         $proposeDAO = new ProposeDAO();
-        $proposes = $proposeDAO->read(19); // retourne tous les proposes du medecin 
+        $proposes = $proposeDAO->read($praticien->getId()); // retourne tous les proposes du medecin 
 
         // echo'<pre>';
         // print_r($proposes);
@@ -71,7 +71,7 @@ class EspacePraticien{
             ]);
         }
 
-        if($_GET['action'] == 'modif_profil'){
+        if(isset($_GET['action']) && $_GET['action'] == 'modif_profil'){
             
             if($praticien){
                 $dataPrat = [];
@@ -120,9 +120,20 @@ class EspacePraticien{
             Vue::render('ModifParamPraticien', [
                 'dataPrat' => $dataPrat,
                 'dataPrestations' => $dataPrestations,
-                'dataLibellePrestations' => $dataLibellePrestations
+                'dataLibellePrestations' => $dataLibellePrestations,
+                'praticien' => $praticien
             ]);
 
+        }
+
+        if(!isset($_GET['action']) || $_GET['action'] == 'accueil_praticien'){
+            // print_r($praticien);
+            Vue::render('Agenda', [
+                "praticien" => $praticien
+            ]);
+        }
+        if(isset($_GET['action']) && $_GET['action'] == "test") {
+            echo "test fonctionne";
         }
 
         } else {
