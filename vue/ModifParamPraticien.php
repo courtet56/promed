@@ -4,7 +4,7 @@
  * 
  */
 ?>
-
+<button type="button" class="btn btn-danger bouton-fixe" id="logoutButton" data-bs-toggle="modal" data-bs-target="#logoutModal">Déconnexion</button>
 <div class="container">
         <h1>Mon profil</h1>
         
@@ -160,3 +160,21 @@
     <div class="spacer"></div>
     <div class="spacer"></div>
     <div class="spacer"></div>
+
+    <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Déconnexion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Voulez-vous vraiment vous déconnecter ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="logoutModalBtnClose" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-danger" id="logoutModalBtnConfirm">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>
