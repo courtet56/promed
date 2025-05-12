@@ -23,6 +23,10 @@ class Routing {
 		$route->add('', 'controleur\Accueil'); //page par défaut
 		$route->add('/auth', 'controleur\Authentif'); //page par défaut
 		$route->add('/inscription', 'controleur\InscriptionPraticien');
+		
+		//Espace Praticien
+		$route->add('/praticien', 'controleur\EspacePraticien');
+
 
 		//$route->add('/validation', 'controleur\Validation');
 		$route->add('/patient', 'controleur\EspacePatient');

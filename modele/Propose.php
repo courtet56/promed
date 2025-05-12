@@ -14,14 +14,15 @@ use modele\DAO\ProposeDAO;
 
 class Propose {
 
-	private int $idPresta=0; //La clé primaire est identifiée par $id
-	private int $idPraticien=0; //La clé primaire est identifiée par $id
+	
 	// les autres paramètres sont ci-dessous, dans le constructeur...
 	
 	//Constructeur : Propose
 	//Le nom des propriétés/attributs/colonnes de la table doivent être identiques dans la déclaration du constructeur.
 	//Ne doit pas être ajouté : la clé primaire, car auto-incrémentée :
 	public function __construct( 
+		private int $idPresta=0,
+		private int $idPraticien=0,
 		private float $duree=0.0,
 		private float $tarif=0.0,
 		) {
@@ -49,6 +50,9 @@ class Propose {
 	/**
 	 * Getters
 	 */
+	public function getIdPraticien() : int {
+		return $this->idPraticien;
+	}
 	
 	public function getIdPresta(): int {
 		return $this->idPresta;
