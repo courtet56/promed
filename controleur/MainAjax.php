@@ -438,8 +438,8 @@ class MainAjax extends Ajax {
 		$idPraticien = 19;
 		$idPresta = trim(req::post('idPresta'));
 
-		$prestationDAO = new PrestationDAO();
-		$prestationDAO->delete($idPraticien,$idPresta);
+		$proposeDAO = new ProposeDAO();
+		$proposeDAO->delete($idPraticien,$idPresta);
 
 
 	}

@@ -102,7 +102,7 @@ class PrestationDAO extends Database {
 	*/
 	public function delete($metier): bool {
 		//deleteOne() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->deleteOne( $metier->getIdPresta() );
+		return $this->deleteOne($metier->getId());
 	}
 
 	/**
