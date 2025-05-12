@@ -7,6 +7,7 @@ use modele\DAO\PraticienDAO as PraticienDAO;
 use vue\base\MainTemplate as Vue;
 use modele\Adresse as Address;
 use modele\DAO\AdresseDAO as AdresseDAO;
+use controleur\util\FormatDate as FormatDate;
 
 
 
@@ -32,7 +33,26 @@ class EspacePraticien{
         print_r($adresse);
         echo '</pre>';
         
+        if($_GET['action'] == "agenda"){
+            $_SESSION['prenom'] = 'bernard';
+            $_SESSION['nom'] = 'cazeneuve';
+            $_SESSION['activite'] = 'Medecin Généraliste';
+            $_SESSION['email'] = 'bernard.cazeneuve@example.com';
+            $email = $_SESSION['email'];
+            $data = $praticienDAO->getAgendaPraticien($email);
+            $dateDuJour = FormatDate::getFormatDate();
 
+
+            Vue::render('Agenda', [
+
+                'data' => $data,
+                'dateDuJour' => $dateDuJour,
+
+                'nom' => $_SESSION['nom'],
+                'prenom' => $_SESSION['prenom'],
+                'activite' => $_SESSION['activite']
+            ]);
+        }
 
         if($_GET['action'] == 'modif_profil'){
             echo 'test';
@@ -68,10 +88,5 @@ class EspacePraticien{
 
 
         }
-            
-
-
-
-
     }
 }

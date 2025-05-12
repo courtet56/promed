@@ -1,59 +1,38 @@
 <?php
-
 /**
- * VUE : Accueil.php
+ * VUE : Agenda.php
  */
-
 ?>
-<div class="container">
 
-	<div class="spacer"></div>
+<div class="container py-5">
 
-	<div class="text-center">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">Bienvenue <?= htmlspecialchars($prenom) ?> <?= htmlspecialchars($nom) ?> !</h1>
+        <h2 class="text-secondary">Mon activité : <?= htmlspecialchars($activite) ?></h2>
+        <h4 class="text-muted"><?= htmlspecialchars($dateDuJour); ?></h4>
+    </div>
 
-		<h1>Bienvenue <?= $prenom ?> <?= $nom ?> !</h1>
-        <h2>Mon activité :  <?= $activite ?></h2>
-        <h2><?= $dateDuJour; ?> </h2>
-
-
-        <table>
-
-            <thead>
-
-             <tr>
-                <th></th>
-                <th>RDV</th>*
-                <th>Patients</th>
-                <th>Prises en charge</th>
-             </tr>
-
-            </thead>
-
-            <tbody>
-
-            <?php foreach ($data as $v) { ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle shadow-sm">
+            <thead class="table-primary text-center">
                 <tr>
-                <td>
-                    <?= $v['libelleStatutRdv']; ?>
-                </td>
-
-                <td>
-                    <?= $v['heureRdv']; ?>
-                </td>
-                <td>
-                    <?= $v['nomPatient']; ?> <?= $v['prenomPatient']; ?>
-                </td>
-                <td>
-                    <?= $v['libellePrestation']; ?>
-                </td>
+                    <th>Statut</th>
+                    <th>Heure du RDV</th>
+                    <th>Patient</th>
+                    <th>Prestation</th>
                 </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data as $v) { ?>
+                    <tr>
+                        <td class="text-center"><?= htmlspecialchars($v['libelleStatutRdv']); ?></td>
+                        <td class="text-center"><?= htmlspecialchars($v['heureRdv']); ?></td>
+                        <td><?= htmlspecialchars($v['nomPatient']); ?> <?= htmlspecialchars($v['prenomPatient']); ?></td>
+                        <td><?= htmlspecialchars($v['libellePrestation']); ?></td>
+                    </tr>
                 <?php } ?>
-             </tbody>
-
+            </tbody>
         </table>
-	
-		
-
-	</div>
+    </div>
 
 </div>
