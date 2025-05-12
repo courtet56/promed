@@ -17,6 +17,7 @@
             <thead class="table-primary text-center">
                 <tr>
                     <th>Statut</th>
+                    <th>Date du Rdv</th>
                     <th>Heure du RDV</th>
                     <th>Patient</th>
                     <th>Prestation</th>
@@ -25,7 +26,12 @@
             <tbody>
                 <?php foreach ($data as $v) { ?>
                     <tr>
-                        <td class="text-center"><?= htmlspecialchars($v['libelleStatutRdv']); ?></td>
+                        <td class="text-center">
+                            <span class="badge-statut <?= strtolower($v['libelleStatutRdv']) === 'confirmé' ? 'badge-confirmé' : (strtolower($v['libelleStatutRdv']) === 'annulé' ? 'badge-annulé' : 'badge-attente') ?>">
+                                <?= htmlspecialchars($v['libelleStatutRdv']); ?>
+                            </span>
+                        </td>
+                        <td class="text-center"><?= htmlspecialchars($v['dateRdv']); ?></td>
                         <td class="text-center"><?= htmlspecialchars($v['heureRdv']); ?></td>
                         <td><?= htmlspecialchars($v['nomPatient']); ?> <?= htmlspecialchars($v['prenomPatient']); ?></td>
                         <td><?= htmlspecialchars($v['libellePrestation']); ?></td>

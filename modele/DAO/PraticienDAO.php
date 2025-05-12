@@ -55,22 +55,23 @@ class PraticienDAO extends Database {
 		Patient.prenom AS prenomPatient,
     	prestation.libelle AS libellePrestation,
     	RendezVous.heureRdv AS heureRdv,
+		RendezVous.dateRdv As dateRdv,
 		StatutRdv.libelle AS libelleStatutRdv
 		FROM
     	RendezVous
-		INNER JOIN Prestation ON RendezVous.idPresta = prestation.idPresta
-		INNER JOIN Patient ON Patient.idPatient = RendezVous.idPatient
-		INNER JOIN Praticien ON Praticien.id = RendezVous.id
-		INNER JOIN StatutRdv ON StatutRdv.idStatutRdv = RendezVous.idStatutRdv
-		where dateRdv = CURDATE() AND Praticien.email = ?;
+		INNER JOIN Prestation ON RendezVous.idPresta = prestation.id
+		INNER JOIN Patient ON Patient.id = RendezVous.idPatient
+		INNER JOIN Praticien ON Praticien.id = RendezVous.idPraticien
+		INNER JOIN StatutRdv ON StatutRdv.id = RendezVous.idStatutRdv
+		WHERE dateRdv BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 MONTH)
+		AND Praticien.email = ?
+		ORDER BY dateRdv ASC, heureRdv ASC;
 
-	');
+		');
 	
-	$stmt->execute([$email]);
-	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	return $result;
-
-
+		$stmt->execute([$email]);
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $result;
 
 	}
 
