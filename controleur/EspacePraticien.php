@@ -63,7 +63,8 @@ class EspacePraticien{
 
                     'data' => $data,
                     'dateDuJour' => $dateDuJour,
-                    'praticien' => $praticien
+                    'praticien' => $praticien,
+                    'action' => "agenda"
                 ]);
             }
 
@@ -117,7 +118,8 @@ class EspacePraticien{
                     'dataPrat' => $dataPrat,
                     'dataPrestations' => $dataPrestations,
                     'dataLibellePrestations' => $dataLibellePrestations,
-                    'praticien' => $praticien
+                    'praticien' => $praticien,
+                    'action' => "modif_profil"
                 ]);
 
             }
@@ -125,7 +127,8 @@ class EspacePraticien{
             if($this->action("accueil_praticien")){
                 // print_r($praticien);
                 Vue::render('AccueilPraticien', [
-                    "praticien" => $praticien
+                    "praticien" => $praticien,
+                    'action' => "accueil_praticien"
                 ]);
             }
 
