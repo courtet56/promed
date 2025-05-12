@@ -6,12 +6,12 @@ function isValidatedForm() {
 
     let errorContainer = document.getElementById('form-errors');
 
-    errorContainer.innerHTML = '';
+    if(errorContainer) errorContainer.innerHTML = '';
 
     let isValid = true;
 
     // Récupérer les champs du formulaire
-    const email = document.getElementById('email').value.trim(),
+    const email = document.getElementById('login').value.trim(),
         motDePasse = document.getElementById('motDePasse').value.trim(),
         captcha = document.getElementById('captcha').value.trim();
 
@@ -42,10 +42,44 @@ function isValidatedForm() {
 
 // Ajouter un écouteur d'événement au chargement du DOM
 document.addEventListener('DOMContentLoaded', function () {
-    const submitButton = document.getElementById('btnAuthentif');
+    const submitButton = document.getElementById('loginButton');
 
     submitButton.addEventListener('click', function () {
 
-        isValidatedForm();
+        if(isValidatedForm()) {
+            const email = document.getElementById('login').value.trim(), // récupération des champs du formulaire
+                    motDePasse = document.getElementById('motDePasse').value.trim(),
+                    captcha = document.getElementById('captcha').value.trim(),
+                    userType = document.querySelector('input[name="userType"]:checked').value;
+
+            const infos = {'email' : email, // mise en forme json
+                'motDePasse' : motDePasse,
+                'captcha' : captcha,
+                'userType' : userType
+            };
+            const ajaxUrl = "ajax?connexion";
+            const request = new AjaxRequest( // création objet ajax
+                ajaxUrl,
+                'POST',
+                infos,
+                false
+            );
+
+            request.send(
+                (response) => {
+                    if(response === "ok") {
+                        console.log("connexion fonctionne, session et redirection a implémenter");
+                        if(userType == "praticien") {
+                            window.location.href = '';
+                        } else if (userType == "patient") {
+                            window.location.href = './patient';
+                        }
+                    } else {
+                        $('#form-errors').text(response);
+                        $('#form-errors').show();
+                    }
+                }
+            )
+        }
     });
-}
+})

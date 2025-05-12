@@ -28,7 +28,7 @@ class AjaxRequest {
 		this.type = type;
 		this.data = data;
 		this.dbug = ajaxDebug;
-		this.verbose = true; //false -> masquer le popup sur le DOM, laisser le console.log
+		this.verbose = false; //false -> masquer le popup sur le DOM, laisser le console.log
 		
 		if(this.dbug) {
 			this.log = '->Début de la requête AJAX\n';
@@ -70,7 +70,7 @@ class AjaxRequest {
 			complete: () => {
 				if(this.dbug) {
 					this.log += '->Requête AJAX terminée\n';
-					console.log(this.log);
+					//console.log(this.log);
 					if(this.verbose) {
 						const htmlContent = this.log.replace(/->(.*)\n/g, "<li><b>$1</b></li>");
 						this.dbugContent.innerHTML = htmlContent.replace(/\n/g, "<br/>");
@@ -78,7 +78,7 @@ class AjaxRequest {
 						this.popup.style.display = "block";
 					}
 				}
-				completeCallback();
+				//completeCallback();
 			},
 			error: (jqXHR, textStatus, errorThrown) => {
 				console.error('Erreur lors de la requête: ', textStatus, errorThrown);

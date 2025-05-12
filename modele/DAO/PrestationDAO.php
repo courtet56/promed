@@ -37,8 +37,6 @@ class PrestationDAO extends Database {
 	private function getAllData($metier): array {
 		return [
 			'libelle' => $metier->getLibelle(),
-			
-			
 		];
 	}
 
@@ -72,6 +70,18 @@ class PrestationDAO extends Database {
 		$metier = new Prestation(...$rowData); //crée l'objet Prestation(->Prestation.php) avec toutes les clés du tableau $rowData
 		$metier->setId($id); //ajoute $id dans l'objet métier (Prestation)
 		return $metier; //retourne l'objet crée
+	}
+
+	// Récupère toutes les prestations: 
+	public function getAllPrestations(): array {
+		$prestations = [];
+		$prestationsData = $this->getAll();
+		foreach($prestationsData as $prestationData){
+			$prestation = new Prestation($prestationData->libelle);
+			$prestation->setId($prestationData->id);
+			$prestations[] = $prestation;
+		}
+		return $prestations;
 	}
 	
 	/** 

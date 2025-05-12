@@ -87,6 +87,26 @@ class Database implements IDatabase {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getAllById(string|array $id) : array|bool {
+        $sql = "SELECT * FROM {$this->tableName} WHERE 1=1 ";
+        if(is_array($id)) {
+            foreach($id as $curPkey) {
+                $sql .= "AND {$curPkey} = ? ";
+            }
+            $stmt = self::getPdo()->prepare($sql);
+        } else {
+            $sql .= "AND {$this->primaryKey} = ? ";
+            $stmt = self::getPdo()->prepare($sql);
+        }
+        $stmt->execute([$id]);
+		try {
+			return $stmt->fetchAll(PDO::FETCH_OBJ);
+		} catch (PDOException $e) {
+			error_log("Method : getOne : Error getting record: " . $e->getMessage());
+			return false; 
+		}
+    }
+
     /**
      * Permet la récupération d'un enregistrement en base de données
      * @param string $id
@@ -155,7 +175,7 @@ class Database implements IDatabase {
      * @param array $data
      * @return bool
      */
-    public function updateOne(string $id, array $data = []): bool {
+    public function updateOne($id, array $data = []): bool {
         // Remplacer 0 par NULL dans les données
         foreach ($data as $key => $value) {
             if ($value === 0) {
@@ -179,6 +199,10 @@ class Database implements IDatabase {
             $query .= " WHERE {$this->primaryKey} = :id";
             $values['id'] = $id;
         }
+
+        // echo $query;
+        // print_r($values);
+        // print_r($data);
         
         $stmt = self::getPdo()->prepare($query);
         return $stmt->execute(array_merge($values, $data));

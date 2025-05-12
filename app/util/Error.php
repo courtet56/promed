@@ -11,7 +11,7 @@ class Error {
 		$curArgs = count($tot);
 		if($defArgs !== $curArgs){$r=' <small>(<b>' . $curArgs . '</b> reçus)</small>';}
 		foreach($arrVars as $k => $var) {
-			if(empty($var)) {
+			if($var === '' || $var === null) {
 				throw new \InvalidArgumentException(
 					"Argument(s) vide(s) ou absent(s) pour le constructeur : " . 
 					$cls . 

@@ -7,7 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'modele\\' => array($baseDir . '/modele'),
+<<<<<<< HEAD
+=======
     'config\\' => array($baseDir . '/config'),
+>>>>>>> e75ef9065e077a113a031b3712f6d33bff6397f4
     'app\\' => array($baseDir . '/app'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),

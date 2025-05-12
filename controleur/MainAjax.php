@@ -8,9 +8,16 @@ use modele\DAO\UserDAO as Model;
 use modele\DAO\PraticienDAO as PraticienDAO;
 use modele\DAO\AdresseDAO as AdresseDAO;
 use modele\Adresse as Adresse;
+
+use modele\DAO\PatientDAO;
 use modele\DAO\RendezVousDAO;
 use modele\Praticien as Praticien;
+use modele\Patient as Patient;
 
+use modele\DAO\PrestationDAO;
+use modele\DAO\ProposeDAO;
+use modele\Prestation;
+use modele\Propose;
 
 /**
  *	Classe chargée depuis le routing : route/routing.php
@@ -44,8 +51,14 @@ class MainAjax extends Ajax {
 			// - la méthode protégée : "getUserBySearch" est implémentée ci-dessous.
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
-			'modifyPraticien' => 'modifyPraticien'
-			'annulerRdv' => 'annulerRendezVous'
+			'annulerRdv' => 'annulerRendezVous',
+			'connexion' => 'connexion',
+			'logout' => 'logout',
+			//Fonctionnalités liées à la modification des param du praticien:
+			'ajouterModifierPrestation' => 'ajouterModifierPrestation',
+			'modifyPraticien' => 'modifyPraticien',
+			'selectPresta' => 'selectionnerPrestation',
+			'supprPresta' => 'supprimerPrestation'
 			// - D'autres lignes ?
 		];
 	}
@@ -140,7 +153,7 @@ class MainAjax extends Ajax {
 							   return "inscription échouée, échec dans la création du praticien en bdd !";
 						   }
 					   } else {
-						   return "impossible de réucpérer l'id de l'adresse !";
+						   return "impossible de récupérer l'id de l'adresse !";
 					   }
 				   } else {
 						return "Echec dans la création de l'adresse !";
@@ -224,11 +237,11 @@ class MainAjax extends Ajax {
 		
 			// Utiliser session quand elle sera disponible : $praticien = $_SESSION['praticien'];
 			$praticienDAO = new PraticienDAO();
-			$currentPraticien = $praticienDAO->read(17);
+			$currentPraticien = $praticienDAO->read(19);
 
 
 			$adresseDAO = new AdresseDAO();
-			$currentAdresse = $adresseDAO->read(17);
+			$currentAdresse = $adresseDAO->read(19);
 
 			$currentName = $currentPraticien->getNom();
 			$currentForname = $currentPraticien->getPrenom();
@@ -376,9 +389,64 @@ class MainAjax extends Ajax {
 		
 		return true;
 		
+	} 
+	// Fin partie modification paramètres Praticien
+	// Début modifications prise en charge Praticien:
+
+	protected function ajouterModifierPrestation (): bool {
+		$idPraticien = 19;
+		$idPresta = trim(req::post('libellePrestation'));
+
+		$proposeDAO = new ProposeDAO();
+		$proposition = $proposeDAO->getPropositionByIds($idPraticien, $idPresta);
+
+		$duree = trim(req::post('dureeConsultation'));
+		$prix = trim(req::post('prixConsultation'));
+		if(empty($duree) && empty($prix)){
+			return false;
+		}
+		if(empty($proposition)){
+			$newPropose = new Propose($idPresta, $idPraticien, $duree, $prix);
+			return $proposeDAO->create($newPropose); // retourne vrai ou faux
+		} else {
+			$proposition->setDuree($duree);
+			$proposition->setTarif($prix);
+			return $proposeDAO->update($proposition);
+		} 
 	}
 
-	
+	protected function selectionnerPrestation () {
+		$idPraticien = 19;
+		$idPresta = trim(req::post('libellePrestation'));
+
+		$proposeDAO = new ProposeDAO();
+		$proposition = $proposeDAO->getPropositionByIds($idPraticien, $idPresta);
+
+		//créer tableau pour envoyer data:
+		$reponse = [];
+		
+		if($proposition != null) {
+			$reponse['existe'] = true;
+			$reponse['duree'] = $proposition->getDuree();
+			$reponse['tarif'] = $proposition->getTarif();
+		}
+		else{
+			$reponse['existe'] = false;
+		}
+
+		return json_encode($reponse);
+	}
+
+	protected function supprimerPrestation() {
+		$idPraticien = 19;
+		$idPresta = trim(req::post('idPresta'));
+
+		$prestationDAO = new PrestationDAO();
+		$prestationDAO->delete($idPraticien,$idPresta);
+
+
+	}
+
 	
 	protected function annulerRendezVous () {
 		$idRdv = trim(req::post('idRdv')); // récupération de l'idrdv envoyé par ajax via POST
@@ -387,8 +455,63 @@ class MainAjax extends Ajax {
 		return $rdvDao->annulerRdv($idRdv);
 	}
 
+	// debut authentification
+	protected function connexion () {
+		$email = trim(req::post('email'));
+		$mdp = trim(req::post('motDePasse'));
+		$captcha = trim(req::post('captcha'));
+		$userType = trim(req::post('userType'));
+		$user = false;
+
+		if($userType == "patient") {
+			$dbPatient = new PatientDAO();
+			$userInfo = $dbPatient->getPatientByEmail($email);
+		} else if ($userType == "praticien"){
+			$dbPraticien = new PraticienDAO();
+			$userInfo = $dbPraticien->getPraticienByEmail($email);
+		}
+		
+		if(md5($captcha) !== $_SESSION['captchaCode']) { // vérification du captcha
+			return "Captcha incorrect.";
+		}
+
+		if(empty($userInfo)) { // cas ou aucune ligne ne correspond a l'email en bd
+			return "Ce compte n'existe pas.";
+		} else { // création d'objet en fonction
+			if($userType == "patient") {
+				$user = new Patient($userInfo['nom'], $userInfo['prenom'], $userInfo['dateNaiss'], $userInfo['telephone'], $userInfo['email'], $userInfo['motDePasse'], $userInfo['idTuteur'], $userInfo['idAdresse']);
+				$user->setIdPatient($userInfo['id']);
+			} else {
+				$user = new Praticien($userInfo['nom'], $userInfo['prenom'], $userInfo['email'], $userInfo['activite'], $userInfo['adeli'], $userInfo['motDePasse'], $userInfo['idAdresse']);
+				$user->setId($userInfo['id']);
+			}
+		}
+
+		if(!password_verify($mdp, $user->getMotDePasse())) { // cas ou mdp incorrect
+			return "Mot de passe incorrect.";
+		}
+		$_SESSION['user'] = [
+			'email' => $email,
+			'userType' => $userType
+		];
+		return "ok";
+	}
+
+	protected function logout() {
+		if(isset($_POST['logout']) && $_POST['logout']) {
+			if (isset($_SESSION['user'])) {
+				unset($_SESSION['user']);
+			}
+			return 'ok';
+		}
+		else {
+			return false;
+		}
+	}
+
+	//fin méthode authentification
 }
 
 
-}
+
 
