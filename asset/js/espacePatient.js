@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('.cancelBtn').on('click', function() {
         const idRdv = $(this).attr('idrdv');
 
-        const $tr = $(this).closest('tr');
+        const $tr = $(this).closest('.accordion-item');
         const $tds = $tr.find('td');
         // récupération de la date, de l'heure et du nom du praticien correspondant au rdv
         const date = $tds.eq(0).text().trim();

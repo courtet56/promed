@@ -47,7 +47,7 @@ header {
 }
 
 h1 {
-	font-family: 'Jersey 25', sans-serif;
+	/* font-family: 'Jersey 25', sans-serif; */
 	font-size: 4rem;
 	color: #2f56b1;
 	margin: 20px 0 30px 0;
@@ -65,7 +65,7 @@ h1 {
 
 #main-logo {
 	height: auto;
-	width: 25rem;
+	width: 20rem;
 	padding: auto;
   }
 
@@ -116,7 +116,7 @@ h1 {
 }
 
 .rdvList {
-	font-family: 'Jersey 25', sans-serif;
+	/* font-family: 'Jersey 25', sans-serif; */
 	font-size: 2rem;
 
 	th {
@@ -128,13 +128,6 @@ h1 {
 		vertical-align: middle;
 		text-align: center; /* si tu veux centrer horizontalement aussi */
 	  }
-	  
-	.btn {
-		background-color: rgb(233, 108, 108);
-		padding: 5px 15px 5px 15px;
-		width: auto;
-		--bs-btn-font-size: 1.5rem;
-	}
 
 	.btn:active{
 		background-color: rgb(161, 76, 76);
@@ -144,4 +137,30 @@ h1 {
 	.btn:disabled {
 		border-color: inherit;
 	}
+}
+
+.cancelBtn {
+	background-color: rgb(233, 108, 108);
+	padding: 5px 15px 5px 15px;
+	width: auto;
+	--bs-btn-font-size: 1.5rem;
+}
+
+.nav-link {
+	font-size: 1.5rem;
+	/* font-family: 'Jersey 25', sans-serif; */
+	color: rgb(135, 135, 135);
+}
+
+.nav-link.active {
+	color: black !important;
+}
+
+.nav-tabs {
+	flex-wrap: nowrap;
+	font-size: 0.85rem; /* Réduit légèrement la taille de police */
+}
+  
+.container {
+	min-height: fit-content;
 }

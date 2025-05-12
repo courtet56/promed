@@ -170,18 +170,18 @@ class Database implements IDatabase {
         }
         $query = rtrim($query, ", ");
         $values = [];
-        if (is_array($id) && !empty($id)) {
-            $conditions = [];
-            foreach ($id as $key => $value) {
-                $param = "id_$key";
-                $conditions[] = "$key = :$param";
-                $values[$param] = $value;
+        if(is_array($id) && !empty($id)) {
+            foreach($id as $key => $value) {
+                $query .= " WHERE {$key} = :id";
+                $values[$key] = $value;
             }
-            $query .= " WHERE " . implode(" AND ", $conditions);
         } else {
             $query .= " WHERE {$this->primaryKey} = :id";
-            $values['id'] = $id;
         }
+
+        // echo $query;
+        // print_r($values);
+        // print_r($data);
         
         $stmt = self::getPdo()->prepare($query);
         return $stmt->execute(array_merge($values, $data));

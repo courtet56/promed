@@ -143,7 +143,7 @@ class PatientDAO extends Database {
 		$idPatient = $patient->getIdPatient();
 		$now = date("Y-m-d H:i:s");
 		date_default_timezone_set("Europe/Paris");
-		return $this->sendSQL("SELECT rdv.id, rdv.dateRdv, rdv.heureRdv, rdv.idPatient, rdv.idPraticien, rdv.idPresta FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv = srdv.id WHERE rdv.idPatient = ? AND CONCAT(rdv.dateRdv, ' ', rdv.heureRdv) > ? AND srdv.libelle LIKE 'En cours';", [$idPatient, $now]);
+		return $this->sendSQL("SELECT rdv.id, rdv.dateRdv, rdv.heureRdv, rdv.idPatient, rdv.idPraticien, rdv.idPresta, srdv.libelle FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv = srdv.id WHERE rdv.idPatient = ? AND CONCAT(rdv.dateRdv, ' ', rdv.heureRdv) > ? AND srdv.libelle LIKE 'En cours';", [$idPatient, $now]);
 	}
 	
 	public function getRdvAnnulesByPatient(Patient $patient) { // rdv a vénir ou passés mais annulés

@@ -35,83 +35,41 @@ Class EspacePatient
             $cancelRdvList = $db->getRdvAnnulesByPatient($patient);
             $oldRdvList = $db->getOldRdvByPatient($patient);
 
-            $htmlCurrent = '';
-
-            if(is_array($currentRdvList) && !empty($currentRdvList)) { // construction ligne par ligne du tableau contenant les rdv en cours
-                $htmlCurrent .= "<thead>
-                <tr>
-                <th scope='col'>Date</th>
-                <th scope='col'>Heure</th>
-                <th scope='col'>Praticien</th>
-                <th scope='col'>Prise en charge</th>
-                <th scope='col'></th>
-                </tr>
-            </thead>";
-                foreach($currentRdvList as $curRdv) {
+            if(is_array($currentRdvList) && !empty($currentRdvList)) {
+                foreach($currentRdvList as $i => $curRdv) {
                     $praticien = $dbPrat->read($curRdv["idPraticien"]);
+                    $currentRdvList[$i]['praticien'] = $praticien->getNom() . " " . $praticien->getPrenom();
+                
                     $prestation = $dbPresta->read($curRdv['idPresta']);
-                    $htmlCurrent .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
-                            $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
-                            $prestation->getLibelle() . "</td><td><button type='button' class='btn cancelBtn' data-bs-toggle='modal' data-bs-target='#cancelModal' idRdv='" . $curRdv['id'] . "'>Annuler</button></td>\n";
+                    $currentRdvList[$i]['presta'] = $prestation->getLibelle();
                 }
-                $htmlCurrent .= "</tbody>";
-            } else {
-                $htmlCurrent .= "Vous n'avez aucun rendez-vous de prévu pour le moment.";
             }
 
-            $htmlCancel = '';
-
-            if(is_array($cancelRdvList) && !empty($cancelRdvList)) { // construction ligne par ligne du tableau contenant les rdv7
-                $htmlCancel .= "<thead>
-                <tr>
-                <th scope='col'>Date</th>
-                <th scope='col'>Heure</th>
-                <th scope='col'>Praticien</th>
-                <th scope='col'>Prise en charge</th>
-                <th scope='col'></th>
-                </tr>
-            </thead><tbody>";
-                foreach($cancelRdvList as $curRdv) {
+            if(is_array($cancelRdvList) && !empty($cancelRdvList)) {
+                foreach ($cancelRdvList as $i => $curRdv) {
                     $praticien = $dbPrat->read($curRdv["idPraticien"]);
+                    $cancelRdvList[$i]['praticien'] = $praticien->getNom() . " " . $praticien->getPrenom();
+                
                     $prestation = $dbPresta->read($curRdv['idPresta']);
-                    $htmlCancel .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
-                            $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
-                            $prestation->getLibelle() . "</td><td><button disabled type='button' class='btn cancelBtn' data-bs-toggle='modal' data-bs-target='#cancelModal' idRdv='" . $curRdv['id'] . "'>Annulé</button></td>\n";
+                    $cancelRdvList[$i]['presta'] = $prestation->getLibelle();
                 }
-                $htmlCancel .= "</tbody>";
-            } else {
-                $htmlCancel .= "Vous n'avez aucun rendez-vous annulé pour le moment.";
             }
 
-            $htmlOld = '';
-
-            if(is_array($oldRdvList) && !empty($oldRdvList)) { // construction ligne par ligne du tableau contenant les rdv7
-                $htmlOld .= "<thead>
-                <tr>
-                <th scope='col'>Date</th>
-                <th scope='col'>Heure</th>
-                <th scope='col'>Praticien</th>
-                <th scope='col'>Prise en charge</th>
-                <th scope='col'></th>
-                </tr>
-            </thead><tbody>";
+            if(is_array($oldRdvList) && !empty($oldRdvList)) {
                 foreach($oldRdvList as $curRdv) {
                     $praticien = $dbPrat->read($curRdv["idPraticien"]);
+                    $oldRdvList[$i]['praticien'] = $praticien->getNom() . " " . $praticien->getPrenom();
+                
                     $prestation = $dbPresta->read($curRdv['idPresta']);
-                    $htmlOld .= '<tr><td>' . $curRdv["dateRdv"] . "</td><td>" .
-                            $curRdv["heureRdv"] . "</td><td>" . $praticien->getNom() . " " . $praticien->getPrenom() . "</td><td>" .
-                            $prestation->getLibelle() . "</td><td><button disabled type='button' class='btn cancelBtn' data-bs-toggle='modal' data-bs-target='#cancelModal' idRdv='" . $curRdv['id'] . "'>Annuler</button></td>\n";
+                    $oldRdvList[$i]['presta'] = $prestation->getLibelle();    
                 }
-                $htmlOld .= "</tbody>";
-            } else {
-                $htmlOld .= "Vous n'avez aucun rendez-vous de passé pour le moment.";
             }
 
             Vue::addJS([ASSET . '/js/espacePatient.js']);
             Vue::render('EspacePatient', [
-                'currentRdv' => $htmlCurrent, // variable html à inclure dans la vue sous le nom $tableRdv
-                'cancelRdv' => $htmlCancel,
-                'oldRdv' => $htmlOld,
+                'currentRdv' => $currentRdvList, // variable html à inclure dans la vue sous le nom $tableRdv
+                'cancelRdv' => $cancelRdvList,
+                'oldRdv' => $oldRdvList,
                 'user' => $patientArray
             ]);
 
