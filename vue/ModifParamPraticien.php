@@ -84,6 +84,7 @@
 
                     
                     <div class="mb-3">
+                        <input type="hidden" name='userId' value="<?=$praticien->getId()?>" id="userId">
                     <select id="libellePrestation" class="form-select">
                         <option value=""  selected>Sélectionner la prestation</option>
                         <?php foreach ($dataLibellePrestations as $dataLibellePrestation){ ?>
@@ -156,3 +157,6 @@
             </div>
         </div>
     </div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>

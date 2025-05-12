@@ -31,7 +31,16 @@
     <div class="wrapper">
     <header>
         <!-- <div class="container-fluid"> -->
-            <a class="navbar-brand" href="<?= $actual_link ?>">
+            <?php
+            if(isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
+                $link = "./praticien";
+            } else if (isset($_SESSION['user']) && $_SESSION['user']['userType'] == "patient") {
+                $link = "./patient";
+            } else {
+                $link = $actual_link;
+            }
+            ?>
+            <a class="navbar-brand" href="<?= $link ?>">
                 <img src="<?=ASSET?>/img/promed.jpg" id="main-logo">
             </a>
             <!-- <ul class="nav nav-pills">
@@ -46,6 +55,29 @@
         //  }
          ?>
     </header>
-    <!-- <nav class="header">
-        
-    </nav> -->
+    <?php
+    if(isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
+    ?>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent"  style="align-items:center;">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./praticien?action=test">Rendez-vous</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./praticien?action=modif_profil">Mon profil</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <?php
+    }
+    ?>

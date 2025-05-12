@@ -66,7 +66,7 @@ class ProposeDAO extends Database {
 		if($id>0)$rows = $this->getAllById($id); //on récupère la ligne/tuple concernée
 		//gestion de l'index en cas d'erreur :
 		if(!$rows) {
-			die( __CLASS__ . "->read() : l'index fourni (<b>$id</b>) est invalide !" );
+			return [];
 		} 
 		$metiers = [];
 		foreach ($rows as $row){
@@ -122,7 +122,7 @@ class ProposeDAO extends Database {
 	* 	@param string $name Prénom de l'utilisateur
 	* 	@return object
 	*/
-	public function getLineFrom(string $name): \stdClass {
+	public function getLineFrom(string $name) {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE prenom = ?", [$name]);
 	}

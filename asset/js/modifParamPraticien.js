@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function getFormDataPresta() {
     const fieldNames = [
-        'libellePrestation','dureeConsultation', 'prixConsultation',
+        'libellePrestation','dureeConsultation', 'prixConsultation', 'userId'
     ];
 
     const formDataPresta = {};
@@ -232,7 +232,7 @@ function getFormDataPresta() {
             formDataPresta[field] = element.value.trim();
         }
     }
-
+    // console.log(formDataPresta);
     return formDataPresta;
 }
 
