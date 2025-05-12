@@ -15,27 +15,28 @@
 		<h1>Connexion</h1>
 
 		<div class="authentification">
+			<div id="form-errors"></div>
 			
 
-				<form method="POST" action="">
+				<!-- <form method="POST" action=""> -->
 					<div class="radioDiv">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-							<label class="form-check-label" for="radioDefault1">
+							<input class="form-check-input" type="radio" name="userType" id="radioPrat" value="praticien" checked>
+							<label class="form-check-label" for="radioPrat">
 								Praticien
 							</label>
 						</div>
 
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-							<label class="form-check-label" for="radioDefault2">
+							<input class="form-check-input" type="radio" name="userType" id="radioPatient" value="patient">
+							<label class="form-check-label" for="radioPatient">
 								Patient
 							</label>
 						</div>
 					</div>
 					
 					<div class="mb-3">
-						<input type="email" class="form-control" id="loginInput" placeholder="Identifiant">
+						<input type="email" class="form-control" id="login" placeholder="Identifiant">
 					</div>
 					<div class="spacer"></div>
 					<div class="d-flex justify-content-center">
@@ -51,7 +52,7 @@
 						</div>
 					</div>
 					<button class="btn" id="loginButton" style="margin: 20px 0 0 0;">Valider</button>
-				</form>
+				<!-- </form> -->
 			  
 		</div>
 

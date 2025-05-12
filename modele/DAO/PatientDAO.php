@@ -122,7 +122,9 @@ class PatientDAO extends Database {
 	*/
 	public function getPatientByEmail(string $email): array|bool {
 		//sendSQL() est une méthode du DAO (modele/DAO/base/Database.php)
-		return $this->sendSQL("SELECT * from `" . $this->tableName . "` WHERE email = ?", [$email]);
+		$stmt = $this->getPdo()->prepare("SELECT * from `" . $this->tableName . "` WHERE email = :email");
+		$stmt->execute([':email' => $email]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 	
 	/**
@@ -141,7 +143,7 @@ class PatientDAO extends Database {
 		$idPatient = $patient->getIdPatient();
 		$now = date("Y-m-d H:i:s");
 		date_default_timezone_set("Europe/Paris");
-		return $this->sendSQL("SELECT rdv.id, rdv.dateRdv, rdv.heureRdv, rdv.idPatient, rdv.idPraticien, rdv.idPresta FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv = srdv.id WHERE rdv.idPatient = ? AND CONCAT(rdv.dateRdv, ' ', rdv.heureRdv) > ? AND srdv.libelle LIKE 'En cours';", [$idPatient, $now]);
+		return $this->sendSQL("SELECT rdv.id, rdv.dateRdv, rdv.heureRdv, rdv.idPatient, rdv.idPraticien, rdv.idPresta, srdv.libelle FROM RendezVous rdv JOIN StatutRdv srdv ON rdv.idStatutRdv = srdv.id WHERE rdv.idPatient = ? AND CONCAT(rdv.dateRdv, ' ', rdv.heureRdv) > ? AND srdv.libelle LIKE 'En cours';", [$idPatient, $now]);
 	}
 	
 	public function getRdvAnnulesByPatient(Patient $patient) { // rdv a vénir ou passés mais annulés

@@ -1,12 +1,12 @@
 {
     "require": {
-        "claviska/simpleimage": "^3.7"
+        "claviska/simpleimage": "^3.7",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "modele\\": "modele/",
-            "app\\": "app/",
-            "config\\": "config/"
+        "modele\\": "modele/",
+        "app\\": "app/"
         }
     }
 }

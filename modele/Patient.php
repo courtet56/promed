@@ -137,4 +137,17 @@ class Patient {
 		$this->motDePasse = $motDePasse;
 	}
 
+	public static function fromArray(array $data): Patient {
+		return new Patient(
+			$data['nom'] ?? '',
+			$data['prenom'] ?? '',
+			$data['dateNaiss'] ?? '',
+			$data['telephone'] ?? '',
+			$data['email'] ?? '',
+			$data['motDePasse'] ?? '',
+			(int)$data['idTuteur'] ?? 0,
+			(int)$data['idAdresse'] ?? 0
+		);
+	}
+
 }

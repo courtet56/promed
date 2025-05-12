@@ -212,7 +212,108 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }            
-});       
+});   
+
+// Début traitement Modifications/Ajout prises en charge :
+
+
+function getFormDataPresta() {
+    const fieldNames = [
+        'libellePrestation','dureeConsultation', 'prixConsultation',
+    ];
+
+    const formDataPresta = {};
+
+    for (let i = 0; i < fieldNames.length; i++) {
+        const field = fieldNames[i];
+        const element = document.getElementById(field);
+
+        if (element) {
+            formDataPresta[field] = element.value.trim();
+        }
+    }
+
+    return formDataPresta;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    
+    let submitButton = document.getElementById('btnAjouterModifierPrestation');
+    submitButton.addEventListener('click', function () {
+
+        const formData = getFormDataPresta();
+        const ajaxUrl = 'ajax?ajouterModifierPrestation'
+        const request = new AjaxRequest(ajaxUrl, 'POST', formData, true);
+        request.send((response) => 
+            {
+                if (response == true)
+                {
+                    alert('creation ok');
+                    location.reload();
+                    // recupérer les datas et refaire tableau => faire une nouvelle fonction recreerTableau() et l'appeler ici
+                    
+                }
+                else {
+
+                    alert("Une erreur est survenue !");
+                }
+            }
+        )
+    });               
+
+
+
+    // Ecoute du menu Select:
+    let champPrix = document.getElementById('dureeConsultation');
+    let champDuree = document.getElementById('prixConsultation');
+    let selectPresta = document.getElementById('libellePrestation');
+    selectPresta.addEventListener('change', function () {
+        {
+            const formData = getFormDataPresta();
+    
+            const ajaxUrl = 'ajax?selectPresta';
+    
+            const request = new AjaxRequest(ajaxUrl, 'POST', formData, true);
+            request.send(
+                (response) => 
+                {
+                    // Convertir la réponse en objet JavaScript
+                    const donnees = JSON.parse(response);
+                    console.log(donnees);
+                    
+                    if (donnees.existe === true)
+                    {
+                        // Changer la valeur du bouton:
+                        submitButton.textContent = 'Modifier';
+                        champDuree.value = donnees.duree;
+                        champPrix.value = donnees.tarif;
+                    }
+                    else {
+                        submitButton.textContent = 'Ajouter';
+                        champPrix.value = "";
+                        champDuree.value = "";
+                    }
+                   
+                },  
+                
+            );
+        }
+    })
+
+    // Supprimer Prestation:
+
+     $('.btnSupprimer').on('click', function() {
+        const $tr = $(this).closest('tr');
+        console.log($tr.attr('id'));
+
+        // faire un tableau avec en key 'idPresta' 
+        // et new Ajax:
+
+
+    })
+
+    
+});           
     
 
 
