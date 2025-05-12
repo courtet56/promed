@@ -16,6 +16,10 @@ class ComposerStaticInit5c0a388dd5f5735c3004166ebc555614
         array (
             'modele\\' => 7,
         ),
+        'c' => 
+        array (
+            'config\\' => 7,
+        ),
         'a' => 
         array (
             'app\\' => 4,
@@ -34,6 +38,13 @@ class ComposerStaticInit5c0a388dd5f5735c3004166ebc555614
         'modele\\' => 
         array (
             0 => __DIR__ . '/../..' . '/modele',
+<<<<<<< HEAD
+=======
+        ),
+        'config\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/config',
+>>>>>>> e75ef9065e077a113a031b3712f6d33bff6397f4
         ),
         'app\\' => 
         array (

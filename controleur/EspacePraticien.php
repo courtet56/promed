@@ -19,6 +19,7 @@ use modele\DAO\PrestationDAO as PrestationDAO;
 class EspacePraticien{
 
     public function __construct(){
+        if (isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
 
 
         // Utilisation de GET pour orienter vers la bonne fonctionnalité (ex: GET = modif_profil))
@@ -102,10 +103,8 @@ class EspacePraticien{
             ]);
 
         }
-            
-
-
-
-
-    }
+        } else {
+            echo "Vous n'êtes pas connecté.";
+        }
+    } 
 }
