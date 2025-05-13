@@ -23,7 +23,7 @@
                     <th>Statut</th>
                     <th>Date du Rdv</th>
                     <th>Heure du RDV</th>
-                    <th>Durée</th>
+                    <th>Durée (mn)</th>
                     <th>Patient</th>
                     <th>Prestation</th>
                     <th>Action</th>
