@@ -23,24 +23,34 @@
                     <th>Statut</th>
                     <th>Date du Rdv</th>
                     <th>Heure du RDV</th>
+                    <th>Durée</th>
                     <th>Patient</th>
                     <th>Prestation</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($data as $v) { ?>
-                    <tr>
+                    <tr id="<?= $v['idRdv'] ?>">
                         <td class="text-center">
-                            <span class="badge-statut <?= strtolower($v['libelleStatutRdv']) === 'confirmé' ? 'badge-confirmé' : (strtolower($v['libelleStatutRdv']) === 'annulé' ? 'badge-annulé' : 'badge-attente') ?>">
+                            <span class="badge-statut statut-label <?= strtolower($v['libelleStatutRdv']) === 'confirmé' ? 'badge-confirmé' : (strtolower($v['libelleStatutRdv']) === 'annulé' ? 'badge-annulé' : 'badge-attente') ?>">
                                 <?= htmlspecialchars($v['libelleStatutRdv']); ?>
                             </span>
                         </td>
                         <td class="text-center"><?= htmlspecialchars($v['dateRdv']); ?></td>
                         <td class="text-center"><?= htmlspecialchars($v['heureRdv']); ?></td>
+                        <td class="text-center"><?= htmlspecialchars($v['dureeRdv']); ?></td>
                         <td><?= htmlspecialchars($v['nomPatient']); ?> <?= htmlspecialchars($v['prenomPatient']); ?></td>
                         <td><?= htmlspecialchars($v['libellePrestation']); ?></td>
+                        <td class="text-center">
+                            <?php if (strtolower($v['libelleStatutRdv']) !== 'annulé') : ?>
+                                <button class="btn btn-sm btn-danger btn-delete btnSupprimer"> 
+                                    <i class="bi bi-trash"></i> 
+                                </button>
+                            <?php endif; ?>
+                        </td>
                     </tr>
-                <?php } ?>
+                    <?php } ?>
             </tbody>
         </table>
         <div class="spacer"></div>
