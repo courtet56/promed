@@ -508,7 +508,6 @@ class MainAjax extends Ajax {
 			return false;
 		}
 	}
-
 	//fin méthode authentification
 }
 
