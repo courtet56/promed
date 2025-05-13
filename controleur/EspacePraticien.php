@@ -61,6 +61,7 @@ class EspacePraticien{
                 $dateDuJour = FormatDate::getFormatDate();
 
                 Vue::addCSS([ASSET . '/css/agenda.css',]);
+                Vue::addJS([ASSET . '/js/agenda.js',]);
                 Vue::setTitle('Agenda du praticien');
                 Vue::render('Agenda', [
 
