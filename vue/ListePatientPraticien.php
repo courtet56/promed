@@ -17,12 +17,11 @@
             </thead>
             <tbody>
 
-
                 <?php foreach ($data as $unPatient): ?>
                     <tr>
                         <td><?= htmlspecialchars($unPatient['nomPatient']); ?></td>
                         <td><?= htmlspecialchars($unPatient['prenomPatient']); ?></td>
-                        </td>
+                        
                     </tr>
 
                 <?php endforeach; ?>

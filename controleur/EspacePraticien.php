@@ -46,6 +46,7 @@ class EspacePraticien
 
             $proposeDAO = new ProposeDAO();
             $proposes = $proposeDAO->read($praticien->getId()); // retourne tous les proposes du medecin 
+            $soigneDAO = new SoigneDAO();
 
             // echo'<pre>';
             // print_r($proposes);
@@ -136,6 +137,23 @@ class EspacePraticien
                     "praticien" => $praticien
                 ]);
             }
+
+            if (isset($_GET['action']) && $_GET['action'] == "liste_patient") {
+                $data = $soigneDAO->getListePatientPraticien($praticien->getEmail());
+
+
+                // Débogage - Vérifier si $data contient quelque chose
+                
+                Vue::addCSS([ASSET . '/css/ListePatientPraticien.css',]);
+                Vue::setTitle('Liste des patients');
+                Vue::render('ListePatientPraticien', [
+
+                    'data' => $data
+
+
+                ]);
+            }
+
 
         } else {
             echo "Vous n'êtes pas connecté.";

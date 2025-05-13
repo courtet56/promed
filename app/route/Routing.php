@@ -46,6 +46,7 @@ class Routing {
 		$route->add('/info', function () { phpinfo(); });
 		//ajout d'un controleur JavaScript (génération dynamique d'un script JS), voir app/Setup.php :
 		$route->add('asset/js/' . $_SESSION['CUSTOM_JS'], 'controleur\util\CustomJS');
+		$route->add('/captcha', 'controleur\util\Captcha');
 		
 		//Contrôleur 404 par défaut :
 		$route->set404('controleur\NotFound');
