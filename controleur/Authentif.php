@@ -12,7 +12,7 @@ Class Authentif
 {
 	public function __construct() {
         // $db = new PatientDAO();
-        // $patient = new Patient('Conte', 'Lysa', '2004-05-30', '0601020304', 'lysa.conte@example.com', password_hash('1234', PASSWORD_DEFAULT), 0, 1);
+        // $patient = new Patient('Test', 'Test', '2004-05-30', '0601020304', 'test@example.com', password_hash('1234', PASSWORD_DEFAULT), 0, 1);
         // $db->create($patient);
 
         Vue::addCSS([

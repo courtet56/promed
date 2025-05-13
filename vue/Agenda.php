@@ -11,7 +11,11 @@
         <h2 class="text-secondary">Mon activité : <?= $praticien->getActivite() ?></h2>
         <h4 class="text-muted"><?= htmlspecialchars($dateDuJour); ?></h4>
     </div>
-
+    <div class="btn-actions-container">
+        <a href="<?= htmlspecialchars($ajouterRdvUrl) ?>" class="btn-ajouter-rdv">
+            + Ajouter un Rendez-vous
+        </a>
+    </div>
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle shadow-sm">
             <thead class="table-primary text-center">
@@ -39,6 +43,9 @@
                 <?php } ?>
             </tbody>
         </table>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
     </div>
 
 </div>
