@@ -110,11 +110,6 @@ h1 {
 	 
 }
 
-.table {
-	border: 2px solid #2f56b1; 
-	border-collapse: collapse;
-}
-
 .rdvList {
 	/* font-family: 'Jersey 25', sans-serif; */
 	font-size: 2rem;
@@ -168,4 +163,31 @@ h1 {
 
 .nav-item {
 	padding:0 30px 0 30px;
+}
+
+.table th,
+.table td {
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #003060;
+}
+
+.table th {
+    background-color: #3257A8;
+    color: white;
+    font-weight: 600;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tr:hover {
+    background-color: #f1f7ff;
+}
+
+.table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
 }

@@ -72,6 +72,9 @@
           <a class="nav-link <?=$action == "agenda" ? "active" : ''?>" href="./praticien?agenda">Rendez-vous</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link <?=$action == "patients" ? "active" : ''?>" href="./praticien?patients">Patients</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link <?=$action == "modif_profil" ? "active" : ''?>" href="./praticien?modif_profil">Mon profil</a>
         </li>
       </ul>

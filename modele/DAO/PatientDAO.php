@@ -24,7 +24,7 @@ class PatientDAO extends Database {
 	public function __construct() {
 		//-------------------------------------------
 		$tableName = 'Patient';
-		$primaryKey = 'idPatient';
+		$primaryKey = 'id';
 		//-------------------------------------------
 		parent::__construct($tableName, $primaryKey);
 	}
@@ -83,8 +83,8 @@ class PatientDAO extends Database {
     	$rowData['idTuteur'] = isset($rowData['idTuteur']) ? (int) $rowData['idTuteur'] : 0;
     	$rowData['idAdresse'] = isset($rowData['idAdresse']) ? (int) $rowData['idAdresse'] : 0;
 
-		$metier = new Patient(...$rowData); //crée l'objet User(->User.php) avec toutes les clés du tableau $rowData
-		$metier->setIdPatient($idPatient); //ajoute $id dans l'objet métier (User)		return $metier; //retourne l'objet crée
+		$metier = new Patient(...$rowData); //crée l'objet PAtient(->Patient.php) avec toutes les clés du tableau $rowData
+		$metier->setIdPatient($idPatient); //ajoute $id dans l'objet métier (patient)
 
 		return $metier; //retourne l'objet crée
 	}
