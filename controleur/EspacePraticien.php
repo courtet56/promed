@@ -113,6 +113,7 @@ class EspacePraticien{
 
                 Vue::addCSS([ASSET . '/css/agenda.css',]);
                 Vue::addJS([ASSET . '/js/agendaAjoutRdv.js',]);
+                Vue::addJS([ASSET . '/js/agenda.js',]);
                 Vue::setTitle('Agenda du praticien');
                 Vue::render('Agenda', [
                     //Ajout rdv:
