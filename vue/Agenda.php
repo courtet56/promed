@@ -11,24 +11,24 @@
         <h2 class="text-secondary">Mon activité : <?= $praticien->getActivite() ?></h2>
         <h4 class="text-muted"><?= htmlspecialchars($dateDuJour); ?></h4>
     </div>
-    <input type="button" class="btn-ajouter-rdv" id="btnAjouter" value="+ Ajouter un Rendez-vous">
+    <input type="button" class="btn-ajouter-rdv" id="btnAjouterRdv" value="+ Ajouter un Rendez-vous">
 
     <div class="btn-actions-container">
-        <?php if (!empty($_SESSION['messageSuccess'])): ?>
-        <div id="userMessageSuccess" class="alert alert-success">
-            <?= htmlspecialchars($_SESSION['messageSuccess']) ?>
+        <?php if (!empty($_SESSION['messageSuccessRdv'])): ?>
+        <div id="userMessageSuccessRdv" class="alert alert-success">
+            <?= htmlspecialchars($_SESSION['messageSuccessRdv']) ?>
         </div>
-        <?php unset($_SESSION['messageSuccess']); ?>
+        <?php unset($_SESSION['messageSuccessRdv']); ?>
         <?php endif; ?>
 
-        <?php if (!empty($_SESSION['messageError'])): ?>
-        <div id="userMessageError" class="alert alert-danger">
-            <?= htmlspecialchars($_SESSION['messageError']) ?>
+        <?php if (!empty($_SESSION['messageErrorRdv'])): ?>
+        <div id="userMessageErrorRdv" class="alert alert-danger">
+            <?= htmlspecialchars($_SESSION['messageErrorRdv']) ?>
         </div>
-        <?php unset($_SESSION['messageError']); ?>
+        <?php unset($_SESSION['messageErrorRdv']); ?>
         <?php endif; ?>
-        <div id="formulaireRdv" class="formulaire-rdv" >
-            <form action="" method="post" class="form-rdv" hidden>
+        <div id="formulaireRdv" class="formulaire-rdv" hidden >
+            <form action="" method="post" class="form-rdv" >
                 
                 <div class="form-group mb-3">
                     <label for="selectPatient" class="form-label">Patient</label>
@@ -58,11 +58,8 @@
                 </div>
                 <div class="d-flex justify-content-end gap-2">
                     <button type="submit" name='btnConfirmer' value="1" class="btn-confirmer">Confirmer</button>
-                    <button type="button" class="btn-fermer" id="fermerFormulaire">Fermer</button>
+                    <button type="button" class="btn-fermer" id="fermerFormulaireRdv">Fermer</button>
                 </div>
-                
-
-
             </form>
         </div>
     </div>

@@ -95,14 +95,14 @@ class EspacePraticien{
 
                         $isDispo = $rdvDAO->verifierDispo($idPraticien, $idPresta, $dateRdv, $heureRdv);
                         if($isDispo === false){
-                            $_SESSION['messageError'] = "Créneau indisponible.";
+                            $_SESSION['messageErrorRdv'] = "Créneau indisponible.";
                             header('Location: ' . $_SERVER['REQUEST_URI']);
                             exit;
                         } else {
                             $result = $rdvDAO->create($rdv);
                             
                             if($result === true){
-                                $_SESSION['messageSuccess'] = "Nouveau rendez-vous ajouté avec succès.";
+                                $_SESSION['messageSuccessRdv'] = "Nouveau rendez-vous ajouté avec succès.";
                                 header('Location: ' . $_SERVER['REQUEST_URI']);
                                 exit;
                             }
@@ -112,15 +112,13 @@ class EspacePraticien{
                 } 
 
                 Vue::addCSS([ASSET . '/css/agenda.css',]);
-                Vue::addJS([ASSET . '/js/agendaAjoutRdv.js',]);
+                // Vue::addJS([ASSET . '/js/agendaAjoutRdv.js',]);
                 Vue::addJS([ASSET . '/js/agenda.js',]);
                 Vue::setTitle('Agenda du praticien');
                 Vue::render('Agenda', [
                     //Ajout rdv:
                     'arraySoignes' => $soignes, 
                     'dataPrestations' => $dataPrestations,
-                    'messageSuccess' => $messageSuccess,
-                    'messageError' => $messageError,
                     
 
                     // Affichage agenda
