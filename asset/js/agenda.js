@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         )
-    })
+    });
 
     $('.btnModifier').on('click', function () {
         const $btn = $(this);
@@ -71,4 +71,34 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+});
+
+//Début Traitement Ajout Rendez-vous:
+document.addEventListener('DOMContentLoaded', function () {
+    $('#btnAjouterRdv').on('click', function() {
+        const form = $('#formulaireRdv');
+        const messageError = $('#userMessageErrorRdv');
+        const messageSuccess = $('#userMessageSuccessRdv');
+        if (form.attr('hidden')) {
+            form.removeAttr('hidden'); // Affiche
+        } else {
+            form.attr('hidden', true); // Cache
+        }
+        if(messageError.text() !== ''){
+            messageError.remove();
+        }
+        if(messageSuccess.text() !== ''){
+            messageSuccess.remove();
+        }
+        })
+    $('#fermerFormulaireRdv').on('click', function () {
+        const form = $('#formulaireRdv');
+        if (form.attr('hidden')) {
+            form.removeAttr('hidden'); // Affiche
+        } else {
+            form.attr('hidden', true); // Cache
+        }
+
+    })
 });

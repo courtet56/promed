@@ -13,6 +13,9 @@ use modele\DAO\PatientDAO;
 use modele\DAO\RendezVousDAO;
 use modele\Praticien as Praticien;
 use modele\Patient as Patient;
+use modele\DAO\SoigneDAO as SoigneDAO;
+use modele\RendezVous as RendezVous;
+
 
 use modele\DAO\PrestationDAO;
 use modele\DAO\ProposeDAO;
@@ -238,11 +241,12 @@ class MainAjax extends Ajax {
 		
 			// Utiliser session quand elle sera disponible : $praticien = $_SESSION['praticien'];
 			$praticienDAO = new PraticienDAO();
-			$currentPraticien = $praticienDAO->read(19);
+			$idPraticien = $_SESSION['user']['idPraticien'];
+			$currentPraticien = $praticienDAO->read($idPraticien);
 
 
 			$adresseDAO = new AdresseDAO();
-			$currentAdresse = $adresseDAO->read(19);
+			$currentAdresse = $adresseDAO->read($idPraticien);
 
 			$currentName = $currentPraticien->getNom();
 			$currentForname = $currentPraticien->getPrenom();
@@ -439,15 +443,15 @@ class MainAjax extends Ajax {
 	}
 
 	protected function supprimerPrestation() {
-		$idPraticien = 19;
+		$idPraticien = $_SESSION['user']['idPraticien'];
 		$idPresta = trim(req::post('idPresta'));
 
 		$proposeDAO = new ProposeDAO();
-		$proposeDAO->delete($idPraticien,$idPresta);
+		return $proposeDAO->delete($idPraticien,$idPresta);
 
 
 	}
-
+	// Fin modifications prestations Praticien.
 	
 	protected function annulerRendezVous () {
 		$idRdv = trim(req::post('idRdv')); // récupération de l'idrdv envoyé par ajax via POST
@@ -505,6 +509,9 @@ class MainAjax extends Ajax {
 			'email' => $email,
 			'userType' => $userType
 		];
+		if($user instanceof Praticien){
+			$_SESSION['user']['idPraticien'] = $user->getId();
+		}
 		return "ok";
 	}
 
@@ -520,6 +527,7 @@ class MainAjax extends Ajax {
 		}
 	}
 	//fin méthode authentification
+	
 }
 
 

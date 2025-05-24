@@ -114,10 +114,58 @@ h4 {
     background-color: #6CB91A;
 }
 
+
+/* Ajustements pour le positionnement du formulaire */
 .btn-actions-container {
-    display: flex;
-    justify-content: flex-end;
+    display: block; /* Changer de flex à block */
     margin-bottom: 20px;
+}
+
+.formulaire-rdv {
+    width: 100%;
+    max-width: 500px; /* Limiter la largeur du formulaire */
+    margin-top: 20px;
+}
+
+.form-rdv {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Boutons du formulaire */
+.btn-fermer {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.btn-confirmer {
+    background-color: #3257A8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.btn-annuler:hover {
+    background-color: #5a6268;
+}
+
+.btn-confirmer:hover {
+    background-color: #264080;
+}
+
+/* Ajustements pour les appareils mobiles */
+@media (max-width: 768px) {
+    .formulaire-rdv {
+        max-width: 100%;
+    }
 }
 
 /* Responsive Adjustments */

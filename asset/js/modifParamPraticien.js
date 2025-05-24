@@ -293,9 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         champPrix.value = "";
                         champDuree.value = "";
                     }
-                   
                 },  
-                
             );
         }
     })
@@ -314,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
         request.send(
             (response) => 
             {
-                if(response === null)
+                if(response === true)
                 {
                     $tr.remove();
                     alert("Suppression prestation réussie");
@@ -322,9 +320,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         )
     })
-
-    
 });
+
 document.addEventListener('DOMContentLoaded', function() {
     logoutButton = document.getElementById('logoutButton');
     if(logoutButton) {

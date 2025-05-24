@@ -11,9 +11,12 @@ use modele\DAO\AdresseDAO as AdresseDAO;
 use controleur\util\FormatDate as FormatDate;
 
 use modele\DAO\ProposeDAO as ProposeDAO;
-use modele\Propose as Propose;
 use modele\DAO\PrestationDAO as PrestationDAO;
 use app\util\Request as Request;
+use modele\DAO\SoigneDAO as SoigneDAO;
+use modele\RendezVous as RendezVous;
+use modele\DAO\RendezVousDAO as RendezVousDAO;
+
 
 
 
@@ -31,14 +34,10 @@ class EspacePraticien{
         if (isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
 
 
-            // Utilisation de GET pour orienter vers la bonne fonctionnalité (ex: GET = modif_profil))
-            // renvoie la vue en conséquence
-
             $praticienDAO = new PraticienDAO();
             $praticienArray = $praticienDAO->getPraticienByEmail($_SESSION['user']['email']);
             $praticien = Praticien::fromArray($praticienArray);
             $praticien->setId($praticienArray['id']);
-
             // echo '<pre>';
             // print_r($praticien);
             // echo '</pre>';
@@ -56,12 +55,73 @@ class EspacePraticien{
             if($this->action("agenda")){
                 $data = $praticienDAO->getAgendaPraticien($praticien->getEmail());
                 $dateDuJour = FormatDate::getFormatDate();
+                
+                // Début Ajout Rdv: 
+                $idPraticien = $_SESSION['user']['idPraticien'];
+                $soigneDAO = new SoigneDAO();
+                $soignes = $soigneDAO->getAllPatientsFromPraticien($idPraticien);
+                // var_dump($soignes);
+                $messageSuccess = '';
+                $messageError = '';
+
+                $dataPrestations = []; //créé tableau avec tous les objets prestations qui regroupent les attributs de propose + prestation
+            
+                $prestationDAO = new PrestationDAO;
+                foreach ($proposes as $key => $propose){
+                    $prestation = $prestationDAO->read($propose->getIdPresta()); // retourne  l'objet prestation avec un idPresta précis
+                    $dataPrestations[$key]['idPresta'] = $propose->getIdPresta();
+                    $dataPrestations[$key]['duree'] = $propose->getDuree();
+                    $dataPrestations[$key]['tarif'] = $propose->getTarif();
+                    $dataPrestations[$key]['libelle'] = $prestation->getLibelle();
+                }
+                
+                $patientId = Request::post('idPatient');
+                $idPresta = Request::post('idPrestation');
+                $heureRdv = Request::post('heureRdv');
+                $dateRdv = Request::post('dateRdv');
+                $idStatut = 1; // statut "en cours" par défaut;
+
+                if(Request::post('btnConfirmer') === '1'){
+                    echo'test';
+                    if(!empty($patientId) 
+                    && !empty($idPresta) 
+                    && !empty($heureRdv) 
+                    && !empty($dateRdv)
+                    && !empty($idStatut))
+                    {
+                        
+                        $rdv = new RendezVous($dateRdv, $heureRdv, $patientId, $idPraticien, $idPresta, $idStatut);
+                        $rdvDAO = new RendezVousDAO();
+
+                        $isDispo = $rdvDAO->verifierDispo($idPraticien, $idPresta, $dateRdv, $heureRdv);
+                        if($isDispo === false){
+                            $_SESSION['messageErrorRdv'] = "Créneau indisponible.";
+                            header('Location: ' . $_SERVER['REQUEST_URI']);
+                            exit;
+                        } else {
+                            $result = $rdvDAO->create($rdv);
+                            
+                            if($result === true){
+                                $_SESSION['messageSuccessRdv'] = "Nouveau rendez-vous ajouté avec succès.";
+                                header('Location: ' . $_SERVER['REQUEST_URI']);
+                                exit;
+                            }
+                        }
+                        
+                    }
+                } 
 
                 Vue::addCSS([ASSET . '/css/agenda.css',]);
+                // Vue::addJS([ASSET . '/js/agendaAjoutRdv.js',]);
                 Vue::addJS([ASSET . '/js/agenda.js',]);
                 Vue::setTitle('Agenda du praticien');
                 Vue::render('Agenda', [
+                    //Ajout rdv:
+                    'arraySoignes' => $soignes, 
+                    'dataPrestations' => $dataPrestations,
+                    
 
+                    // Affichage agenda
                     'data' => $data,
                     'dateDuJour' => $dateDuJour,
                     'praticien' => $praticien
