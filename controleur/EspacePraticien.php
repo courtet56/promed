@@ -61,8 +61,6 @@ class EspacePraticien{
                 $soigneDAO = new SoigneDAO();
                 $soignes = $soigneDAO->getAllPatientsFromPraticien($idPraticien);
                 // var_dump($soignes);
-                $messageSuccess = '';
-                $messageError = '';
 
                 $dataPrestations = []; //créé tableau avec tous les objets prestations qui regroupent les attributs de propose + prestation
             
