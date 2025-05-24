@@ -47,6 +47,9 @@
                                 <button class="btn btn-sm btn-danger btn-delete btnSupprimer"> 
                                     <i class="bi bi-trash"></i> 
                                 </button>
+                                <button class="btn btn-sm btn-primary btnModifier"> 
+                                    <i class="bi bi-pencil-square"></i> 
+                                </button>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -58,4 +61,32 @@
         <div class="spacer"></div>
     </div>
 
+</div>
+<div class="modal fade" id="modalModifierRdv" tabindex="-1" aria-labelledby="modalModifierRdvLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formModifierRdv">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalModifierRdvLabel">Modifier le rendez-vous</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="rdvId" name="idRdv">
+
+          <div class="mb-3">
+            <label for="dateRdv" class="form-label">Date</label>
+            <input type="date" class="form-control" id="dateRdv" name="dateRdv" required>
+          </div>
+          <div class="mb-3">
+            <label for="heureRdv" class="form-label">Heure</label>
+            <input type="time" class="form-control" id="heureRdv" name="heureRdv" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
