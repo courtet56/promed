@@ -55,6 +55,7 @@ class MainAjax extends Ajax {
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
 			'annulerRdv' => 'annulerRendezVous',
+			'validerModificationRdv' => 'validerModificationRdv',
 			'connexion' => 'connexion',
 			'logout' => 'logout',
 			//Fonctionnalités liées à la modification des param du praticien:
@@ -457,6 +458,16 @@ class MainAjax extends Ajax {
 		$rdvDao = new RendezVousDAO;
 		
 		return $rdvDao->annulerRdv($idRdv);
+	}
+
+	protected function validerModificationRdv(): bool {
+		$idRdv = trim(req::post('idRdv'));
+		$dateRdv = trim(req::post('dateRdv'));
+		$heureRdv = trim(req::post('heureRdv'));
+		
+		$rdvDao = new RendezVousDAO;
+		return $rdvDao->updateDateById($idRdv, $dateRdv, $heureRdv);
+
 	}
 
 	// debut authentification

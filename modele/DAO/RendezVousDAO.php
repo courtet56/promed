@@ -88,6 +88,13 @@ class RendezVousDAO extends Database {
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->updateOne($metier->getIdRdv(), $data);
 	}
+
+	
+	public function updateDateById(int $id, string $date, string $heure): bool {
+		$stmt = $this->getPdo()->prepare("UPDATE `" . $this->tableName . "` SET dateRdv=:dateRdv, heureRdv=:heureRdv WHERE id=:id");
+		return $stmt->execute([':dateRdv' => $date, ':heureRdv' => $heure, ':id' => $id]);
+	}
+
 	
 	/** 
 	*	CRUD : delete
