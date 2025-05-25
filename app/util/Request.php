@@ -43,7 +43,7 @@ class Request {
 	* @param string $default La valeur par défaut si la clé n'existe pas.
 	* @return string La valeur après un passage au niveau de la sécurité.
 	*/
-	public static function post(string $key, string $default=''): string {
+	public static function post(string $key, string $default=''): string|array {
 		return empty($_POST[$key]) ? $default : self::sanitize($_POST[$key]);
 	}
 
@@ -76,29 +76,39 @@ class Request {
 	* @param string $encoding L'encodage de la chaîne (défaut: UTF-8).
 	* @return string La chaîne nettoyée.
 	*/
-	private static function sanitize(string $input, int $maxLength = 256, string $encoding = 'UTF-8'): ?string {
-		if(!empty($input)) {
-			
-			$input = (string)$input;
-			
-			//On limitte la longueur de la chaine pour contrecarrer les débordements de tampon :
-			$input = mb_substr($input, 0, $maxLength, $encoding);
+	private static function sanitize(string|array $input, int $maxLength = 256, string $encoding = 'UTF-8'): string|array|null {
+    if (is_array($input)) {
+        $sanitized = [];
+		// adaptée pour la méthode "modifierPatient" de MainAjax.php
+        foreach ($input as $key => $value) {
+            // application récursive de sanitize pour chaque ligne du tableau
+            $sanitized[$key] = self::sanitize($value, $maxLength, $encoding);
+        }
+        return $sanitized;
+    }
 
-			//On supprime les balises HTML afin d'éviter certaines attaques XSS :
-			$input = strip_tags($input, '');
+    if (!empty($input)) {
+        $input = (string) $input;
 
-			//On supprime les espaces en début et fin de chaîne :
-			$input = trim($input);
+        // On limite la longueur de la chaîne pour éviter les débordements
+        $input = mb_substr($input, 0, $maxLength, $encoding);
 
-			//On échappe les caractères spéciaux pour l'affichage HTML (empêche d'exécuter du code) :
-			$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+        // Suppression des balises HTML
+        $input = strip_tags($input);
 
-			//On supprime les caractères de contrôle NUL, BS, HT, CR, DEL (sauf LF) :
-			$input = preg_replace('/[\x00\x08\x0B\x0C\x0D]/u', '', $input);
-		}
+        // Suppression des espaces en début et fin
+        $input = trim($input);
 
-		return $input;
-	}
+        // Encodage des caractères spéciaux HTML
+        $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+
+        // Suppression des caractères de contrôle (sauf LF)
+        $input = preg_replace('/[\x00\x08\x0B\x0C\x0D]/u', '', $input);
+    }
+
+    return $input;
+}
+
 
 	/**
 	* Obtenir la taille d'une string varchar(num)

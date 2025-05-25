@@ -8,7 +8,7 @@ use modele\DAO\SoigneDAO;
  * MODELE : Objet métier : Direct Object (DO) : 
  * Encapsulation, manipulation et récupération des données issues du DAO :
  * -> modele/DAO/SoigneDAO.php (hérités de : modele/DAO/base/Database.php)
- * Accesseurs / mutateurs de la table : "Paye".
+ * Accesseurs / mutateurs de la table : "Soigne".
  */
 
 class Soigne {
@@ -63,7 +63,7 @@ class Soigne {
 		$this->idPraticien = $idPraticien;
 	}
 	
-	public function setIdPatien($idPatient): void {
+	public function setIdPatient($idPatient): void {
 		$this->idPatient = $idPatient;
 	}
 	
