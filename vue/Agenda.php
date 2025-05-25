@@ -6,11 +6,11 @@
 
 <div class="container py-5">
 
-    <div class="text-center mb-4">
+    <!-- <div class="text-center mb-4">
         <h1 class="fw-bold">Bienvenue <?= $praticien->getPrenom() ?> <?= $praticien->getNom() ?> !</h1>
         <h2 class="text-secondary">Mon activité : <?= $praticien->getActivite() ?></h2>
         <h4 class="text-muted"><?= htmlspecialchars($dateDuJour); ?></h4>
-    </div>
+    </div> -->
     <input type="button" class="btn-ajouter-rdv" id="btnAjouterRdv" value="+ Ajouter un Rendez-vous">
 
     <div class="btn-actions-container">
