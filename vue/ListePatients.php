@@ -10,7 +10,8 @@
         <h1 class="fw-bold">Vos patients</h1>
     </div>
 
-    <button id="btnAjouterPatient" data-bs-toggle="modal" data-bs-target="#formAjoutModal" class="btn btn-sm btn-primary">Ajouter un patient</button>
+    <button id="btnAjouterPatient" data-bs-toggle="modal" data-bs-target="#formAjoutModal" class="btn btn-sm btn-ajouter-rdv">Ajouter un patient</button>
+    
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle shadow-sm">
