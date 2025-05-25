@@ -19,6 +19,7 @@ use modele\DAO\PrestationDAO;
 use modele\DAO\ProposeDAO;
 use modele\Prestation;
 use modele\Propose;
+use modele\Soigne;
 use PHPUnit\Event\TestSuite\TestSuiteForTestMethodWithDataProvider;
 
 /**
@@ -63,7 +64,8 @@ class MainAjax extends Ajax {
 			'supprPresta' => 'supprimerPrestation',
 			'supprimerPatient' => 'supprimerPatient',
 			'getInfoPatient' => 'getInfoPatient',
-			"modifierPatient" => "modifierPatient"
+			"modifierPatient" => "modifierPatient",
+			"ajouterPatient" => "ajouterPatient"
 			// - D'autres lignes ?
 		];
 	}
@@ -484,7 +486,12 @@ class MainAjax extends Ajax {
 			return "Ce compte n'existe pas.";
 		} else { // création d'objet en fonction
 			if($userType == "patient") {
-				$user = new Patient($userInfo['nom'], $userInfo['prenom'], $userInfo['dateNaiss'], $userInfo['telephone'], $userInfo['email'], $userInfo['motDePasse'], $userInfo['idTuteur'], $userInfo['idAdresse']);
+				if($userInfo['idTuteur'] == null) {
+					$idTuteur = (int) 0;
+				} else {
+					$idTuteur = $userInfo['idTuteur'];
+				}
+				$user = new Patient($userInfo['nom'], $userInfo['prenom'], $userInfo['dateNaiss'], $userInfo['telephone'], $userInfo['email'], $userInfo['motDePasse'], $idTuteur, $userInfo['idAdresse']);
 				$user->setIdPatient($userInfo['id']);
 			} else {
 				$user = new Praticien($userInfo['nom'], $userInfo['prenom'], $userInfo['email'], $userInfo['activite'], $userInfo['adeli'], $userInfo['motDePasse'], $userInfo['idAdresse']);
@@ -587,5 +594,61 @@ class MainAjax extends Ajax {
 		
 		//TODO : modifier patient, rechercher nouveau tuteur du patient, modifier/supprimer adresse ?
 		return $pDao->update($newPatient);
+	}
+
+	protected function ajouterPatient() {
+		// instanciation des dao
+		$aDao = new AdresseDAO();
+		$pDao = new PatientDAO();
+		$sDao = new SoigneDAO();
+		$formValues = req::post('formValues');
+		$idTuteur = (int) 0;
+		// si le champ mail tuteur non vide, on vérifie qu'il existe en bdd
+		if($formValues['tuteur'] != "") {
+			$newTuteur = $pDao->getPatientByEmail($formValues['tuteur']);
+			if(!$newTuteur) {
+				// si il n'existe pas, message d'erreur
+				return "L'email entré ne correspond à aucun tuteur.";
+			} else {
+				$idTuteur = $newTuteur['id'];
+			}
+		}
+		// hashage du nouveau mot de passe du patient
+		$mdp = MainAjax::creerMotDePassePatient($formValues['nom'], $formValues['dateNaiss']);
+		$newAdresse = new Adresse($formValues['numero'], $formValues['rue'], $formValues['codePostal'], $formValues['ville'], $formValues['pays']);
+		// insertion en bdd de l'adresse du nouveau patient
+		$aDao->create($newAdresse);
+		// récupération de son id en bdd
+		$idNewAdresse = $aDao->getLastKey();
+		$newPatient = new Patient($formValues['nom'], $formValues['prenom'], $formValues['dateNaiss'], $formValues['telephone'], $formValues['email'], $mdp, $idTuteur, $idNewAdresse);
+		$retourPatient = $pDao->create($newPatient);
+		$idPatient = $pDao->getLastKey();
+		//  insertion de la ligne en bdd dans la table "soigne" qui lie le patient et le praticien
+		$idPraticien = $_SESSION['user']['idPraticien'];
+		$soigne = new Soigne($idPraticien, $idPatient);
+		$retourSoigne = $sDao->create($soigne);
+		if(!$retourPatient) {
+			return "Erreur de liaison avec le praticien. Merci de réessayer.";
+		}
+		if(!$retourPatient) {
+			return "Erreur de sauvegarde du patient. Merci de réessayer.";
+		} else {
+			return "ok";
+		}
+	}
+
+	protected function creerMotDePassePatient(string $nom, string $dateNaiss) {
+		// récuperation  des 3 premières lettres du nom du patient
+		$nom = strtoupper(substr($nom, 0, 3));
+		$parties = explode('-', $dateNaiss);
+		$annee = substr($parties[0], -2);
+		$mois = $parties[1];              
+		$jour = $parties[2];
+
+		$dateMdp = $jour . $mois . $annee;
+
+		$mdp = $nom . $dateMdp;
+		$mdpHash = password_hash($mdp, PASSWORD_DEFAULT);
+		return $mdpHash;
 	}
 }

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const deleteBtns = document.getElementsByClassName("btnSupprimer");
     const updateBtns = document.getElementsByClassName("btnModifier");
+    const addBtn = document.getElementById('ajouterPatient');
     const modal = new bootstrap.Modal(document.getElementById('cancelModal'));
     let idPatient = null;
     for (let btn of deleteBtns) {
@@ -33,8 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if(modifValidate) {
         modifValidate.addEventListener('click', function() {
             // console.log(idPatient)
-            let values = getFormValues();
+            let values = getFormValues('#formModal');
             modifierPatient(idPatient, values);
+        })
+    }
+
+    if(addBtn) {
+        addBtn.addEventListener('click', function() {
+            let values = getFormValues('#formAjoutModal');
+            ajouterPatient(values);
         })
     }
 });
@@ -91,7 +99,6 @@ function afficherDonneesPatient(data) {
 }
 
 function modifierPatient(idPatient, formValues) {
-    console.log("Id patient : " + idPatient);
     const data = {"idPatient" : idPatient, "formValues" : formValues};
     const ajaxUrl = "ajax?modifierPatient";
     const req = new AjaxRequest(ajaxUrl, 'POST', data, false);
@@ -110,8 +117,8 @@ function modifierPatient(idPatient, formValues) {
     )
 }
 
-function getFormValues() {
-    const inputs = document.querySelectorAll('#formModal input');
+function getFormValues(id) {
+    const inputs = document.querySelectorAll(id + ' input');
     const values = {};
 
     inputs.forEach(input => {
@@ -119,4 +126,24 @@ function getFormValues() {
     });
 
     return values;
+}
+
+function ajouterPatient(formValues) {
+    const data = {"formValues" : formValues};
+    const ajaxUrl = "ajax?ajouterPatient";
+    const req = new AjaxRequest(ajaxUrl, 'POST', data, false);
+    req.send(
+        (response) => {
+            console.log(response);
+            if(response === "ok") {
+                $('#form-error').text('');
+                $('#form-success').text("Ajout effectué avec succès !");
+                setTimeout(() => {
+                    window.location.href = './praticien?patients';
+                }, 2000);
+            } else {
+                $('#form-error').text(response);
+            }
+        }
+    )
 }

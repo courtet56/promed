@@ -63,7 +63,7 @@ class Soigne {
 		$this->idPraticien = $idPraticien;
 	}
 	
-	public function setIdPatien($idPatient): void {
+	public function setIdPatient($idPatient): void {
 		$this->idPatient = $idPatient;
 	}
 	

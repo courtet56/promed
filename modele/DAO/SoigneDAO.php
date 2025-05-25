@@ -50,7 +50,7 @@ class SoigneDAO extends Database {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setId( $this->getLastKey() );
+		// $metier->setId( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -70,7 +70,7 @@ class SoigneDAO extends Database {
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Soigne(...$rowData); //crée l'objet Soigne(->Soigne.php) avec toutes les clés du tableau $rowData
 		$metier->setidPraticien($idPraticien); //ajoute $id dans l'objet métier (Soigne)
-        $metier->setIdPatien($idPatient);
+        $metier->setIdPatient($idPatient);
 		return $metier; //retourne l'objet créé
 	}
 	
