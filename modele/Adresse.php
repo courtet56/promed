@@ -87,6 +87,18 @@ use modele\DAO\AdresseDAO;
     public function __toString() {
         return "Adresse: {$this->numero}, {$this->rue}, {$this->codePostal}, {$this->ville}, {$this->pays}";
     }
+
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'numero' => $this->numero,
+            'rue' => $this->rue,
+            'codePostal' => $this->codePostal,
+            'ville' => $this->ville,
+            'pays' => $this->pays,
+        ];
+    }
+
 }   
  
 // Fin de la classe Adresse

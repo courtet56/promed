@@ -34,7 +34,7 @@ class FormatDate {
         $moisEn = $date->format('F');
         $moisFr = $mois[$moisEn];
         $annee = $date->format('Y');
-        $heure = $date->format('H\h i');
+        $heure = $date->format('H\hi');
 
         // 📅 Format final : Lundi 6 mai 2024 14h 05
         return "$jour $numeroJour $moisFr $annee $heure";

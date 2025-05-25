@@ -38,7 +38,6 @@ class SoigneDAO extends Database {
 		return [
 			'idPraticien' => $metier->getIdPraticien(),
 			'idPatient' => $metier->getIdPatient(),
-			
 		];
 	}
 
@@ -51,7 +50,7 @@ class SoigneDAO extends Database {
 		$data = $this->getAllData($metier);
 		//createOne() et getLastKey() sont des méthodes du DAO (modele/DAO/base/Database.php)
 		$bool = $this->createOne($data);
-		$metier->setId( $this->getLastKey() );
+		// $metier->setId( $this->getLastKey() );
 		return $bool;
 	}
 
@@ -71,7 +70,7 @@ class SoigneDAO extends Database {
 		unset($rowData[$this->primaryKey], $row); //retire la clé primaire du tableau et $row qui ne sert plus
 		$metier = new Soigne(...$rowData); //crée l'objet Soigne(->Soigne.php) avec toutes les clés du tableau $rowData
 		$metier->setidPraticien($idPraticien); //ajoute $id dans l'objet métier (Soigne)
-        $metier->setIdPatien($idPatient);
+        $metier->setIdPatient($idPatient);
 		return $metier; //retourne l'objet créé
 	}
 	
@@ -124,6 +123,19 @@ class SoigneDAO extends Database {
 		return $this->deleteOne( $metier->getId() );
 	}
 
+
+    // suppression d'un patient pour un praticien donné
+    public function deletePatient($idPatient, $idPraticien) {
+    $stmt = $this->getPdo()->prepare(
+        "DELETE FROM `" . $this->tableName . "` WHERE idPatient = :idPatient AND idPraticien = :idPraticien"
+    );
+    $stmt->execute([
+        ':idPatient' => $idPatient,
+        ':idPraticien' => $idPraticien
+    ]);
+
+    return $stmt->rowCount() > 0; // Renvoie true si suppression réussie
+}
 	/**
 	*	Méthode permettant l'accès aux données filtrées pour une recherche du prénom ou du nom, 
 	*	avec une requête préparée.
@@ -159,6 +171,5 @@ class SoigneDAO extends Database {
 	public function getPrimaryKey(): string {
 		return $this->primaryKey;
 	}
-
 	
 }

@@ -177,4 +177,11 @@ class PraticienDAO extends Database {
 		return $this->primaryKey;
 	}
 
+	public function getAllPatientByPraticien(Praticien $praticien) {
+		$idPrat = $praticien->getId();
+		$stmt = $this->getPdo()->prepare("SELECT p.* FROM Patient p INNER JOIN Soigne ON Soigne.idPatient=p.id WHERE Soigne.idPraticien = :idPrat");
+		$stmt->execute([':idPrat' => $idPrat]);
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 }	

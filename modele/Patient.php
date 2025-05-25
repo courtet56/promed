@@ -138,16 +138,30 @@ class Patient {
 	}
 
 	public static function fromArray(array $data): Patient {
-		return new Patient(
-			$data['nom'] ?? '',
+		$retour = new Patient($data['nom'] ?? '',
 			$data['prenom'] ?? '',
 			$data['dateNaiss'] ?? '',
 			$data['telephone'] ?? '',
 			$data['email'] ?? '',
 			$data['motDePasse'] ?? '',
 			(int)$data['idTuteur'] ?? 0,
-			(int)$data['idAdresse'] ?? 0
-		);
+			(int)$data['idAdresse'] ?? 0);
+		$retour->setIdPatient($data['id'] ?? 0);
+		return $retour;
 	}
+
+	public function toArray(): array {
+		return [
+			'id' => $this->id,
+			'nom' => $this->nom,
+			'prenom' => $this->prenom,
+			'dateNaiss' => $this->dateNaiss,
+			'telephone' => $this->telephone,
+			'email' => $this->email,
+			'idTuteur' => $this->idTuteur,
+			'idAdresse' => $this->idAdresse,
+		];
+	}
+
 
 }

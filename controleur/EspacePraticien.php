@@ -122,9 +122,10 @@ class EspacePraticien{
                     // Affichage agenda
                     'data' => $data,
                     'dateDuJour' => $dateDuJour,
-                    'praticien' => $praticien
+                    'praticien' => $praticien,
+                    'action' => "agenda"
                 ]);
-            }
+            } else
 
             if($this->action("modif_profil")){
                 
@@ -176,15 +177,30 @@ class EspacePraticien{
                     'dataPrat' => $dataPrat,
                     'dataPrestations' => $dataPrestations,
                     'dataLibellePrestations' => $dataLibellePrestations,
-                    'praticien' => $praticien
+                    'praticien' => $praticien,
+                    'action' => "modif_profil"
                 ]);
 
-            }
+            } else if ($this->action("patients")) {
+                $allPatient = $praticienDAO->getAllPatientByPraticien($praticien);
+                // print_r($allPatient);
+                Vue::addJS([ASSET . '/js/modifPatients.js',]);
+                Vue::render('ListePatients', [
+                    "action" => "patients",
+                    "listePatient" => $allPatient]);
+            } else
 
             if($this->action("accueil_praticien")){
                 // print_r($praticien);
                 Vue::render('AccueilPraticien', [
-                    "praticien" => $praticien
+                    "praticien" => $praticien,
+                    'action' => "accueil_praticien"
+                ]);
+            } else {
+                // print_r($praticien);
+                Vue::render('AccueilPraticien', [
+                    "praticien" => $praticien,
+                    'action' => "accueil_praticien"
                 ]);
             }
 

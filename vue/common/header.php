@@ -66,13 +66,16 @@
     <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent"  style="align-items:center;">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "accueil_praticien" ? "active" : ''?>" aria-current="page" href="./praticien?accueil_praticien">Accueil</a>
+          <a class="nav-link <?=$action == "accueil_praticien" ? "active" : ''?>" aria-current="page" href="./praticien?accueil_praticien">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?=isset($_GET['action']) && $_GET['action'] == "agenda" ? "active" : ''?>" href="./praticien?agenda">Rendez-vous</a>
+          <a class="nav-link <?=$action == "agenda" ? "active" : ''?>" href="./praticien?agenda">Rendez-vous</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?=isset($_GET['action']) && ($_GET['action'] == "modif_profil" || $_GET['action'] == "") ? "active" : ''?>" href="./praticien?modif_profil">Mon profil</a>
+          <a class="nav-link <?=$action == "patients" ? "active" : ''?>" href="./praticien?patients">Patients</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?=$action == "modif_profil" ? "active" : ''?>" href="./praticien?modif_profil">Mon profil</a>
         </li>
       </ul>
     </div>
