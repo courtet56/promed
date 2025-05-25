@@ -171,9 +171,4 @@ class SoigneDAO extends Database {
 	public function getPrimaryKey(): string {
 		return $this->primaryKey;
 	}
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> ca44cf6913a404d0d20903e318261cedf6eaaee7
 }
