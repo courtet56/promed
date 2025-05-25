@@ -98,12 +98,10 @@ class ProposeDAO extends Database {
 		
 		$sql = "DELETE FROM Propose WHERE idPresta = :idPresta AND idPraticien = :idPrat LIMIT 1;";
         $stmt = self::getPdo()->prepare($sql);
-        $stmt->execute([
+        return $stmt->execute([
 			':idPrat' => $idPrat, 
 			':idPresta' => $idPresta,
 		]);
-		 // Retourne true si une ligne a été supprimée
-    	return $stmt->rowCount() > 0;
 
 	}
 

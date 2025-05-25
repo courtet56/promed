@@ -14,6 +14,8 @@ use modele\DAO\PatientDAO;
 use modele\DAO\RendezVousDAO;
 use modele\Praticien as Praticien;
 use modele\Patient as Patient;
+use modele\RendezVous as RendezVous;
+
 
 use modele\DAO\PrestationDAO;
 use modele\DAO\ProposeDAO;
@@ -55,6 +57,7 @@ class MainAjax extends Ajax {
 			'findUsers' => 'getUserBySearch',
 			'newPraticien' => 'inscriptionPraticien',
 			'annulerRdv' => 'annulerRendezVous',
+			'validerModificationRdv' => 'validerModificationRdv',
 			'connexion' => 'connexion',
 			'logout' => 'logout',
 			//Fonctionnalités liées à la modification des param du praticien:
@@ -244,11 +247,12 @@ class MainAjax extends Ajax {
 		
 			// Utiliser session quand elle sera disponible : $praticien = $_SESSION['praticien'];
 			$praticienDAO = new PraticienDAO();
-			$currentPraticien = $praticienDAO->read(19);
+			$idPraticien = $_SESSION['user']['idPraticien'];
+			$currentPraticien = $praticienDAO->read($idPraticien);
 
 
 			$adresseDAO = new AdresseDAO();
-			$currentAdresse = $adresseDAO->read(19);
+			$currentAdresse = $adresseDAO->read($idPraticien);
 
 			$currentName = $currentPraticien->getNom();
 			$currentForname = $currentPraticien->getPrenom();
@@ -445,21 +449,31 @@ class MainAjax extends Ajax {
 	}
 
 	protected function supprimerPrestation() {
-		$idPraticien = 19;
+		$idPraticien = $_SESSION['user']['idPraticien'];
 		$idPresta = trim(req::post('idPresta'));
 
 		$proposeDAO = new ProposeDAO();
-		$proposeDAO->delete($idPraticien,$idPresta);
+		return $proposeDAO->delete($idPraticien,$idPresta);
 
 
 	}
-
+	// Fin modifications prestations Praticien.
 	
 	protected function annulerRendezVous () {
 		$idRdv = trim(req::post('idRdv')); // récupération de l'idrdv envoyé par ajax via POST
 		$rdvDao = new RendezVousDAO;
 		
 		return $rdvDao->annulerRdv($idRdv);
+	}
+
+	protected function validerModificationRdv(): bool {
+		$idRdv = trim(req::post('idRdv'));
+		$dateRdv = trim(req::post('dateRdv'));
+		$heureRdv = trim(req::post('heureRdv'));
+		
+		$rdvDao = new RendezVousDAO;
+		return $rdvDao->updateDateById($idRdv, $dateRdv, $heureRdv);
+
 	}
 
 	// debut authentification
@@ -523,7 +537,6 @@ class MainAjax extends Ajax {
 			return false;
 		}
 	}
-
 	//fin méthode authentification
 
 	protected function supprimerPatient () {

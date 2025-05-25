@@ -84,11 +84,24 @@ class SoigneDAO extends Database {
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->updateOne($metier->getId(), $data);
 	}
-	
+	//  Méthode qui prend en paramètre l'id du praticien et renvoie un array avec id,
+    //  nom et prenom des patients associés auu praticien :
+    public function getAllPatientsFromPraticien(int $idPraticien):array {
+         return $this->sendSQL("SELECT
+                Patient.id AS idPatient,
+                Patient.nom AS nomPatient,
+                Patient.prenom AS prenomPatient
+         FROM Soigne
+             INNER JOIN Patient ON Soigne.idPatient = Patient.id
+             INNER JOIN Praticien ON Soigne.idPraticien = Praticien.id
+             WHERE Praticien.id = ?;
+            ", [$idPraticien]);
+    }
 
     public function getListePatientPraticien(string $email):array{
 
          return $this->sendSQL("SELECT
+                Patient.id AS idPatient,
                 Patient.nom AS nomPatient,
                 Patient.prenom AS prenomPatient
          FROM Soigne
@@ -123,6 +136,17 @@ class SoigneDAO extends Database {
 
     return $stmt->rowCount() > 0; // Renvoie true si suppression réussie
 }
+	/**
+	*	Méthode permettant l'accès aux données filtrées pour une recherche du prénom ou du nom, 
+	*	avec une requête préparée.
+	* 	@param string $name Nom ou prénom de l'utilisateur
+	* 	@return array
+	*/
+	// public function getUsersByName(string $name): mixed {
+	// 	$stmt = $this->getPdo()->prepare("SELECT * FROM `" . $this->tableName . "` WHERE prenom LIKE :sname OR nom LIKE :name");
+	// 	$stmt->execute([':sname' => "%$name%", ':name' => "%$name%"]);
+	// 	return $stmt->fetch(PDO::FETCH_ASSOC);
+	// }
 
 	// /**
 	// *	Méthode sendSQL() implémentée dans le DAO (modele/DAO/base/Database.php)

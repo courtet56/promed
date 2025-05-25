@@ -20,8 +20,7 @@ class InscriptionPraticien
          *	    MODELE
          *	--------------
          */
-        // echo "session captcha : ";
-        //  print_r($_SESSION);
+      
         
     
     
