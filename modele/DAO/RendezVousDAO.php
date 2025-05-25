@@ -36,7 +36,7 @@ class RendezVousDAO extends Database {
 	*/
 	private function getAllData($metier): array {
 		return [
-			'idRdv' => $metier->getIdRdv(),
+			'id' => $metier->getIdRdv(),
 			'dateRdv' => $metier->getDateRdv(),
 			'heureRdv' => $metier->getHeureRdv(),
             'idPatient' => $metier->getIdPatient(),
@@ -88,6 +88,13 @@ class RendezVousDAO extends Database {
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->updateOne($metier->getIdRdv(), $data);
 	}
+
+	
+	public function updateDateById(int $id, string $date, string $heure): bool {
+		$stmt = $this->getPdo()->prepare("UPDATE `" . $this->tableName . "` SET dateRdv=:dateRdv, heureRdv=:heureRdv WHERE id=:id");
+		return $stmt->execute([':dateRdv' => $date, ':heureRdv' => $heure, ':id' => $id]);
+	}
+
 	
 	/** 
 	*	CRUD : delete
@@ -156,4 +163,50 @@ class RendezVousDAO extends Database {
 		return $this->primaryKey;
 	}
 	
+	public function verifierDispo($idPraticien, $idPrestation, $dateRdv, $heureRdv): bool {
+		$sql = "SELECT COUNT(*) AS conflit
+		FROM RendezVous rv
+
+		-- On joint avec la table Propose pour obtenir la durée des RDV existants
+		JOIN Propose p ON rv.idPraticien = p.idPraticien AND rv.idPresta = p.idPresta
+
+		-- On joint à nouveau Propose (alias p2) pour obtenir la durée de la prestation demandée
+		JOIN Propose p2 ON p2.idPraticien = :idPraticien AND p2.idPresta = :idPrestation
+
+		WHERE 
+			rv.idPraticien = :idPraticien        -- Même praticien
+			AND rv.dateRdv = :dateRdv            -- Même jour
+			AND rv.idStatutRdv = 1               -- RDV actif (non annulé)
+
+			-- Détection du chevauchement :
+			AND (
+				-- Heure de début du nouveau RDV < Heure de fin du RDV existant
+				TIME(:heureRdv) < ADDTIME(rv.heureRdv, SEC_TO_TIME(p.duree * 60))
+
+				AND
+
+				-- Heure de fin du nouveau RDV > Heure de début du RDV existant
+				ADDTIME(TIME(:heureRdv), SEC_TO_TIME(p2.duree * 60)) > rv.heureRdv
+			)";
+		$stmt = $this->getPdo()->prepare($sql);
+		$stmt->execute([
+			':idPraticien' => $idPraticien,
+			':idPrestation' => $idPrestation,
+			':dateRdv' => $dateRdv,
+			':heureRdv' => $heureRdv
+		]);
+		$compteur = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($compteur['conflit'] == 0){
+			return true;
+		} else {
+			return false;
+		}
+
+		
+
+// -- Cette requête retourne un nombre > 0 s'il y a un conflit
+// -- Si le résultat est 0, alors le créneau est disponible"
+
+
+	}
 }

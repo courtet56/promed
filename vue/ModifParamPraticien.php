@@ -108,7 +108,7 @@
                             <input type="number" id="prixConsultation" class="form-control" value="" placeholder="Tarif">
                         </div>
                         <div class="col-6">
-                            <span class="min-euro-label">Euro</span>
+                            <span class="min-euro-label">Euros</span>
                         </div>
                     </div>
                     

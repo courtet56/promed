@@ -26,6 +26,7 @@ class Routing {
 		
 		//Espace Praticien
 		$route->add('/praticien', 'controleur\EspacePraticien');
+		$route->add('/praticien/ajouter_patient', 'controleur\EspacePraticien');
 
 
 		//$route->add('/validation', 'controleur\Validation');

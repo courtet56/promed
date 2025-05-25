@@ -85,11 +85,24 @@ class SoigneDAO extends Database {
 		//updateOne() est une méthode du DAO (modele/DAO/base/Database.php)
 		return $this->updateOne($metier->getId(), $data);
 	}
-	
+	//  Méthode qui prend en paramètre l'id du praticien et renvoie un array avec id,
+    //  nom et prenom des patients associés auu praticien :
+    public function getAllPatientsFromPraticien(int $idPraticien):array {
+         return $this->sendSQL("SELECT
+                Patient.id AS idPatient,
+                Patient.nom AS nomPatient,
+                Patient.prenom AS prenomPatient
+         FROM Soigne
+             INNER JOIN Patient ON Soigne.idPatient = Patient.id
+             INNER JOIN Praticien ON Soigne.idPraticien = Praticien.id
+             WHERE Praticien.id = ?;
+            ", [$idPraticien]);
+    }
 
     public function getListePatientPraticien(string $email):array{
 
          return $this->sendSQL("SELECT
+                Patient.id AS idPatient,
                 Patient.nom AS nomPatient,
                 Patient.prenom AS prenomPatient
          FROM Soigne
@@ -146,5 +159,5 @@ class SoigneDAO extends Database {
 	public function getPrimaryKey(): string {
 		return $this->primaryKey;
 	}
-	
+
 }
