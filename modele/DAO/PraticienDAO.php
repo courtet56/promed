@@ -65,7 +65,7 @@ class PraticienDAO extends Database {
 		INNER JOIN Patient ON Patient.id = RendezVous.idPatient
 		INNER JOIN Praticien ON Praticien.id = RendezVous.idPraticien
 		INNER JOIN StatutRdv ON StatutRdv.id = RendezVous.idStatutRdv
-		INNER JOIN Propose ON Propose.idPresta = Prestation.id
+		INNER JOIN Propose ON Propose.idPresta = Prestation.id AND Propose.idPresta = Praticien.id
 		WHERE dateRdv BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 MONTH)
 		AND Praticien.email = ?
 		ORDER BY dateRdv ASC, heureRdv ASC;

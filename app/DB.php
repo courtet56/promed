@@ -11,12 +11,18 @@
  */
 
  const DB_SERVER = 'db'; //127.0.0.1 PAR DEFAUT EN LOCAL
- 
+ // distant : localhost
+// en local = 'db' 
 
  const DB_DATABASE = 'promed'; //NOM DE LA BDD
-
+ // distant : promo25_baptiste_promed
+// local = 'promed'
  const DB_USER = 'root'; //NOM DE L'UTILISATEUR MYSQL
+ // distant = 'promo25'
+ // 'root'
  const DB_PASSWORD = 'secret'; //MOT DE PASSE
+ // distant =  'user@sio25'
+ // 'secret'
  const DB_PORT = '3306'; //3306, PORT PAR DEFAUT
  const DB_DEBUG = false; //RENFORCE LE TRAITEMENT DES ERREURS SQL
 
