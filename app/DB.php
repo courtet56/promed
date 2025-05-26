@@ -15,7 +15,7 @@
 // en local = 'db' 
 
  const DB_DATABASE = 'promed'; //NOM DE LA BDD
- // distant : promo25_baptiste_promed
+ // distant : promo25_coleen_promed
 // local = 'promed'
  const DB_USER = 'root'; //NOM DE L'UTILISATEUR MYSQL
  // distant = 'promo25'

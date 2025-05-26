@@ -4,7 +4,7 @@
  * 
  */
 ?>
-<button type="button" class="btn btn-danger bouton-fixe" id="logoutButton" data-bs-toggle="modal" data-bs-target="#logoutModal">Déconnexion</button>
+
 <div class="container">
         <h1>Mon profil</h1>
         

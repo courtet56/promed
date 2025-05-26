@@ -54,6 +54,8 @@ class EspacePraticien{
             
             if($this->action("agenda")){
                 $data = $praticienDAO->getAgendaPraticien($praticien->getEmail());
+                // echo "<pre>";
+                // print_r($data);
                 $dateDuJour = FormatDate::getFormatDate();
                 
                 // Début Ajout Rdv: 
@@ -80,7 +82,6 @@ class EspacePraticien{
                 $idStatut = 1; // statut "en cours" par défaut;
 
                 if(Request::post('btnConfirmer') === '1'){
-                    echo'test';
                     if(!empty($patientId) 
                     && !empty($idPresta) 
                     && !empty($heureRdv) 

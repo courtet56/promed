@@ -17,6 +17,7 @@
     <?= $customCSS ?>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="<?= ASSET ?>/js/popup.js" defer></script>
+    <script src="<?= ASSET ?>/js/logout.js" defer></script>
     <script src="<?= ASSET ?>/js/main.js" defer></script>
     <script src="<?= ASSET ?>/js/<?= $_SESSION['CUSTOM_JS'] ?>" defer></script>
     <?= $customJS ?>
@@ -56,7 +57,7 @@
          ?>
     </header>
     <?php
-    if(isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien") {
+    if(isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien" && $_SERVER['REQUEST_URI'] !== '/dev/promed/auth' && $_SERVER['REQUEST_URI'] !== '/dev/promed/inscription' && $_SERVER['REQUEST_URI'] !== '/dev/promed/accueil' && $_SERVER['REQUEST_URI'] !== '/dev/promed/') {
     ?>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
@@ -77,6 +78,9 @@
         <li class="nav-item">
           <a class="nav-link <?=$action == "modif_profil" ? "active" : ''?>" href="./praticien?modif_profil">Mon profil</a>
         </li>
+        <li>
+          <a class="nav-link" id="logoutButton" data-bs-toggle="modal" data-bs-target="#logoutModal" style="color: red; cursor:pointer; font-weight:bold;">Déconnexion</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -84,3 +88,21 @@
     <?php
     }
     ?>
+
+<div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Déconnexion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Voulez-vous vraiment vous déconnecter ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="logoutModalBtnClose" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-danger" id="logoutModalBtnConfirm">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>

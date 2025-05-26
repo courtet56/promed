@@ -56,7 +56,7 @@ Class EspacePatient
             }
 
             if(is_array($oldRdvList) && !empty($oldRdvList)) {
-                foreach($oldRdvList as $curRdv) {
+                foreach($oldRdvList as $i=>$curRdv) {
                     $praticien = $dbPrat->read($curRdv["idPraticien"]);
                     $oldRdvList[$i]['praticien'] = $praticien->getNom() . " " . $praticien->getPrenom();
                 

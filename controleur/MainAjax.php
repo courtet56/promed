@@ -591,15 +591,18 @@ class MainAjax extends Ajax {
 		}
 		// vérification de l'identité du nouveau tuteur si changement
 		$newTuteur = $pDao->getPatientByEmail($formValues['tuteur']);
-		if(!$newTuteur) {
+		// return var_dump($newTuteur);
+		if($formValues['tuteur'] != null && !$newTuteur) {
 			// retour d'erreur si le mail entré pour le tuteur ne correspond a personne en bdd
 			return "L'email spécifié pour le tuteur ne correspond à aucun patient.";
 		}
-		if($newTuteur['id'] != $oldPatient->getIdTuteur()) {
+		if($newTuteur!=false && $newTuteur['id'] != $oldPatient->getIdTuteur()) {
 			$newTuteur = Patient::fromArray($newTuteur);
 			$idTuteur = $newTuteur->getIdPatient();
-		} else {
+		} else if($newTuteur!=false) {
 			$idTuteur = $oldPatient->getIdTuteur();
+		} else {
+			$idTuteur = 0;
 		}
 		// creation du nouveau patient pour la modification
 		$newPatient = new Patient($formValues['nom'], $formValues['prenom'], $formValues['dateNaiss'], $formValues['telephone'], $formValues['email'], $oldPatient->getMotDePasse(), $idTuteur, $idNewAdresse);
