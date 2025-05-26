@@ -220,3 +220,12 @@ h1 {
     text-decoration: none;
     text-align: center;
 }
+
+.container {
+    max-width: 1000px;
+    margin: 0px 40px 40px 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

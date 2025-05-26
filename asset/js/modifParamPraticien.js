@@ -264,8 +264,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Ecoute du menu Select:
-    let champPrix = document.getElementById('dureeConsultation');
-    let champDuree = document.getElementById('prixConsultation');
+    let champPrix = document.getElementById('prixConsultation');
+    let champDuree = document.getElementById('dureeConsultation');
     let selectPresta = document.getElementById('libellePrestation');
     selectPresta.addEventListener('change', function () {
         {
@@ -322,31 +322,3 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    logoutButton = document.getElementById('logoutButton');
-    if(logoutButton) {
-        logoutButton.addEventListener('click', function() {
-            $('#logoutModalBtnConfirm').on('click', function() { // si bouton de confirmation de la modale est cliqué
-                deconnexion();
-            });
-        })
-    }
-})
-
-function deconnexion() {
-    const ajaxUrl = 'ajax?logout';
-
-    
-    const request = new AjaxRequest(
-        ajaxUrl,
-        'POST',
-        {'logout' : true}
-    )
-
-    request.send(
-        (response) => {
-            console.log(response);
-            window.location.href = './accueil'
-        }
-    )
-}
