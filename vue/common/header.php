@@ -57,7 +57,7 @@
          ?>
     </header>
     <?php
-    if(isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien" && $_SERVER['REQUEST_URI'] !== '/dev/promed/auth' && $_SERVER['REQUEST_URI'] !== '/dev/promed/inscription' && $_SERVER['REQUEST_URI'] !== '/dev/promed/accueil' && $_SERVER['REQUEST_URI'] !== '/dev/promed/') {
+    if(isset($_SESSION['user']) && $_SESSION['user']['userType'] == "praticien" && $_SERVER['REQUEST_URI'] !== BASENAME . SLASH . 'accueil' && $_SERVER['REQUEST_URI'] !== BASENAME . SLASH . 'inscription' && $_SERVER['REQUEST_URI'] !== BASENAME . SLASH . 'auth' && $_SERVER['REQUEST_URI'] !== BASENAME . SLASH ) {
     ?>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
