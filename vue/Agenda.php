@@ -118,15 +118,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="rdvId" name="idRdv">
+          <input type="hidden" id="modalRdvId" name="idRdv">
 
           <div class="mb-3">
             <label for="dateRdv" class="form-label">Date</label>
-            <input type="date" class="form-control" id="dateRdv" name="dateRdv" required>
+            <input type="date" class="form-control" id="modalDateRdv" name="dateRdv" required>
           </div>
           <div class="mb-3">
             <label for="heureRdv" class="form-label">Heure</label>
-            <input type="time" class="form-control" id="heureRdv" name="heureRdv" required>
+            <input type="time" class="form-control" id="modalHeureRdv" name="heureRdv" required>
           </div>
         </div>
         <div class="modal-footer">

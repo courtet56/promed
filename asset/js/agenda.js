@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const heureRdv = $tr.find('td:eq(2)').text().trim();
 
         // Préremplir les champs de la modale
-        $('#rdvId').val(idRdv);
-        $('#dateRdv').val(dateRdv);
-        $('#heureRdv').val(heureRdv);
+        $('#modalRdvId').val(idRdv);
+        $('#modalDateRdv').val(dateRdv);
+        $('#modalHeureRdv').val(heureRdv);
 
         // Afficher la modale
         const modal = new bootstrap.Modal(document.getElementById('modalModifierRdv'));
@@ -72,11 +72,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-});
-
-//Début Traitement Ajout Rendez-vous:
-document.addEventListener('DOMContentLoaded', function () {
-    $('#btnAjouterRdv').on('click', function() {
+    //Début Traitement Ajout Rendez-vous:
+    $('#btnAjouterRdv').on('click', function () {
         const form = $('#formulaireRdv');
         const messageError = $('#userMessageErrorRdv');
         const messageSuccess = $('#userMessageSuccessRdv');
@@ -85,13 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             form.attr('hidden', true); // Cache
         }
-        if(messageError.text() !== ''){
+        if (messageError.text() !== '') {
             messageError.remove();
         }
-        if(messageSuccess.text() !== ''){
+        if (messageSuccess.text() !== '') {
             messageSuccess.remove();
         }
-        })
+    })
     $('#fermerFormulaireRdv').on('click', function () {
         const form = $('#formulaireRdv');
         if (form.attr('hidden')) {
