@@ -10,17 +10,17 @@
  *
  */
 
- const DB_SERVER = 'db'; //127.0.0.1 PAR DEFAUT EN LOCAL
+ const DB_SERVER = 'localhost'; //127.0.0.1 PAR DEFAUT EN LOCAL
  // distant : localhost
 // en local = 'db' 
 
- const DB_DATABASE = 'promed'; //NOM DE LA BDD
+ const DB_DATABASE = 'promo25_coleen_promed'; //NOM DE LA BDD
  // distant : promo25_coleen_promed
 // local = 'promed'
- const DB_USER = 'root'; //NOM DE L'UTILISATEUR MYSQL
+ const DB_USER = 'promo25'; //NOM DE L'UTILISATEUR MYSQL
  // distant = 'promo25'
- // 'root'
- const DB_PASSWORD = 'secret'; //MOT DE PASSE
+ // local : 'root'
+ const DB_PASSWORD = 'user@sio25'; //MOT DE PASSE
  // distant =  'user@sio25'
  // 'secret'
  const DB_PORT = '3306'; //3306, PORT PAR DEFAUT
