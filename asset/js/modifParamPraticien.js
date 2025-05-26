@@ -264,8 +264,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Ecoute du menu Select:
-    let champPrix = document.getElementById('dureeConsultation');
-    let champDuree = document.getElementById('prixConsultation');
+    let champPrix = document.getElementById('prixConsultation');
+    let champDuree = document.getElementById('dureeConsultation');
     let selectPresta = document.getElementById('libellePrestation');
     selectPresta.addEventListener('change', function () {
         {
